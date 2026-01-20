@@ -72,7 +72,17 @@ function App() {
           <div>
             <p className="text-hi-text text-base mb-4 font-normal">Hi, my name is</p>
             <h1 className={`text-[4.5rem] font-bold ${isDarkMode ? 'text-name-text' : 'text-light-name-text'} mb-2 leading-tight max-xl:text-[3.5rem] max-md:text-[2.5rem] max-sm:text-[2rem]`}>
-              Jay Lao<span className="relative inline-block">.</span>
+              Jay La<span className="relative inline-block">
+             <svg width="116" height="44" viewBox="0 0 116 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="116" height="44" rx="22" fill="white"/>
+</svg>
+
+                <svg width="45" height="55" viewBox="0 0 45 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="45" height="55" rx="22.5" fill="#CCD6F6"/>
+<path opacity="0.65" d="M19 9C25.0751 9 30.5 14.9249 30.5 21L30.5225 21.2699C30.8403 25.0833 30.8403 28.9167 30.5225 32.7301L30.5 33C30.5 39.5 24.6711 45.5 19 45.5C12.9249 45.5 7 38.5 7 33V27V20.5C7 14.4249 12.9249 9 19 9Z" fill="#0A2B2F"/>
+</svg>
+
+                .</span>
             </h1>
             <h2 className={`text-[3.5rem] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-light-tagline-text'} mb-6 leading-tight max-xl:text-[2.5rem] max-md:text-[2rem] max-sm:text-[1.5rem]`}>
               I live with data to learn.
