@@ -61,10 +61,24 @@ export const ContactIcon = ({ className = "w-6 h-6" }: { className?: string }) =
 )
 
 export const MoonIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
-<svg width="30" height="40" viewBox="0 0 45 55" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="45" height="55" rx="22.5" fill="#CCD6F6"/>
-<path opacity="0.65" d="M19 9C25.0751 9 30.5 14.9249 30.5 21L30.5225 21.2699C30.8403 25.0833 30.8403 28.9167 30.5225 32.7301L30.5 33C30.5 39.5 24.6711 45.5 19 45.5C12.9249 45.5 7 38.5 7 33V27V20.5C7 14.4249 12.9249 9 19 9Z" fill="#0A2B2F"/>
-</svg>
-
+ 
+ <svg width="100" height="45" viewBox="0 0 116 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect y="6" width="116" height="44" rx="22" fill="white"/>
+  <rect x="8" width="45" height="55" rx="22.5" fill="#CCD6F6"/>
+  <path opacity="0.65" d="M27 9C33.0751 9 38.5 14.9249 38.5 21L38.5225 21.2699C38.8403 25.0833 38.8403 28.9167 38.5225 32.7301L38.5 33C38.5 39.5 32.6711 45.5 27 45.5C20.9249 45.5 15 38.5 15 33V27V20.5C15 14.4249 20.9249 9 27 9Z" fill="#0A2B2F"/>
+  </svg>
   
 )
+
+export const SunIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+
+  <svg width="100" height="45" viewBox="0 0 116 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect y="5" width="116" height="44" rx="22" fill="white"/>
+  <rect x="62" width="45" height="55" rx="22.5" fill="#CCD6F6"/>
+  <path opacity="0.65" d="M85 9C91.0751 9 96.5 14.9249 96.5 21L96.5225 21.2699C96.8403 25.0833 96.8403 28.9167 96.5225 32.7301L96.5 33C96.5 39.5 90.6711 45.5 85 45.5C78.9249 45.5 73 38.5 73 33V27V20.5C73 14.4249 78.9249 9 85 9Z" fill="#285B9D"/>
+  </svg>
+
+
+
+)
+

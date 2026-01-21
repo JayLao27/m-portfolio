@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import {  ContactIcon, MoonIcon } from './components/Icons'
+import {  ContactIcon, MoonIcon, SunIcon } from './components/Icons'
 import { LeftIcons } from './components/Left-icons'
 
 
@@ -40,12 +40,12 @@ function App() {
         {/* Hero Content */}
         <div className="flex-1 max-w-[700px] pl-20 max-xl:pl-12 max-md:pl-4 animate-fade-in-up">
           <div>
-            <p className="text-hi-text text-base mb-4 font-normal">Hi, my name is</p>
+            <p className="text-hi-text text-base font-normal font-['Calibri']">Hi, my name is</p>
             <h1 className={`text-[4.5rem] font-bold ${isDarkMode ? 'text-name-text' : 'text-light-name-text'} mb-2 leading-tight max-xl:text-[3.5rem] max-md:text-[2.5rem] max-sm:text-[2rem]`}>
               Jay La
                   <button onClick={toggleTheme} //button icon toggle
                   className={`bg-transparent border ${isDarkMode ? 'border-[rgba(136,146,176,0.2)] text-nav-text hover:bg-[rgba(136,146,176,0.2)]' : 'border-[rgba(10,43,47,0.1)] text-light-nav-text hover:bg-[rgba(10,43,47,0.1)]'} px-3 py-2 rounded cursor-pointer text-xl transition-all duration-300`}>
-                  {isDarkMode ? <MoonIcon /> : <MoonIcon />}
+                  {isDarkMode ? <MoonIcon /> : <SunIcon />}
                   </button>
               <span className="relative inline-block"> .</span>
             </h1>
@@ -53,7 +53,7 @@ function App() {
               I just live to Learn.
             </h2>
             <p className={`text-lg ${isDarkMode ? 'text-body-text' : 'text-light-body-text'} max-w-[600px] leading-relaxed`}>
-              I'm a <span className="text-highlight font-medium">curious</span> programmer who enjoy a lot of learning and creating. Doing things is one of my favorite.
+              I'm a <span className="text-highlight font-medium">curious</span> programmer who invest my time learning a lot and creating.
             </p>
           </div>
         </div>
