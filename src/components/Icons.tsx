@@ -78,7 +78,14 @@ export const SunIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   <path opacity="0.65" d="M85 9C91.0751 9 96.5 14.9249 96.5 21L96.5225 21.2699C96.8403 25.0833 96.8403 28.9167 96.5225 32.7301L96.5 33C96.5 39.5 90.6711 45.5 85 45.5C78.9249 45.5 73 38.5 73 33V27V20.5C73 14.4249 78.9249 9 85 9Z" fill="#285B9D"/>
   </svg>
 
+)
+
+export const TwoLines = ({ className = "w-6 h-6" }: { className?: string }) => (
+
+  <svg  width="290" height="8" viewBox="0 0 319 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <line y1="0.5" x2="309" y2="0.5" stroke="#5EEEFF"/>
+  <line x1="10" y1="7.5" x2="319" y2="7.5" stroke="#5EEEFF"/>
+  </svg>
 
 
 )
-

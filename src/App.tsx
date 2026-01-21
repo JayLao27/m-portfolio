@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import {  ContactIcon, MoonIcon, SunIcon } from './components/Icons'
+import {  ContactIcon, MoonIcon, SunIcon, TwoLines } from './components/Icons'
 import { LeftIcons } from './components/Left-icons'
 
 
@@ -73,9 +73,9 @@ function App() {
       <section id="about" className="min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12">
         <div className="grid grid-cols-2 gap-16 items-center max-md:grid-cols-1 max-md:gap-12">
           <div>
-            <h2 className={`text-5xl font-bold ${isDarkMode ? 'text-name-text' : 'text-light-name-text'} mb-8 relative inline-block max-md:text-[2.5rem]`}>
+            <h2 className={`mr-30 text-[70px] font-[SF Compact] font-semibold text-[#8892B0] mb-8 relative inline-block max-md:text-[2.5rem]`}>
               About Me
-              <span className="absolute bottom-[-0.5rem] left-0 w-full h-[3px] bg-highlight"></span>
+             <TwoLines className='relative ml-1'/>
             </h2>
             <div className={`text-lg leading-relaxed ${isDarkMode ? 'text-body-text' : 'text-light-body-text'}`}>
               <p className="mb-6">
