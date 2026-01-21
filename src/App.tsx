@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import { EmailIcon, InstagramIcon, LinkedInIcon, ContactIcon } from './components/Icons'
+import { EmailIcon, InstagramIcon, LinkedInIcon, ContactIcon, MoonIcon } from './components/Icons'
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true)
@@ -31,7 +31,7 @@ function App() {
           onClick={toggleTheme}
           className={`bg-transparent border ${isDarkMode ? 'border-[rgba(136,146,176,0.2)] text-nav-text hover:bg-[rgba(136,146,176,0.2)]' : 'border-[rgba(10,43,47,0.1)] text-light-nav-text hover:bg-[rgba(10,43,47,0.1)]'} px-3 py-2 rounded cursor-pointer text-xl transition-all duration-300`}
         >
-          {isDarkMode ? '☀️' : '🌙'}
+          {isDarkMode ? <MoonIcon /> : <MoonIcon />}
         </button>
       </nav>
 
@@ -41,14 +41,14 @@ function App() {
         <div className="absolute left-8 flex flex-col gap-6 py-4 max-md:static max-md:flex-row max-md:mb-8 max-md:left-auto max-md:pb-0">
           <div className="absolute bottom-[-5rem] left-1/2 -translate-x-1/2 w-px h-20 bg-[rgba(136,146,176,0.2)] max-md:hidden"></div>
           <a
-            href="mailto:jay@example.com"
+            href="laocjay697@gmail.com"
             aria-label="Email"
             className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-light-logo-color hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
           >
             <EmailIcon />
           </a>
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/xjay_lao"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
@@ -57,7 +57,7 @@ function App() {
             <InstagramIcon />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/jaylao"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -72,20 +72,10 @@ function App() {
           <div>
             <p className="text-hi-text text-base mb-4 font-normal">Hi, my name is</p>
             <h1 className={`text-[4.5rem] font-bold ${isDarkMode ? 'text-name-text' : 'text-light-name-text'} mb-2 leading-tight max-xl:text-[3.5rem] max-md:text-[2.5rem] max-sm:text-[2rem]`}>
-              Jay La<span className="relative inline-block">
-             <svg width="116" height="44" viewBox="0 0 116 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="116" height="44" rx="22" fill="white"/>
-</svg>
-
-                <svg width="45" height="55" viewBox="0 0 45 55" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="45" height="55" rx="22.5" fill="#CCD6F6"/>
-<path opacity="0.65" d="M19 9C25.0751 9 30.5 14.9249 30.5 21L30.5225 21.2699C30.8403 25.0833 30.8403 28.9167 30.5225 32.7301L30.5 33C30.5 39.5 24.6711 45.5 19 45.5C12.9249 45.5 7 38.5 7 33V27V20.5C7 14.4249 12.9249 9 19 9Z" fill="#0A2B2F"/>
-</svg>
-
-                .</span>
+              Jay Lao<span className="relative inline-block"> .</span>
             </h1>
             <h2 className={`text-[3.5rem] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-light-tagline-text'} mb-6 leading-tight max-xl:text-[2.5rem] max-md:text-[2rem] max-sm:text-[1.5rem]`}>
-              I live with data to learn.
+              I just live to Learn.
             </h2>
             <p className={`text-lg ${isDarkMode ? 'text-body-text' : 'text-light-body-text'} max-w-[600px] leading-relaxed`}>
               I'm a <span className="text-highlight font-medium">curious</span> programmer who enjoy a lot of learning and creating. Doing things is one of my favorite.
@@ -114,7 +104,7 @@ function App() {
             </h2>
             <div className={`text-lg leading-relaxed ${isDarkMode ? 'text-body-text' : 'text-light-body-text'}`}>
               <p className="mb-6">
-                Hi! I am <span className="text-highlight font-medium">Jay Lao</span>. I love what I am currently learning right now. My interest is data. I have been exposed to computers from an early age. I began to play with and learn about computers when I was 5 years old.
+                Hi! I am <span className="text-highlight font-medium">Jay Lao</span>. I love that I am still learning. My interest is data. I have been exposed to computers from an early age. I began to play with and learn about computers when I was 5 years old.
               </p>
               <p>
                 Now, I have the opportunity to began to work freely on my curiosity to live with my values and principles.

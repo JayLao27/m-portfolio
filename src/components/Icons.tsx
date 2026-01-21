@@ -59,3 +59,13 @@ export const ContactIcon = ({ className = "w-6 h-6" }: { className?: string }) =
     <polygon points="22 2 15 22 11 13 2 9 22 2"/>
   </svg>
 )
+
+export const MoonIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+
+   <svg width="116" height="44" viewBox="0 0 116 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <rect width="116" height="44" rx="22" fill="white"/>
+    </svg>
+
+  
+  
+)
