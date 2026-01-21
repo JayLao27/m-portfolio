@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
-import { EmailIcon, InstagramIcon, LinkedInIcon, ContactIcon, MoonIcon } from './components/Icons'
+import {  ContactIcon, MoonIcon } from './components/Icons'
+import { LeftIcons } from './components/Left-icons'
+
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true)
@@ -27,52 +29,25 @@ function App() {
             Projects
           </a>
         </div>
-        <button
-          onClick={toggleTheme}
-          className={`bg-transparent border ${isDarkMode ? 'border-[rgba(136,146,176,0.2)] text-nav-text hover:bg-[rgba(136,146,176,0.2)]' : 'border-[rgba(10,43,47,0.1)] text-light-nav-text hover:bg-[rgba(10,43,47,0.1)]'} px-3 py-2 rounded cursor-pointer text-xl transition-all duration-300`}
-        >
-          {isDarkMode ? <MoonIcon /> : <MoonIcon />}
-        </button>
+       
       </nav>
 
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center px-[10%] relative max-w-[1600px] mx-auto max-xl:px-[5%] max-md:px-[5%]">
-        {/* Social Media Icons - Left Sidebar */}
-        <div className="absolute left-8 flex flex-col gap-6 py-4 max-md:static max-md:flex-row max-md:mb-8 max-md:left-auto max-md:pb-0">
-          <div className="absolute bottom-[-5rem] left-1/2 -translate-x-1/2 w-px h-20 bg-[rgba(136,146,176,0.2)] max-md:hidden"></div>
-          <a
-            href="laocjay697@gmail.com"
-            aria-label="Email"
-            className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-light-logo-color hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
-          >
-            <EmailIcon />
-          </a>
-          <a
-            href="https://www.instagram.com/xjay_lao"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-            className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-light-logo-color hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
-          >
-            <InstagramIcon />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/jaylao"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-light-logo-color hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
-          >
-            <LinkedInIcon />
-          </a>
-        </div>
+      <section className="min-h-screen flex items-center px-[10%] relative max-w-[1600px] max-xl:px-[5%] max-md:px-[5%]">
+        {/* Social Media Icons - Right Side */}
+        <LeftIcons isDarkMode={isDarkMode} />
 
         {/* Hero Content */}
         <div className="flex-1 max-w-[700px] pl-20 max-xl:pl-12 max-md:pl-4 animate-fade-in-up">
           <div>
             <p className="text-hi-text text-base mb-4 font-normal">Hi, my name is</p>
             <h1 className={`text-[4.5rem] font-bold ${isDarkMode ? 'text-name-text' : 'text-light-name-text'} mb-2 leading-tight max-xl:text-[3.5rem] max-md:text-[2.5rem] max-sm:text-[2rem]`}>
-              Jay Lao<span className="relative inline-block"> .</span>
+              Jay La
+                  <button onClick={toggleTheme} //button icon toggle
+                  className={`bg-transparent border ${isDarkMode ? 'border-[rgba(136,146,176,0.2)] text-nav-text hover:bg-[rgba(136,146,176,0.2)]' : 'border-[rgba(10,43,47,0.1)] text-light-nav-text hover:bg-[rgba(10,43,47,0.1)]'} px-3 py-2 rounded cursor-pointer text-xl transition-all duration-300`}>
+                  {isDarkMode ? <MoonIcon /> : <MoonIcon />}
+                  </button>
+              <span className="relative inline-block"> .</span>
             </h1>
             <h2 className={`text-[3.5rem] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-light-tagline-text'} mb-6 leading-tight max-xl:text-[2.5rem] max-md:text-[2rem] max-sm:text-[1.5rem]`}>
               I just live to Learn.
