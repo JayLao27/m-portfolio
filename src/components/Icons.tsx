@@ -82,9 +82,18 @@ export const SunIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
 
 export const TwoLines = ({ className = "w-6 h-6" }: { className?: string }) => (
 
-  <svg  width="290" height="8" viewBox="0 0 319 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg  width="400" height="8" viewBox="0 0 319 8" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
   <line y1="0.5" x2="309" y2="0.5" stroke="#5EEEFF"/>
   <line x1="10" y1="7.5" x2="319" y2="7.5" stroke="#5EEEFF"/>
+  </svg>
+
+
+)
+
+export const AboutBackground = ({ className = "w-6 h-6" }: { className?: string }) => (
+
+  <svg width="506" height="124" viewBox="0 0 506 124" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+  <rect opacity="0.39" width="506" height="124" fill="#224D52"/>
   </svg>
 
 
