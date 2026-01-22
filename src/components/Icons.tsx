@@ -96,5 +96,4 @@ export const AboutBackground = ({ className = "w-6 h-6" }: { className?: string 
   <rect opacity="0.39" width="506" height="124" fill="#224D52"/>
   </svg>
 
-//add comments
 )
