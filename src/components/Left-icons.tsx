@@ -7,7 +7,7 @@ export function LeftIcons({ isDarkMode }: { isDarkMode: boolean }) {
           <a
             href="laocjay697@gmail.com"
             aria-label="Email"
-            className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-light-logo-color hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
+            className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-[#CCD6F6] hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
           >
             <EmailIcon />
           </a>
@@ -16,7 +16,7 @@ export function LeftIcons({ isDarkMode }: { isDarkMode: boolean }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
-            className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-light-logo-color hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
+            className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-[#CCD6F6] hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
           >
             <InstagramIcon />
           </a>
@@ -25,7 +25,7 @@ export function LeftIcons({ isDarkMode }: { isDarkMode: boolean }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-light-logo-color hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
+            className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-[#CCD6F6] hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
           >
             <LinkedInIcon />
           </a>
