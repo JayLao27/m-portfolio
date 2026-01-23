@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import './App.css'
-import {  ContactIcon, MoonIcon, SunIcon, TwoLines, AboutBackground, MessageIcon } from './components/Icons'
+import {  MoonIcon, SunIcon, TwoLines, AboutBackground, MessageIcon } from './components/Icons'
 import { LeftIcons } from './components/Left-icons'
+import  useSpotlightEffect from './components/light-cursor'
 import SplashCursor from './components/splash-Cursor'
-
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true)
@@ -14,8 +14,7 @@ function App() {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark bg-dark-bg text-body-text' : 'bg-[#285B9D] text-light-body-text'} transition-colors duration-300 font-sans leading-relaxed`}>
-          <SplashCursor />
-
+        <SplashCursor/>
       {/* Navigation */}
       <nav className="fixed top-0 right-0 p-8 pr-12 z-[1000] flex items-center gap-8 max-md:p-6 max-md:pr-8 max-md:gap-4">
         <div className="flex gap-8 max-md:gap-4">
@@ -96,7 +95,9 @@ function App() {
           </div>
         </div>
       </section>
+
     </div>
+    
   )
 }
 
