@@ -56,8 +56,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
         </div>
         <div className="flex justify-center items-center">
           <div
-            className={`w-[300px] h-[290px] ${isDarkMode ? 'bg-gradient-to-br from-[rgba(136,146,176,0.2)] to-transparent border border-[rgba(136,146,176,0.2)]' : 'bg-gradient-to-br from-[rgba(10,43,47,0.1)] to-transparent border border-[rgba(10,43,47,0.1)]'} rounded-lg flex items-center justify-center ${isDarkMode ? 'text-body-text' : 'text-light-body-text'} text-xl`}
-          >
+            className={`w-[300px] h-[290px] ${isDarkMode ? 'bg-gradient-to-br from-[rgba(136,146,176,0.2)] to-transparent border border-[rgba(136,146,176,0.2)]' : 'bg-gradient-to-br from-[rgba(10,43,47,0.1)] to-transparent border border-[rgba(10,43,47,0.1)]'} rounded-lg flex items-center justify-center ${isDarkMode ? 'text-body-text' : 'text-light-body-text'} text-xl`}>
             <img src="../../assets/images/LinkedIn_Profile.png" alt="Profile" />
           </div>
         </div>
