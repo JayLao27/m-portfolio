@@ -20,7 +20,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
           <TwoLines className="relative bottom-[40px] right-4" />
           <div className={`text-lg leading-relaxed ${isDarkMode ? 'text-body-text' : 'text-[#FFFFFF]'}`}>
             <p className="mb-6">
-              Hi! I am <span className="text-highlight font-medium">Jay Lao</span>. I love that I am still learning. My interest is data. I have been exposed to computers from an early age. I began to play with and learn about computers when I was 5 years old.
+              Hi! I am <span className="text-highlight font-medium">Jay Lao</span>. I started  My interest is data. I have been exposed to computers from an early age. I began to play with and learn about computers when I was 5 years old.
             </p>
             <p>
               Now, I have the opportunity to began to work freely on my curiosity to live with my values and principles.
