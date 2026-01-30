@@ -1,4 +1,5 @@
 import React from 'react'
+import { MLIcon, MotionIcon, InventoryIcon, AudioIcon } from '../ProjectIcons'
 
 interface Project {
   id: number
@@ -65,6 +66,14 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                   : 'bg-gradient-to-br from-[rgba(10,43,47,0.1)] to-transparent border border-[rgba(10,43,47,0.1)] hover:border-[rgba(10,43,47,0.3)]'
               }`}
             >
+              {/* Project Icon */}
+              <div className="w-full h-[200px] rounded-lg mb-4 bg-gradient-to-br from-[rgba(136,146,176,0.3)] to-transparent overflow-hidden flex items-center justify-center p-4">
+                {project.id === 1 && <MLIcon isDarkMode={isDarkMode} />}
+                {project.id === 2 && <MotionIcon isDarkMode={isDarkMode} />}
+                {project.id === 3 && <InventoryIcon isDarkMode={isDarkMode} />}
+                {project.id === 4 && <AudioIcon isDarkMode={isDarkMode} />}
+              </div>
+
               {/* Project Content */}
               <h3
                 className={`text-xl font-semibold mb-3 ${isDarkMode ? 'text-highlight' : 'text-[#E1E8FF]'}`}
