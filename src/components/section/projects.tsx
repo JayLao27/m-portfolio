@@ -6,7 +6,6 @@ interface Project {
   description: string
   technologies: string[]
   link?: string
-  imageUrl?: string
 }
 
 const projectsData: Project[] = [
@@ -14,7 +13,6 @@ const projectsData: Project[] = [
     id: 1,
     title: 'Real Estate Pricing Prediction (ML)',
     description: 'Utilizing a pricing prediction for real estate using Gradient Boosting, while comparing with other models.',
-    imageUrl: 'src/assets/images/machine-learning.png',
     technologies: ['Python', 'Jupyter Notebook', 'Streamlit'],
     link: 'https://github.com/JayLao27/realestate-pricing-prediction'
   },
@@ -22,7 +20,6 @@ const projectsData: Project[] = [
     id: 2,
     title: 'Text Messaging Motion Detection',
     description: 'Motion detection and text messaging system that detects motion.',
-    imageUrl: 'src/assets/images/arduino.png',
     technologies: ['C++'],  
     link: 'https://github.com/JayLao27/PirMotion-GSMSim800L'
   },
@@ -30,7 +27,6 @@ const projectsData: Project[] = [
     id: 3,
     title: 'Wood Inventory Management System',
     description: 'A system designed for RM companies to efficiently manage stock and transactions. It provides accurate record-keeping, generates detailed reports, and ensures sustainable and organized inventory management.',
-    imageUrl: 'src/assets/images/WebDevelopment.png',
     technologies: ['Laravel', 'PHP', 'MySQL'],
     link: 'https://github.com/JayLao27/wood-inventory-management'
   },
@@ -38,7 +34,6 @@ const projectsData: Project[] = [
     id: 4,
     title: 'Audio Library',
     description: 'A platform where users can browse, purchase, and stream music from artists. It allows users to create and manage playlists, add tracks to their collection, and explore a personal music library.',
-    imageUrl: 'src/assets/images/audio-library.png',
     technologies: ['Java', 'JavaFX', 'CSS', 'MySQL'],
     link: '#'
   }
@@ -70,17 +65,6 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                   : 'bg-gradient-to-br from-[rgba(10,43,47,0.1)] to-transparent border border-[rgba(10,43,47,0.1)] hover:border-[rgba(10,43,47,0.3)]'
               }`}
             >
-              {/* Project Image Placeholder */}
-              {project.imageUrl && (
-                <div className="w-full h-[200px] rounded-lg mb-4 bg-gradient-to-br from-[rgba(136,146,176,0.3)] to-transparent overflow-hidden">
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-
               {/* Project Content */}
               <h3
                 className={`text-xl font-semibold mb-3 ${isDarkMode ? 'text-highlight' : 'text-[#E1E8FF]'}`}
