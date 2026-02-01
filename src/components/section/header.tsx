@@ -43,7 +43,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
         </div>
       </nav>
 
-      <section className="min-h-screen flex items-center justify-center px-[10%] relative max-w-[1600px] max-xl:px-[5%] max-md:px-[5%] overflow-hidden">
+      <section className="min-h-screen flex items-center justify-center px-[10%] relative max-w-[1600px] mx-auto max-xl:px-[5%] max-md:px-[5%] overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-highlight/5 rounded-full blur-3xl animate-float"></div>
@@ -54,12 +54,15 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
 
         <div className="flex-1 max-w-[800px] text-center relative z-10">
           <div className="space-y-6">
-            <p className={`text-hi-text text-base font-['JetBrains_Mono'] font-normal tracking-widest uppercase opacity-0 animate-fade-in-up`}>
+            <p 
+              className={`text-hi-text text-base font-['JetBrains_Mono'] font-normal tracking-widest uppercase animate-fade-in-up`}
+              style={{ animationFillMode: 'forwards' }}
+            >
               Hi, my name is
             </p>
             
             <h1 
-              className={`text-[5rem] font-['Syne'] font-bold ${isDarkMode ? 'text-name-text' : 'text-[#F0F4FF]'} mb-2 leading-tight max-xl:text-[4rem] max-md:text-[3rem] max-sm:text-[2.5rem] opacity-0 animate-fade-in-up`}
+              className={`text-[5rem] font-['Syne'] font-bold ${isDarkMode ? 'text-name-text' : 'text-[#F0F4FF]'} mb-2 leading-tight max-xl:text-[4rem] max-md:text-[3rem] max-sm:text-[2.5rem] animate-fade-in-up`}
               style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}
             >
               Jay La
@@ -74,7 +77,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
             </h1>
 
             <h2 
-              className={`text-[4rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-[#F0F4FF]'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] opacity-0 animate-fade-in-up`}
+              className={`text-[4rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-[#F0F4FF]'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] animate-fade-in-up`}
               style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
             >
               I just live to{' '}
@@ -87,7 +90,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
             </h2>
 
             <p 
-              className={`text-xl font-['DM_Sans'] ${isDarkMode ? 'text-body-text' : 'text-[#1DD0A7]'} max-w-[650px] mx-auto leading-relaxed opacity-0 animate-fade-in-up`}
+              className={`text-xl font-['DM_Sans'] ${isDarkMode ? 'text-body-text' : 'text-[#1DD0A7]'} max-w-[650px] mx-auto leading-relaxed animate-fade-in-up`}
               style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
             >
               I'm a{' '}
@@ -100,7 +103,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
 
             {/* CTA Button */}
             <div 
-              className="pt-8 opacity-0 animate-fade-in-up"
+              className="pt-8 animate-fade-in-up"
               style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}
             >
               <a
@@ -120,7 +123,10 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
           </div>
         </div>
 
-        <div className="absolute right-8 flex items-center justify-center max-md:right-4 max-sm:hidden opacity-0 animate-fade-in-up" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
+        <div 
+          className="absolute right-8 flex items-center justify-center max-md:right-4 max-sm:hidden animate-fade-in-up" 
+          style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}
+        >
           <a 
             href="mailto:laocjay697@gmail.com"
             className="rounded-full bg-[#448BB2] border-none text-white cursor-pointer flex items-center justify-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(68,139,178,0.4)] hover:scale-110 animate-glow"
