@@ -1,29 +1,9 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { ProfileImage } from '../ProfileImage'
+
 export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-slide-left')
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-
-    const elements = sectionRef.current?.querySelectorAll('.fade-in-element')
-    elements?.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [])
-
   return (
     <section
-      ref={sectionRef}
       id="about"
       className="min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12 relative overflow-hidden"
     >
@@ -34,7 +14,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
       <div className="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-16 relative z-10">
         {/* Text Content */}
-        <div className="space-y-8 fade-in-element opacity-0">
+        <div className="space-y-8">
           <div className="relative">
             <div className="absolute -top-4 -left-8 w-20 h-20 border-l-4 border-t-4 border-highlight/30"></div>
             <h2
@@ -72,7 +52,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
             {/* Skills/Interests Tags */}
             <div className="flex flex-wrap gap-3 pt-4">
-              {['Machine Learning', 'Data Science', 'Web Development', 'IoT'].map((skill, index) => (
+              {['Machine Learning', 'Data Science', 'Web Development', 'IoT'].map((skill) => (
                 <span
                   key={skill}
                   className={`px-4 py-2 rounded-full text-sm font-['JetBrains_Mono'] border transition-all duration-300 hover:scale-105 hover:shadow-lg ${
@@ -80,11 +60,6 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                       ? 'bg-highlight/10 border-highlight/30 text-highlight hover:bg-highlight/20'
                       : 'bg-[#1DD0A7]/10 border-[#1DD0A7]/30 text-[#1DD0A7] hover:bg-[#1DD0A7]/20'
                   }`}
-                  style={{ 
-                    animationDelay: `${0.6 + index * 0.1}s`,
-                    opacity: 0,
-                    animation: 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards'
-                  }}
                 >
                   {skill}
                 </span>
@@ -104,7 +79,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
         </div>
 
         {/* Profile Image */}
-        <div className="flex justify-center items-center fade-in-element opacity-0" style={{ animationDelay: '0.3s' }}>
+        <div className="flex justify-center items-center">
           <div className="relative">
             {/* Decorative frame */}
             <div className="absolute -inset-4 rounded-2xl border border-highlight/20 -z-10"></div>
