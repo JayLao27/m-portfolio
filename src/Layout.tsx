@@ -113,7 +113,7 @@ function Layout() {
                 className={`text-sm transition-all duration-300 hover:-translate-y-1 ${
                   isDarkMode ? 'text-body-text hover:text-highlight' : 'text-white hover:text-[#1DD0A7]'
                 }`}
-              >
+              > 
                 Email
               </a>
             </div>
