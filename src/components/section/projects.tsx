@@ -40,7 +40,7 @@ const projectsData: Project[] = [
     title: 'Audio Library Platform',
     description: 'A feature-rich music platform where users can browse, purchase, and stream music from artists. Includes playlist management, personal library features, and seamless audio playback.',
     technologies: ['Java', 'JavaFX', 'CSS', 'MySQL'],
-    link: '#',
+    link: 'https://github.com/JayLao27/AudioLibrary',
     category: 'Desktop Application'
   }
 ]

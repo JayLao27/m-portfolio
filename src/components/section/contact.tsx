@@ -38,8 +38,8 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
     {
       icon: <EmailIcon className="w-6 h-6" />,
       title: 'Email',
-      value: 'laocjay697@gmail.com',
-      link: 'mailto:laocjay697@gmail.com'
+      value: 'cjaylao447@gmail.com',
+      link: 'mailto:cjaylao447@gmail.com' 
     },
     {
       icon: <LinkedInIcon className="w-6 h-6" />,
@@ -315,7 +315,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             Prefer a direct email?
           </p>
           <a
-            href="mailto:laocjay697@gmail.com"
+            href="mailto:cjaylao447@gmail.com"
             className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 ${
               isDarkMode
                 ? 'bg-highlight/10 text-highlight border-2 border-highlight/50 hover:bg-highlight hover:text-dark-bg'
@@ -323,7 +323,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             } hover:scale-105 hover:shadow-lg hover:shadow-highlight/30`}
           >
             <EmailIcon className="w-5 h-5" />
-            laocjay697@gmail.com
+            cjaylao447@gmail.com
           </a>
         </div>
       </div>
