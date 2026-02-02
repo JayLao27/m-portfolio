@@ -4,6 +4,7 @@ import { AboutMe } from './components/section/aboutMe'
 import { Head } from './components/section/header'
 import { Projects } from './components/section/projects'
 import { Contact } from './components/section/contact'
+import { AdvancedCursorSpotlight } from './components/AdvancedCursorSpotlight'
 
 function Layout() {
   const [isDarkMode, setIsDarkMode] = useState(true)
@@ -37,8 +38,15 @@ function Layout() {
           : 'bg-gradient-to-br from-[#285B9D] via-[#2a5f9e] to-[#285B9D] text-light-body-text'
       } transition-all duration-700 font-['DM_Sans'] leading-relaxed relative overflow-x-hidden`}
     >
+      {/* Cursor Spotlight Effect */}
+     <AdvancedCursorSpotlight 
+  isDarkMode={isDarkMode}
+  intensity={0.2}
+  size={500}
+/>
+
       {/* Animated grid background */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.02]">
+      <div className="fixed inset-0 pointer-events-none opacity-[0.02] z-[1]">
         <div 
           className="absolute inset-0"
           style={{
@@ -50,14 +58,14 @@ function Layout() {
 
       {/* Grain texture overlay */}
       <div 
-        className="fixed inset-0 pointer-events-none opacity-[0.015]"
+        className="fixed inset-0 pointer-events-none opacity-[0.015] z-[2]"
         style={{
           backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
         }}
       ></div>
 
       {/* Gradient orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-[3]">
         <div 
           className={`absolute top-0 right-1/4 w-[500px] h-[500px] rounded-full blur-[120px] ${
             isDarkMode ? 'bg-highlight/10' : 'bg-[#1DD0A7]/10'
