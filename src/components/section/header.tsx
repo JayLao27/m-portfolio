@@ -40,6 +40,13 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
             <span className="relative z-10">Projects</span>
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
           </a>
+          <a
+            href="#contact"
+            className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group`}
+          >
+            <span className="relative z-10">Contact</span>
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
+          </a>
         </div>
       </nav>
 
@@ -80,7 +87,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
               className={`text-[4rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-[#F0F4FF]'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] animate-fade-in-up`}
               style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
             >
-              Driven to{' '}
+              I just live to{' '}
               <span className="relative inline-block">
                 <span className="text-gradient">Learn</span>
                 <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
@@ -128,7 +135,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
           style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}
         >
           <a 
-            href="mailto:laocjay697@gmail.com"
+            href="#contact"
             className="rounded-full bg-[#448BB2] border-none text-white cursor-pointer flex items-center justify-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(68,139,178,0.4)] hover:scale-110 animate-glow"
             aria-label="Contact"
           >
