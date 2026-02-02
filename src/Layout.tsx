@@ -3,6 +3,7 @@ import './App.css'
 import { AboutMe } from './components/section/aboutMe'
 import { Head } from './components/section/header'
 import { Projects } from './components/section/projects'
+import { Contact } from './components/section/contact'
 
 function Layout() {
   const [isDarkMode, setIsDarkMode] = useState(true)
@@ -76,6 +77,7 @@ function Layout() {
         <Head isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         <AboutMe isDarkMode={isDarkMode} />
         <Projects isDarkMode={isDarkMode} />
+        <Contact isDarkMode={isDarkMode} />
 
         {/* Footer */}
         <footer className={`relative z-10 py-12 text-center border-t ${
@@ -113,10 +115,15 @@ function Layout() {
                 className={`text-sm transition-all duration-300 hover:-translate-y-1 ${
                   isDarkMode ? 'text-body-text hover:text-highlight' : 'text-white hover:text-[#1DD0A7]'
                 }`}
-              > 
+              >
                 Email
               </a>
             </div>
+            <p className={`text-xs font-['JetBrains_Mono'] mt-4 ${
+              isDarkMode ? 'text-body-text/40' : 'text-white/40'
+            }`}>
+              © 2026 Jay Lao. All rights reserved.
+            </p>
           </div>
         </footer>
       </div>
