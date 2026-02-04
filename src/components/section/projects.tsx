@@ -8,6 +8,7 @@ interface Project {
   technologies: string[]
   link?: string
   category: string
+  image: string
 }
 
 const projectsData: Project[] = [
@@ -17,7 +18,8 @@ const projectsData: Project[] = [
     description: 'Utilizing machine learning for real estate pricing prediction using Gradient Boosting, while comparing performance with other models to achieve optimal accuracy.',
     technologies: ['Python', 'Jupyter Notebook', 'Streamlit', 'Scikit-learn'],
     link: 'https://github.com/JayLao27/realestate-pricing-prediction',
-    category: 'Machine Learning'
+    category: 'Machine Learning',
+    image: 'src/assets/images/Real-estate.png'
   },
   {
     id: 2,
@@ -25,7 +27,8 @@ const projectsData: Project[] = [
     description: 'IoT-based motion detection system that sends real-time text message alerts. Built with embedded systems programming for efficient sensor monitoring.',
     technologies: ['C++', 'IoT', 'GSM Module'],  
     link: 'https://github.com/JayLao27/PirMotion-GSMSim800L',
-    category: 'IoT & Embedded'
+    category: 'IoT & Embedded',
+    image: 'Motion'
   },
   {
     id: 3,
@@ -33,7 +36,8 @@ const projectsData: Project[] = [
     description: 'A comprehensive system designed for resource management companies to efficiently track stock and transactions. Features detailed reporting, sustainable inventory management, and organized record-keeping.',
     technologies: ['Laravel', 'PHP', 'MySQL', 'Bootstrap'],
     link: 'https://github.com/JayLao27/wood-inventory-management',
-    category: 'Web Application'
+    category: 'Web Application',
+    image: 'Inventory'
   },
   {
     id: 4,
@@ -41,7 +45,8 @@ const projectsData: Project[] = [
     description: 'A feature-rich music platform where users can browse, purchase, and stream music from artists. Includes playlist management, personal library features, and seamless audio playback.',
     technologies: ['Java', 'JavaFX', 'CSS', 'MySQL'],
     link: 'https://github.com/JayLao27/AudioLibrary',
-    category: 'Desktop Application'
+    category: 'Desktop Application',
+    image: 'Audio'
   }
 ]
 
@@ -168,11 +173,11 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                 isDarkMode 
                   ? 'bg-gradient-to-br from-highlight/10 to-transparent' 
                   : 'bg-gradient-to-br from-[#1DD0A7]/10 to-transparent'
-              }`}>
-                {project.id === 1 && <MLIcon isDarkMode={isDarkMode} />}
-                {project.id === 2 && <MotionIcon isDarkMode={isDarkMode} />}
-                {project.id === 3 && <InventoryIcon isDarkMode={isDarkMode} />}
-                {project.id === 4 && <AudioIcon isDarkMode={isDarkMode} />}
+              }`} id={`project-image-${project.id}`}>
+                {project.image === 'src/assets/images/Real-estate.png' && <MLIcon isDarkMode={isDarkMode} />}
+                {project.image === 'Motion' && <MotionIcon isDarkMode={isDarkMode} />}
+                {project.image === 'Inventory' && <InventoryIcon isDarkMode={isDarkMode} />}
+                {project.image === 'Audio' && <AudioIcon isDarkMode={isDarkMode} />}
                 
                 {/* Shine effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
