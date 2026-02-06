@@ -345,7 +345,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
           </p>
           <a
             href="mailto:cjaylao447@gmail.com"
-            className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 ${
+            className={`contact-email-link inline-flex items-center gap-3 px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 ${
               isDarkMode
                 ? 'bg-highlight/10 text-highlight border-2 border-highlight/50 hover:bg-highlight hover:text-dark-bg'
                 : 'bg-[#1DD0A7]/10 text-[#1DD0A7] border-2 border-[#1DD0A7]/50 hover:bg-[#1DD0A7] hover:text-white'
