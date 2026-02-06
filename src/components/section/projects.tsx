@@ -168,7 +168,7 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       {/* Projects Grid/Scroll Container */}
       <div 
         ref={scrollContainerRef}
-        className={`overflow-x-auto pb-8 scrollbar-hide relative z-10 scroll-animate scroll-animate-delay-1 ${isVisible ? 'show' : ''}`}
+        className={`project-scroll overflow-x-auto pb-8 scrollbar-hide relative z-10 scroll-animate scroll-animate-delay-1 ${isVisible ? 'show' : ''}`}
         style={{ 
           scrollbarWidth: 'none',
           msOverflowStyle: 'none'
@@ -178,7 +178,7 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
-              className={`perspective-card flex-shrink-0 w-[420px] p-8 rounded-2xl transition-all duration-500 group relative overflow-hidden ${
+              className={`project-card perspective-card flex-shrink-0 w-[420px] p-8 rounded-2xl transition-all duration-500 group relative overflow-hidden ${
                 isDarkMode
                   ? 'glass-effect hover:bg-white/5'
                   : 'bg-gradient-to-br from-white/10 to-transparent border border-white/20 hover:bg-white/15'
@@ -206,7 +206,7 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
               </div>
 
               {/* Project Icon */}
-              <div className={`relative w-full h-[220px] rounded-xl mb-6 overflow-hidden flex items-center justify-center p-6 transition-transform duration-500 group-hover:scale-105 ${
+              <div className={`project-image relative w-full h-[220px] rounded-xl mb-6 overflow-hidden flex items-center justify-center p-6 transition-transform duration-500 group-hover:scale-105 ${
                 isDarkMode 
                   ? 'bg-gradient-to-br from-highlight/10 to-transparent' 
                   : 'bg-gradient-to-br from-[#1DD0A7]/10 to-transparent'
