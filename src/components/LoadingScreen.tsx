@@ -11,13 +11,13 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
   duration = 4000 
 }) => {
   const [isComplete, setIsComplete] = useState(false);
-  const [zoomOut, setZoomOut] = useState(false);
+  const [glowOut, setGlowOut] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsComplete(true);
-      // Immediately trigger zoom out when complete
-      setZoomOut(true);
+      // Trigger glow outro when complete
+      setGlowOut(true);
       if (onLoadingComplete) {
         setTimeout(() => onLoadingComplete(), 900);
       }
@@ -30,7 +30,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
 
   return (
     <div className={`loading-screen ${isComplete ? 'fade-out' : ''}`}>
-      <div className={`logo-container ${zoomOut ? 'zoom-out' : ''}`}>
+      <div className={`logo-container ${glowOut ? 'glow-out' : ''}`}>
         {/* Hexagon */}
         <svg className="hexagon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           <path className="hex-path" d="M 100,10 L 173,50 L 173,150 L 100,190 L 27,150 L 27,50 Z"/>
