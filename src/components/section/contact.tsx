@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { EmailIcon, InstagramIcon, LinkedInIcon } from '../Icons'
 
 export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
+  const sectionRef = useRef<HTMLElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,6 +13,32 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true)
+          }
+        })
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of the section is visible
+        rootMargin: '0px 0px 0px 0px'
+      }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current)
+      }
+    }
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -67,6 +95,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
   return (
     <section
+      ref={sectionRef}
       id="contact"
       className="min-h-screen pt-32 px-[10%] pb-20 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-16 relative overflow-hidden"
     >
@@ -77,7 +106,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       </div>
 
       {/* Header */}
-      <div className="mb-16 text-center relative z-10">
+      <div className={`mb-16 text-center relative z-10 scroll-animate ${isVisible ? 'show' : ''}`}>
         <div className="inline-block">
           <div className="relative">
             <h2
@@ -100,7 +129,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       </div>
 
       {/* Contact Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
+      <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10 scroll-animate scroll-animate-delay-1 ${isVisible ? 'show' : ''}`}>
         
         {/* Left Side - Contact Information */}
         <div className="space-y-8">
@@ -309,7 +338,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       </div>
 
       {/* Bottom CTA */}
-      <div className="mt-20 text-center relative z-10">
+      <div className={`mt-20 text-center relative z-10 scroll-animate scroll-animate-delay-2 ${isVisible ? 'show' : ''}`}>
         <div className={`inline-block p-8 rounded-2xl glass-effect border ${isDarkMode ? 'border-white/10' : 'border-white/20'}`}>
           <p className={`text-lg font-['DM_Sans'] mb-4 ${isDarkMode ? 'text-body-text' : 'text-white'}`}>
             Prefer a direct email?

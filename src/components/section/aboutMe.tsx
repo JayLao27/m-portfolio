@@ -1,9 +1,42 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ProfileImage } from '../ProfileImage'
 
 export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
+  const sectionRef = useRef<HTMLElement>(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true)
+          }
+        })
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of the section is visible
+        rootMargin: '0px 0px 0px 0px'
+      }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current)
+      }
+    }
+  }, [])
+
   return (
-    <section id="about" className="min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12 relative overflow-hidden">
+    <section 
+      ref={sectionRef}
+      id="about" 
+      className="min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12 relative overflow-hidden"
+    >
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className={`absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#1DD0A7]/5'} animate-float`}></div>
@@ -11,7 +44,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
       <div className="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-16 relative z-10">
         {/* Text Content */}
-        <div className="space-y-8">
+        <div className={`space-y-8 scroll-animate ${isVisible ? 'show' : ''}`}>
           <div className="relative">
             <div className="absolute -top-4 -left-8 w-20 h-20 border-l-4 border-t-4 border-highlight/30"></div>
             <h2
@@ -29,7 +62,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             </div>
           </div>
 
-          <div className={`text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text' : 'text-[#FFFFFF]'} space-y-6 mt-12`}>
+          <div className={`text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text' : 'text-[#FFFFFF]'} space-y-6 mt-12 scroll-animate scroll-animate-delay-1 ${isVisible ? 'show' : ''}`}>
             <p className="relative pl-6 border-l-2 border-highlight/30 hover:border-highlight transition-colors duration-300">
               Hi! I am{' '}
               <span className="text-highlight font-semibold font-['Syne'] text-xl">Jay Lao</span>. 
@@ -48,7 +81,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             </p>
 
             {/* Skills/Interests Tags */}
-            <div className="flex flex-wrap gap-3 pt-4">
+            <div className={`flex flex-wrap gap-3 pt-4 scroll-animate scroll-animate-delay-2 ${isVisible ? 'show' : ''}`}>
               {['Machine Learning', 'Data Science', 'Web Development', 'IoT'].map((skill) => (
                 <span
                   key={skill}
@@ -65,7 +98,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
           </div>
 
           {/* Decorative quote */}
-          <div className={`mt-8 p-6 rounded-2xl glass-effect border-l-4 border-highlight relative ${isDarkMode ? 'bg-white/5' : 'bg-black/10'}`}>
+          <div className={`mt-8 p-6 rounded-2xl glass-effect border-l-4 border-highlight relative scroll-animate scroll-animate-delay-3 ${isVisible ? 'show' : ''} ${isDarkMode ? 'bg-white/5' : 'bg-black/10'}`}>
             <svg className="absolute top-4 left-4 w-8 h-8 text-highlight/30" fill="currentColor" viewBox="0 0 24 24">
               <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
             </svg>
@@ -76,7 +109,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
         </div>
 
         {/* Profile Image */}
-        <div className="flex justify-center items-center">
+        <div className={`flex justify-center items-center scroll-animate scroll-animate-delay-2 ${isVisible ? 'show' : ''}`}>
           <div className="relative">
             {/* Decorative frame */}
             <div className="absolute -inset-4 rounded-2xl border border-highlight/20 -z-10"></div>

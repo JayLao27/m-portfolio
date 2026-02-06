@@ -8,7 +8,6 @@ type HeadProps = {
 }
 
 export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
-  const [scrolled, setScrolled] = useState(false)
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [visible, setVisible] = useState(true)
   const [showHeader, setShowHeader] = useState(false)
@@ -25,7 +24,6 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
       setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10)
       
       setPrevScrollPos(currentScrollPos)
-      setScrolled(currentScrollPos > 50)
     }
     
     window.addEventListener('scroll', handleScroll)
