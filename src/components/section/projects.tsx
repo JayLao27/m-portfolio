@@ -18,7 +18,7 @@ const projectsData: Project[] = [
     technologies: ['Python', 'Jupyter Notebook', 'Streamlit', 'Scikit-learn', 'Gradient Boosting'],
     link: 'https://github.com/JayLao27/realestate-pricing-prediction',
     category: 'Machine Learning',
-    image: 'src/assets/images/Real-estate.png'
+    image: 'src/assets/images/Project/Real-estate.png'
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const projectsData: Project[] = [
     technologies: ['C++', 'IoT', 'GSM Module', 'PIR'],  
     link: 'https://github.com/JayLao27/PirMotion-GSMSim800L',
     category: 'IoT & Embedded',
-    image: 'src/assets/images/arduino.jpg'
+    image: 'src/assets/images/Project/arduino.jpg'
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ const projectsData: Project[] = [
     technologies: ['Laravel', 'PHP', 'MySQL', 'Bootstrap', 'Vite'],
     link: 'https://github.com/JayLao27/wood-inventory-management',
     category: 'Web Application',
-    image: 'src/assets/images/Inventory.png'
+    image: 'src/assets/images/Project/Inventory.png'
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const projectsData: Project[] = [
     technologies: ['Java', 'JavaFX', 'CSS', 'MySQL'],
     link: 'https://github.com/JayLao27/AudioLibrary',
     category: 'Desktop Application',
-    image: 'src/assets/images/AudioLib.png'
+    image: 'src/assets/images/Project/AudioLib.png'
   },
   {
     id: 5,
