@@ -46,6 +46,15 @@ const projectsData: Project[] = [
     link: 'https://github.com/JayLao27/AudioLibrary',
     category: 'Desktop Application',
     image: 'src/assets/images/AudioLib.png'
+  },
+  {
+    id: 5,
+    title: 'GameForge E-commerce',
+    description: 'A Gaming Accessories E-commerce Platform: An online platform for browsing and purchasing gaming accessories. Built primarily with HTML, CSS, and JavaScript, it currently uses a local module for product management.',
+    technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL', 'Tailwindcss'],
+    link: 'https://github.com/JayLao27/AudioLibrary',
+    category: 'Web Application',
+    image: 'src/assets/images/Project/Gameforge.png'
   }
 ]
 
