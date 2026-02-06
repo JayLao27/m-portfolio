@@ -2,11 +2,13 @@ import React, { useState, useRef } from 'react'
 
 interface ProfileImageProps {
   isDarkMode: boolean
+  imageSrc?: string
   imageAlt?: string
 }
 
 export const ProfileImage: React.FC<ProfileImageProps> = ({
   isDarkMode,
+  imageSrc = 'src/assets/images/Meseum1.png',
   imageAlt = 'Profile'
 }) => {
   const [isHovering, setIsHovering] = useState(false)
