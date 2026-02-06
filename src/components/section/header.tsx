@@ -73,7 +73,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
           </button>
 
           {/* Navigation - Right Side */}
-          <nav className="flex items-center gap-8 max-md:gap-4">
+          <nav className="header-nav flex items-center gap-8 max-md:gap-4">
             <a
               href="#about"
               className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group ${showHeader ? 'animate-slide-down' : 'opacity-0'}`}
@@ -99,7 +99,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
         </div>
       </header>
 
-      <section className="min-h-screen flex items-center justify-center px-[10%] relative max-w-[1600px] mx-auto max-xl:px-[5%] max-md:px-[5%] overflow-hidden">
+      <section className="hero-section min-h-screen flex items-center justify-center px-[10%] relative max-w-[1600px] mx-auto max-xl:px-[5%] max-md:px-[5%] overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-highlight/5 rounded-full blur-3xl animate-float"></div>
@@ -138,15 +138,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
 
             <h2 
               className={`text-[2rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-[#F0F4FF]'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] transition-all duration-700 ease-out ${
-                showText3 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
-              }`}
-            >
-              Sleep, Eat,  {' '}
-              <span className="relative inline-block">
-                <span className="text-gradient">Create</span>
-                <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
-                  <path d="M0,4 Q25,0 50,4 T100,4" stroke="#5EEEFF" strokeWidth="2" fill="none" />
-                </svg>
+                showText3 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0' }`}>Sleep, Eat, Create  <span className="relative inline-block">
               </span>
             </h2>
 
@@ -158,7 +150,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
             >
               <a
                 href="#projects"
-                className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 ${
+                className={`hero-cta inline-flex items-center gap-3 px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 ${
                   isDarkMode
                     ? 'bg-highlight/10 text-highlight border-2 border-highlight/50 hover:bg-highlight hover:text-dark-bg'
                     : 'bg-[#1DD0A7]/10 text-[#1DD0A7] border-2 border-[#1DD0A7]/50 hover:bg-[#1DD0A7] hover:text-white'
