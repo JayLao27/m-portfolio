@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { MLIcon, MotionIcon, InventoryIcon, AudioIcon } from '../ProjectIcons'
 
 interface Project {
   id: number
@@ -16,7 +15,7 @@ const projectsData: Project[] = [
     id: 1,
     title: 'Real Estate Pricing Prediction',
     description: 'Utilizing machine learning for real estate pricing prediction using Gradient Boosting, while comparing performance with other models to achieve optimal accuracy.',
-    technologies: ['Python', 'Jupyter Notebook', 'Streamlit', 'Scikit-learn'],
+    technologies: ['Python', 'Jupyter Notebook', 'Streamlit', 'Scikit-learn', 'Gradient Boosting'],
     link: 'https://github.com/JayLao27/realestate-pricing-prediction',
     category: 'Machine Learning',
     image: 'src/assets/images/Real-estate.png'
@@ -25,19 +24,19 @@ const projectsData: Project[] = [
     id: 2,
     title: 'Text Messaging Motion Detection',
     description: 'IoT-based motion detection system that sends real-time text message alerts. Built with embedded systems programming for efficient sensor monitoring.',
-    technologies: ['C++', 'IoT', 'GSM Module'],  
+    technologies: ['C++', 'IoT', 'GSM Module', 'PIR'],  
     link: 'https://github.com/JayLao27/PirMotion-GSMSim800L',
     category: 'IoT & Embedded',
-    image: 'Motion'
+    image: 'src/assets/images/arduino.jpg'
   },
   {
     id: 3,
     title: 'Wood Inventory Management System',
     description: 'A comprehensive system designed for resource management companies to efficiently track stock and transactions. Features detailed reporting, sustainable inventory management, and organized record-keeping.',
-    technologies: ['Laravel', 'PHP', 'MySQL', 'Bootstrap'],
+    technologies: ['Laravel', 'PHP', 'MySQL', 'Bootstrap', 'Vite'],
     link: 'https://github.com/JayLao27/wood-inventory-management',
     category: 'Web Application',
-    image: 'Inventory'
+    image: 'src/assets/images/Inventory.png'
   },
   {
     id: 4,
@@ -46,7 +45,7 @@ const projectsData: Project[] = [
     technologies: ['Java', 'JavaFX', 'CSS', 'MySQL'],
     link: 'https://github.com/JayLao27/AudioLibrary',
     category: 'Desktop Application',
-    image: 'Audio'
+    image: 'src/assets/images/AudioLib.png'
   }
 ]
 
@@ -174,10 +173,11 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                   ? 'bg-gradient-to-br from-highlight/10 to-transparent' 
                   : 'bg-gradient-to-br from-[#1DD0A7]/10 to-transparent'
               }`} id={`project-image-${project.id}`}>
-                {project.image === 'src/assets/images/Real-estate.png' && <MLIcon isDarkMode={isDarkMode} />}
-                {project.image === 'Motion' && <MotionIcon isDarkMode={isDarkMode} />}
-                {project.image === 'Inventory' && <InventoryIcon isDarkMode={isDarkMode} />}
-                {project.image === 'Audio' && <AudioIcon isDarkMode={isDarkMode} />}
+                <img 
+                  src={project.image.startsWith('src/') ? project.image : `src/assets/images/${project.image}.png`}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
                 
                 {/* Shine effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
