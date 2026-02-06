@@ -18,7 +18,7 @@ const projectsData: Project[] = [
     technologies: ['Python', 'Jupyter Notebook', 'Streamlit', 'Scikit-learn', 'Gradient Boosting'],
     link: 'https://github.com/JayLao27/realestate-pricing-prediction',
     category: 'Machine Learning',
-    image: 'src/assets/images/Project/Real-estate.png'
+    image: '/images/Real-estate.png'
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const projectsData: Project[] = [
     technologies: ['C++', 'IoT', 'GSM Module', 'PIR'],  
     link: 'https://github.com/JayLao27/PirMotion-GSMSim800L',
     category: 'IoT & Embedded',
-    image: 'src/assets/images/Project/arduino.jpg'
+    image: '/images/arduino.jpg'
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ const projectsData: Project[] = [
     technologies: ['Laravel', 'PHP', 'MySQL', 'Bootstrap', 'Vite'],
     link: 'https://github.com/JayLao27/wood-inventory-management',
     category: 'Web Application',
-    image: 'src/assets/images/Project/Inventory.png'
+    image: '/images/Inventory.png'
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const projectsData: Project[] = [
     technologies: ['Java', 'JavaFX', 'CSS', 'MySQL'],
     link: 'https://github.com/JayLao27/AudioLibrary',
     category: 'Desktop Application',
-    image: 'src/assets/images/Project/AudioLib.png'
+    image: '/images/AudioLib.png'
   },
   {
     id: 5,
@@ -54,7 +54,7 @@ const projectsData: Project[] = [
     technologies: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL', 'Tailwindcss'],
     link: 'https://github.com/JayLao27/AudioLibrary',
     category: 'Web Application',
-    image: 'src/assets/images/Project/Gameforge.png'
+    image: '/images/Gameforge.png'
   }
 ]
 
@@ -183,8 +183,7 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                   : 'bg-gradient-to-br from-[#1DD0A7]/10 to-transparent'
               }`} id={`project-image-${project.id}`}>
                 <img 
-                  src={project.image.startsWith('src/') ? project.image : `src/assets/images/${project.image}.png`}
-                  alt={project.title}
+                src={project.image}
                   className="w-full h-full object-cover"
                 />
                 
