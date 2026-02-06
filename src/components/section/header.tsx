@@ -138,7 +138,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
 
             <h2 
               className={`text-[2rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-[#F0F4FF]'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] transition-all duration-700 ease-out ${
-                showText3 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0' }`}>Sleep, Eat, Create  <span className="relative inline-block">
+                showText3 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0' }`}>Sleep, Eat, Create.  <span className="relative inline-block">
               </span>
             </h2>
 
