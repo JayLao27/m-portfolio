@@ -33,13 +33,13 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             <p className="relative pl-6 border-l-2 border-highlight/30 hover:border-highlight transition-colors duration-300">
               Hi! I am{' '}
               <span className="text-highlight font-semibold font-['Syne'] text-xl">Jay Lao</span>. 
-              I started my journey into compusters from an early age. I have been exposed to computers 
+              I started my journey into computers from an early age. I have been exposed to computers 
               from childhood, beginning to explore and learn about them when I was just{' '}
               <span className="text-highlight font-medium">5 years old</span>.
             </p>
             
             <p className="relative pl-6 border-l-2 border-highlight/30 hover:border-highlight transition-colors duration-300">
-              Now, I have the opportunity to work freely on my curiosity, living with my values 
+              Now, I am working freely on making things based on my values 
               and principles. I believe in{' '}
               <span className={`font-medium ${isDarkMode ? 'text-[#CCD6F6]' : 'text-[#E1E8FF]'}`}>
                 continuous learning
