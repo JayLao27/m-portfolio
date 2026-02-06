@@ -1,4 +1,4 @@
-import { EmailIcon, InstagramIcon, LinkedInIcon } from './Icons';
+import { EmailIcon, InstagramIcon, LinkedInIcon, GitHubIcon } from './Icons';
   
 export function LeftIcons({ isDarkMode }: { isDarkMode: boolean }) {
   return (
@@ -28,6 +28,15 @@ export function LeftIcons({ isDarkMode }: { isDarkMode: boolean }) {
             className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-[#CCD6F6] hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
           >
             <LinkedInIcon />
+          </a>
+          <a
+            href="https://github.com/JayLao27"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className={`${isDarkMode ? 'text-logo-color hover:text-highlight' : 'text-[#CCD6F6] hover:text-highlight'} transition-all duration-300 flex items-center justify-center hover:-translate-y-0.5`}
+          >
+            <GitHubIcon />
           </a>
       <div className="absolute bottom-[-5rem] left-1/2 -translate-x-1/2 w-px h-20 bg-[rgba(136,146,176,0.2)] max-md:hidden"></div>
     </div>
