@@ -128,7 +128,7 @@ function Layout() {
       {/* Scroll to top button */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={`fixed bottom-8 right-8 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-50 ${
+        className={`scroll-top-button fixed bottom-8 right-8 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-50 ${
           isDarkMode
             ? 'bg-highlight/10 border-2 border-highlight/30 text-highlight hover:bg-highlight/20'
             : 'bg-[#1DD0A7]/10 border-2 border-[#1DD0A7]/30 text-[#1DD0A7] hover:bg-[#1DD0A7]/20'
