@@ -79,6 +79,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
               </span>{' '}
               and creating meaningful solutions.
             </p>
+              <p>Here's what I'm working lately:</p>
 
             {/* Skills/Interests Tags */}
             <div className={`flex flex-wrap gap-3 pt-4 scroll-animate scroll-animate-delay-2 ${isVisible ? 'show' : ''}`}>
