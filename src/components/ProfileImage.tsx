@@ -8,7 +8,6 @@ interface ProfileImageProps {
 
 export const ProfileImage: React.FC<ProfileImageProps> = ({
   isDarkMode,
-  imageSrc = 'src/assets/images/Meseum1.png',
   imageAlt = 'Profile'
 }) => {
   const [isHovering, setIsHovering] = useState(false)
