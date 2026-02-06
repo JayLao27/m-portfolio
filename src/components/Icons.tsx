@@ -60,7 +60,7 @@ export const ContactIcon = ({ className = "w-6 h-6" }: { className?: string }) =
   </svg>
 )
 
-export const MoonIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+export const MoonIcon = ({ }: { className?: string }) => (
  
  <svg width="100" height="45" viewBox="0 0 116 55" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect y="6" width="116" height="44" rx="22" fill="white"/>
@@ -70,7 +70,7 @@ export const MoonIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   
 )
 
-export const SunIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+export const SunIcon = ({ }: { className?: string }) => (
 
   <svg width="100" height="45" viewBox="0 0 116 55" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect y="5" width="116" height="44" rx="22" fill="white"/>
@@ -98,7 +98,7 @@ export const AboutBackground = ({ className = "w-6 h-6" }: { className?: string 
 
 )
 
-export const  MessageIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+export const  MessageIcon = ({ }: { className?: string }) => (
 
 <svg width="62" height="52" viewBox="0 0 62 52" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M0 19C0 8.50659 8.50659 0 19 0H43C53.4934 0 62 8.50659 62 19V33C62 43.4934 53.4934 52 43 52H19C8.50659 52 0 43.4934 0 33V19Z" fill="#448BB2"/>
