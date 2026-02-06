@@ -84,10 +84,10 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
             </h1>
 
             <h2 
-              className={`text-[4rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-[#F0F4FF]'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] animate-fade-in-up`}
+              className={`text-[2rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-[#F0F4FF]'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] animate-fade-in-up`}
               style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
             >
-              Sleep, Eat, Learn,  {' '}
+              Sleep, Eat,  {' '}
               <span className="relative inline-block">
                 <span className="text-gradient">Create</span>
                 <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
@@ -96,25 +96,13 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
               </span>
             </h2>
 
-            <p 
-              className={`text-xl font-['DM_Sans'] ${isDarkMode ? 'text-body-text' : 'text-[#1DD0A7]'} max-w-[650px] mx-auto leading-relaxed animate-fade-in-up`}
-              style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}
-            >
-              I'm a{' '}
-              <span className="text-highlight font-medium relative inline-block group">
-                curious
-                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-highlight scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-              </span>{' '}
-              programmer who invests time learning a lot and creating.
-            </p>
-
             {/* CTA Button */}
             <div 
               className="pt-8 animate-fade-in-up"
               style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}
             >
               <a
-                href="#about"
+                href="#projects"
                 className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 ${
                   isDarkMode
                     ? 'bg-highlight/10 text-highlight border-2 border-highlight/50 hover:bg-highlight hover:text-dark-bg'
