@@ -14,7 +14,7 @@ export const AdvancedCursorSpotlight: React.FC<AdvancedCursorSpotlightProps> = (
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mousePosition = useRef({ x: 0, y: 0 })
   const currentPosition = useRef({ x: 0, y: 0 })
-  const animationFrameId = useRef<number>()
+  const animationFrameId = useRef<number | null>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current

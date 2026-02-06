@@ -61,8 +61,14 @@ export const ContactIcon = ({ className = "w-6 h-6" }: { className?: string }) =
 )
 
 export const MoonIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
- 
- <svg width="100" height="45" viewBox="0 0 116 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="100"
+    height="45"
+    viewBox="0 0 116 55"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
   <rect y="6" width="116" height="44" rx="22" fill="white"/>
   <rect x="8" width="45" height="55" rx="22.5" fill="#CCD6F6"/>
   <path opacity="0.65" d="M27 9C33.0751 9 38.5 14.9249 38.5 21L38.5225 21.2699C38.8403 25.0833 38.8403 28.9167 38.5225 32.7301L38.5 33C38.5 39.5 32.6711 45.5 27 45.5C20.9249 45.5 15 38.5 15 33V27V20.5C15 14.4249 20.9249 9 27 9Z" fill="#0A2B2F"/>
@@ -71,8 +77,14 @@ export const MoonIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
 )
 
 export const SunIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
-
-  <svg width="100" height="45" viewBox="0 0 116 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="100"
+    height="45"
+    viewBox="0 0 116 55"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
   <rect y="5" width="116" height="44" rx="22" fill="white"/>
   <rect x="62" width="45" height="55" rx="22.5" fill="#CCD6F6"/>
   <path opacity="0.65" d="M85 9C91.0751 9 96.5 14.9249 96.5 21L96.5225 21.2699C96.8403 25.0833 96.8403 28.9167 96.5225 32.7301L96.5 33C96.5 39.5 90.6711 45.5 85 45.5C78.9249 45.5 73 38.5 73 33V27V20.5C73 14.4249 78.9249 9 85 9Z" fill="#285B9D"/>
@@ -98,13 +110,17 @@ export const AboutBackground = ({ className = "w-6 h-6" }: { className?: string 
 
 )
 
-export const  MessageIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
-
-<svg width="62" height="52" viewBox="0 0 62 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const MessageIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg
+    width="62"
+    height="52"
+    viewBox="0 0 62 52"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
 <path d="M0 19C0 8.50659 8.50659 0 19 0H43C53.4934 0 62 8.50659 62 19V33C62 43.4934 53.4934 52 43 52H19C8.50659 52 0 43.4934 0 33V19Z" fill="#448BB2"/>
 <path d="M20.2734 26.9954L25.4036 28.7055C25.8588 28.8553 26.2848 29.0695 26.6689 29.3386C26.9158 29.5115 27.1454 29.707 27.3544 29.9229C27.8321 30.4161 28.2022 31.0151 28.4251 31.6903L30.1562 36.7583C31.6354 41.1422 37.8672 41.049 39.2521 36.665L45.0747 18.1652C45.6393 16.3367 45.0705 14.5699 43.9018 13.4C42.7256 12.2225 40.9419 11.6496 39.0946 12.2267L20.3364 17.9787C15.9301 19.3467 15.8671 25.5341 20.2734 26.9954Z" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-
+  </svg>
 )
 
