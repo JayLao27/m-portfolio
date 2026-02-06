@@ -87,9 +87,9 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
               className={`text-[4rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-[#F0F4FF]'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] animate-fade-in-up`}
               style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
             >
-              Eat, Sleep, Learn,  {' '}
+              Sleep, Eat, Learn,  {' '}
               <span className="relative inline-block">
-                <span className="text-gradient">Code</span>
+                <span className="text-gradient">Create</span>
                 <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
                   <path d="M0,4 Q25,0 50,4 T100,4" stroke="#5EEEFF" strokeWidth="2" fill="none" />
                 </svg>
