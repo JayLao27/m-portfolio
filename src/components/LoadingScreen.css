@@ -28,9 +28,8 @@
   opacity: 1;
 }
 
-.logo-container.zoom-out {
-  transform: scale(0);
-  opacity: 0;
+.logo-container.glow-out {
+  animation: glowOut 900ms ease-out forwards;
 }
 
 /* Hexagon SVG Animation */
@@ -93,6 +92,21 @@
 @keyframes fadeInLogo {
   to {
     opacity: 1;
+  }
+}
+
+@keyframes glowOut {
+  0% {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(94, 238, 255, 0.35));
+  }
+  60% {
+    opacity: 1;
+    filter: drop-shadow(0 0 24px rgba(94, 238, 255, 0.75));
+  }
+  100% {
+    opacity: 0;
+    filter: drop-shadow(0 0 40px rgba(94, 238, 255, 0.9));
   }
 }
 
