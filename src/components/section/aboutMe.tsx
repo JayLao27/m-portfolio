@@ -35,7 +35,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
     <section 
       ref={sectionRef}
       id="about" 
-      className="min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12 relative overflow-hidden"
+      className="section-about min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12 relative overflow-hidden"
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
