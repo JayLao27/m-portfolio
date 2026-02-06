@@ -76,21 +76,21 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
           <nav className="flex items-center gap-8 max-md:gap-4">
             <a
               href="#about"
-              className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group`}
+              className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group ${showHeader ? 'animate-slide-down' : 'opacity-0'}`}
             >
               <span className="relative z-10">About</span>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#projects"
-              className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group`}
+              className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group ${showHeader ? 'animate-slide-down-delay-1' : 'opacity-0'}`}
             >
               <span className="relative z-10">Projects</span>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
               href="#contact"
-              className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group`}
+              className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group ${showHeader ? 'animate-slide-down-delay-2' : 'opacity-0'}`}
             >
               <span className="relative z-10">Contact</span>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
@@ -110,13 +110,15 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
 
         <div className="flex-1 max-w-[800px] text-center relative z-10">
           <div className="space-y-6">
-            <p 
-              className={`text-hi-text text-base font-['JetBrains_Mono'] font-normal tracking-widest uppercase transition-all duration-700 ease-out ${
-                showText1 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
-              }`}
-            >
-              Hi, my name is
-            </p>
+            <div className="inline-block">
+              <p 
+                className={`text-hi-text text-base font-['JetBrains_Mono'] font-normal tracking-widest uppercase ${
+                  showText1 ? 'typing-text' : 'opacity-0'
+                }`}
+              >
+                Hi, my name is
+              </p>
+            </div>
             
             <h1 
               className={`text-[5rem] font-['Syne'] font-bold ${isDarkMode ? 'text-name-text' : 'text-[#F0F4FF]'} mb-2 leading-tight max-xl:text-[4rem] max-md:text-[3rem] max-sm:text-[2.5rem] transition-all duration-700 ease-out ${
