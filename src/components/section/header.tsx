@@ -38,7 +38,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
     const timer3 = setTimeout(() => setShowText2(true), 900)
     const timer4 = setTimeout(() => setShowText3(true), 1200)
     const timer5 = setTimeout(() => setShowText4(true), 1500)
-    const timer6 = setTimeout(() => setShowLeftIcons(true), 1800)
+    const timer6 = setTimeout(() => setShowLeftIcons(true), 2300)
 
     return () => {
       clearTimeout(timer1)
