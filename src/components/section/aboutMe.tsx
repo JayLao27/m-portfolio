@@ -73,7 +73,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             
             <p className="relative pl-6 border-l-2 border-highlight/30 hover:border-highlight transition-colors duration-300">
               Now, I am working freely on making things based on my values 
-              and principles. I believe in{' '}
+              and principles. I value{' '}
               <span className={`font-medium ${isDarkMode ? 'text-[#CCD6F6]' : 'text-[#E1E8FF]'}`}>
                 continuous learning
               </span>{' '}
