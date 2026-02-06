@@ -92,7 +92,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
           transform: isHovering ? 'scale(1.08) rotate(2deg)' : 'scale(1)',
           filter: isHovering ? 'brightness(1.1) contrast(1.05)' : 'brightness(1) contrast(1)'
         }}
-        src={isHovering ? 'src/assets/images/Museum(2).jpg' : 'src/assets/images/Meseum1.png'}
+        src={isHovering ? '/images/Museum(2).jpg' : '/images/Meseum1.png'}
         alt={imageAlt}
       />
 
