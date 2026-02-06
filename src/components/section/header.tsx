@@ -15,6 +15,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
   const [showText2, setShowText2] = useState(false)
   const [showText3, setShowText3] = useState(false)
   const [showText4, setShowText4] = useState(false)
+  const [showLeftIcons, setShowLeftIcons] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,6 +38,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
     const timer3 = setTimeout(() => setShowText2(true), 900)
     const timer4 = setTimeout(() => setShowText3(true), 1200)
     const timer5 = setTimeout(() => setShowText4(true), 1500)
+    const timer6 = setTimeout(() => setShowLeftIcons(true), 1800)
 
     return () => {
       clearTimeout(timer1)
@@ -44,6 +46,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
       clearTimeout(timer3)
       clearTimeout(timer4)
       clearTimeout(timer5)
+      clearTimeout(timer6)
     }
   }, [])
 
@@ -106,7 +109,7 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-highlight/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
         </div>
 
-        <LeftIcons isDarkMode={isDarkMode} />
+        <LeftIcons isDarkMode={isDarkMode} showIcons={showLeftIcons} />
 
         <div className="flex-1 max-w-[800px] text-center relative z-10">
           <div className="space-y-6">
