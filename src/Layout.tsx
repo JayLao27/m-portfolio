@@ -5,29 +5,18 @@ import { Head } from './components/section/header'
 import { Projects } from './components/section/projects'
 import { Contact } from './components/section/contact'
 import { AdvancedCursorSpotlight } from './components/AdvancedCursorSpotlight'
+import LoadingScreen from './components/LoadingScreen'
 
 function Layout() {
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    // Simulate initial loading
-    setTimeout(() => setIsLoading(false), 1000)
-  }, [])
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode)
   }
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-dark-bg flex items-center justify-center">
-        <div className="relative">
-          <div className="w-16 h-16 border-4 border-highlight/20 border-t-highlight rounded-full animate-spin"></div>
-          <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-highlight/50 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
-        </div>
-      </div>
-    )
+    return <LoadingScreen onLoadingComplete={() => setIsLoading(false)} duration={4000} />
   }
 
   return (

@@ -9,46 +9,97 @@ type HeadProps = {
 
 export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
   const [scrolled, setScrolled] = useState(false)
+  const [prevScrollPos, setPrevScrollPos] = useState(0)
+  const [visible, setVisible] = useState(true)
+  const [showHeader, setShowHeader] = useState(false)
+  const [showText1, setShowText1] = useState(false)
+  const [showText2, setShowText2] = useState(false)
+  const [showText3, setShowText3] = useState(false)
+  const [showText4, setShowText4] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      const currentScrollPos = window.scrollY
+      
+      // Show header when scrolling up, hide when scrolling down
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10)
+      
+      setPrevScrollPos(currentScrollPos)
+      setScrolled(currentScrollPos > 50)
     }
+    
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [prevScrollPos])
+
+  useEffect(() => {
+    // Sequential animations after component mounts
+    const timer1 = setTimeout(() => setShowHeader(true), 100)
+    const timer2 = setTimeout(() => setShowText1(true), 600)
+    const timer3 = setTimeout(() => setShowText2(true), 900)
+    const timer4 = setTimeout(() => setShowText3(true), 1200)
+    const timer5 = setTimeout(() => setShowText4(true), 1500)
+
+    return () => {
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+      clearTimeout(timer3)
+      clearTimeout(timer4)
+      clearTimeout(timer5)
+    }
   }, [])
 
   return (
     <>
-      <nav 
-        className={`fixed top-0 right-0 p-8 pr-12 z-[1000] flex items-center gap-8 max-md:p-6 max-md:pr-8 max-md:gap-4 transition-all duration-300 ${
-          scrolled ? 'glass-effect rounded-bl-2xl' : ''
-        }`}
-      >
-        <div className="flex gap-8 max-md:gap-4">
-          <a
-            href="#about"
-            className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group`}
+      {/* Header Bar with Glass Effect */}
+      <header className={`fixed top-0 left-0 right-0 z-[1000] backdrop-blur-md transition-all duration-500 ease-in-out ${
+        showHeader && visible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+      }`}>
+        <div className="flex items-center justify-between px-12 py-3 max-md:px-8 max-md:py-4">
+          {/* Logo - Left Side */}
+          <button
+            onClick={() => window.location.reload()}
+            className="relative transition-all duration-300 hover:scale-110 group"
+            aria-label="Refresh page"
           >
-            <span className="relative z-10">About</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a
-            href="#projects"
-            className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group`}
-          >
-            <span className="relative z-10">Projects</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a
-            href="#contact"
-            className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group`}
-          >
-            <span className="relative z-10">Contact</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
-          </a>
+            <div className={`relative w-14 h-14 transition-colors duration-300 ${
+              isDarkMode ? 'text-nav-text group-hover:text-highlight' : 'text-[#FFFFFF] group-hover:text-highlight'
+            }`}>
+              <svg className="absolute inset-0" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path className="fill-none stroke-current" strokeWidth="4" d="M 100,10 L 173,50 L 173,150 L 100,190 L 27,150 L 27,50 Z"/>
+              </svg>
+              <svg className="absolute inset-0" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path className="fill-none stroke-current" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" d="M 80,60 L 120,60 L 120,130 Q 120,150 100,150 Q 80,150 80,130"/>
+              </svg>
+            </div>
+          </button>
+
+          {/* Navigation - Right Side */}
+          <nav className="flex items-center gap-8 max-md:gap-4">
+            <a
+              href="#about"
+              className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group`}
+            >
+              <span className="relative z-10">About</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a
+              href="#projects"
+              className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group`}
+            >
+              <span className="relative z-10">Projects</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a
+              href="#contact"
+              className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-[#FFFFFF] hover:text-highlight'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group`}
+            >
+              <span className="relative z-10">Contact</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
+            </a>
+          </nav>
         </div>
-      </nav>
+      </header>
 
       <section className="min-h-screen flex items-center justify-center px-[10%] relative max-w-[1600px] mx-auto max-xl:px-[5%] max-md:px-[5%] overflow-hidden">
         {/* Animated background elements */}
@@ -62,15 +113,17 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
         <div className="flex-1 max-w-[800px] text-center relative z-10">
           <div className="space-y-6">
             <p 
-              className={`text-hi-text text-base font-['JetBrains_Mono'] font-normal tracking-widest uppercase animate-fade-in-up`}
-              style={{ animationFillMode: 'forwards' }}
+              className={`text-hi-text text-base font-['JetBrains_Mono'] font-normal tracking-widest uppercase transition-all duration-700 ease-out ${
+                showText1 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
+              }`}
             >
               Hi, my name is
             </p>
             
             <h1 
-              className={`text-[5rem] font-['Syne'] font-bold ${isDarkMode ? 'text-name-text' : 'text-[#F0F4FF]'} mb-2 leading-tight max-xl:text-[4rem] max-md:text-[3rem] max-sm:text-[2.5rem] animate-fade-in-up`}
-              style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}
+              className={`text-[5rem] font-['Syne'] font-bold ${isDarkMode ? 'text-name-text' : 'text-[#F0F4FF]'} mb-2 leading-tight max-xl:text-[4rem] max-md:text-[3rem] max-sm:text-[2.5rem] transition-all duration-700 ease-out ${
+                showText2 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
+              }`}
             >
               Jay La
               <button
@@ -84,8 +137,9 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
             </h1>
 
             <h2 
-              className={`text-[2rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-[#F0F4FF]'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] animate-fade-in-up`}
-              style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}
+              className={`text-[2rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-[#F0F4FF]'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] transition-all duration-700 ease-out ${
+                showText3 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
+              }`}
             >
               Sleep, Eat,  {' '}
               <span className="relative inline-block">
@@ -98,8 +152,9 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
 
             {/* CTA Button */}
             <div 
-              className="pt-8 animate-fade-in-up"
-              style={{ animationDelay: '0.4s', animationFillMode: 'forwards' }}
+              className={`pt-8 transition-all duration-700 ease-out ${
+                showText4 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
+              }`}
             >
               <a
                 href="#projects"
@@ -119,8 +174,9 @@ export const Head: React.FC<HeadProps> = ({ isDarkMode, toggleTheme }) => {
         </div>
 
         <div 
-          className="absolute right-8 flex items-center justify-center max-md:right-4 max-sm:hidden animate-fade-in-up" 
-          style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}
+          className={`absolute right-8 flex items-center justify-center max-md:right-4 max-sm:hidden transition-all duration-700 ease-out ${ 
+            showText4 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
+          }`}
         >
           <a 
             href="#contact"
