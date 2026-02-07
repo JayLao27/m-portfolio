@@ -2,7 +2,7 @@ import { EmailIcon, InstagramIcon, LinkedInIcon, GitHubIcon } from './Icons';
   
 export function LeftIcons({ isDarkMode, showIcons }: { isDarkMode: boolean; showIcons: boolean }) {
   return (
-    <div className={`absolute left-24 flex flex-col gap-6 py-4 max-md:hidden transition-all duration-700 ease-out ${
+    <div className={`absolute left-24 flex flex-col gap-6 py-4 max-md:static max-md:flex-col max-md:mb-8 max-md:right-auto max-md:pb-0 transition-all duration-700 ease-out ${
       showIcons ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
     }`}>
       <div className="absolute top-[-5rem] left-1/2 -translate-x-1/2 w-px h-20 bg-[rgba(136,146,176,0.2)] max-md:hidden"></div>
