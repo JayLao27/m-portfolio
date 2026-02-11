@@ -83,7 +83,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
             {/* Skills/Interests Tags */}
             <div className={`flex flex-wrap gap-3 pt-4 scroll-animate scroll-animate-delay-2 ${isVisible ? 'show' : ''}`}>
-              {['Machine Learning', 'Data Science', 'Web Development'].map((skill) => (
+              {['Machine Learning', 'Web Development'].map((skill) => (
                 <span
                   key={skill}
                   className={`px-4 py-2 rounded-full text-sm font-['JetBrains_Mono'] border transition-all duration-300 hover:scale-105 hover:shadow-lg ${
