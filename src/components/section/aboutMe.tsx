@@ -32,9 +32,9 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   }, [])
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      id="about" 
+      id="about"
       className="section-about min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12 relative overflow-hidden"
     >
       {/* Background decorative elements */}
@@ -65,32 +65,31 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
           <div className={`text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text' : 'text-[#FFFFFF]'} space-y-6 mt-12 scroll-animate scroll-animate-delay-1 ${isVisible ? 'show' : ''}`}>
             <p className="relative pl-6 border-l-2 border-highlight/30 hover:border-highlight transition-colors duration-300">
               Hi! I am{' '}
-              <span className="text-highlight font-semibold font-['Syne'] text-xl">Jay Lao</span>. 
-              I started my journey into computers from an early age. I have been exposed to computers 
+              <span className="text-highlight font-semibold font-['Syne'] text-xl">Jay Lao</span>.
+              I started my journey into computers from an early age. I have been exposed to computers
               from childhood, beginning to explore and learn about them when I was just{' '}
               <span className="text-highlight font-medium">5 years old</span>.
             </p>
-            
+
             <p className="relative pl-6 border-l-2 border-highlight/30 hover:border-highlight transition-colors duration-300">
-              Now, I am working freely on making things based on my values 
+              Now, I am working freely on making things based on my values
               and principles. I value{' '}
               <span className={`font-medium ${isDarkMode ? 'text-[#CCD6F6]' : 'text-[#E1E8FF]'}`}>
                 continuous learning
               </span>{' '}
               and creating meaningful solutions.
             </p>
-              <p>Here's what I'm working on lately:</p>
+            <p>Here's what I'm working on lately:</p>
 
             {/* Skills/Interests Tags */}
             <div className={`flex flex-wrap gap-3 pt-4 scroll-animate scroll-animate-delay-2 ${isVisible ? 'show' : ''}`}>
-              {['Machine Learning', 'Web Development'].map((skill) => (
+              {['Machine Learning', 'Web Development', 'Cybersecurity'].map((skill) => (
                 <span
                   key={skill}
-                  className={`px-4 py-2 rounded-full text-sm font-['JetBrains_Mono'] border transition-all duration-300 hover:scale-105 hover:shadow-lg ${
-                    isDarkMode
-                      ? 'bg-highlight/10 border-highlight/30 text-highlight hover:bg-highlight/20'
-                      : 'bg-[#1DD0A7]/10 border-[#1DD0A7]/30 text-[#1DD0A7] hover:bg-[#1DD0A7]/20'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-['JetBrains_Mono'] border transition-all duration-300 hover:scale-105 hover:shadow-lg ${isDarkMode
+                    ? 'bg-highlight/10 border-highlight/30 text-highlight hover:bg-highlight/20'
+                    : 'bg-[#1DD0A7]/10 border-[#1DD0A7]/30 text-[#1DD0A7] hover:bg-[#1DD0A7]/20'
+                    }`}
                 >
                   {skill}
                 </span>
@@ -101,7 +100,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
           {/* Decorative quote */}
           <div className={`mt-8 p-6 rounded-2xl glass-effect border-l-4 border-highlight relative scroll-animate scroll-animate-delay-3 ${isVisible ? 'show' : ''} ${isDarkMode ? 'bg-white/5' : 'bg-black/10'}`}>
             <svg className="absolute top-4 left-4 w-8 h-8 text-highlight/30" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/>
+              <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
             </svg>
             <p className={`font-['DM_Sans'] italic text-base ${isDarkMode ? 'text-body-text/80' : 'text-white/80'} pl-8`}>
               "The only way to do great work is to love what you do and never stop learning."
@@ -115,9 +114,9 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             {/* Decorative frame */}
             <div className="absolute -inset-4 rounded-2xl border border-highlight/20 -z-10"></div>
             <div className="absolute -inset-8 rounded-2xl border border-highlight/10 -z-20"></div>
-            
+
             <ProfileImage isDarkMode={isDarkMode} />
-            
+
             {/* Floating badge */}
             <div className={`absolute -bottom-6 -right-6 px-6 py-3 rounded-full glass-effect border ${isDarkMode ? 'border-highlight/30' : 'border-[#1DD0A7]/30'} backdrop-blur-xl animate-float`}>
               <p className="text-highlight font-['JetBrains_Mono'] text-sm font-medium tracking-wider">
