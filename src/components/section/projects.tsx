@@ -122,24 +122,22 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       </div>
 
       {/* Header */}
-      <div className={`mb-16 text-center relative z-10 scroll-animate ${isVisible ? 'show' : ''}`}>
-        <div className="inline-block">
-          <div className="relative">
-            <h2
-              className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[5rem] font-bold mb-4 max-md:text-[3.5rem] leading-none`}
-            >
-              Featured
-              <span className="block text-gradient">Projects</span>
-            </h2>
-            <div className="flex justify-center gap-2 mt-4">
-              <div className="w-20 h-1 bg-highlight"></div>
-              <div className="w-12 h-1 bg-highlight/50"></div>
-              <div className="w-6 h-1 bg-highlight/30"></div>
-            </div>
-          </div>
+      <div className={`mb-20 text-center relative z-10 scroll-animate ${isVisible ? 'show' : ''}`}>
+        {/* Connecting Line Receiver */}
+        <div className={`absolute left-[10%] top-[-8rem] w-[2px] h-32 bg-gradient-to-t ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#1DD0A7]/50 to-transparent'
+          } max-md:hidden`}></div>
+
+        <div className="inline-block relative">
+          <div className={`absolute -inset-4 blur-2xl opacity-20 ${isDarkMode ? 'bg-highlight' : 'bg-[#1DD0A7]'}`}></div>
+          <h2
+            className={`relative font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[6rem] font-bold mb-4 max-md:text-[3.5rem] leading-none tracking-tight`}
+          >
+            Featured
+            <span className="block text-gradient">Projects</span>
+          </h2>
         </div>
 
-        <p className={`mt-8 text-lg font-['DM_Sans'] ${isDarkMode ? 'text-body-text' : 'text-white/80'} max-w-2xl mx-auto`}>
+        <p className={`mt-8 text-xl font-['DM_Sans'] ${isDarkMode ? 'text-body-text' : 'text-white/80'} max-w-2xl mx-auto leading-relaxed`}>
           A collection of projects showcasing my expertise in machine learning, web development, and IoT solutions.
         </p>
 
@@ -177,75 +175,78 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
-              className={`project-card perspective-card flex-shrink-0 w-[420px] p-8 rounded-2xl transition-all duration-500 group relative overflow-hidden ${isDarkMode
-                ? 'glass-effect hover:bg-white/5'
-                : 'bg-gradient-to-br from-white/10 to-transparent border border-white/20 hover:bg-white/15'
-                }`}
+              className={`project-card perspective-card flex-shrink-0 w-[420px] p-6 rounded-3xl transition-all duration-500 group relative overflow-hidden ${isDarkMode
+                ? 'bg-white/5 border border-white/10 hover:border-highlight/30 hover:shadow-2xl hover:shadow-highlight/10'
+                : 'bg-white/10 border border-white/20 hover:border-[#1DD0A7]/30 hover:shadow-2xl hover:shadow-[#1DD0A7]/10'
+                } backdrop-blur-md`}
               style={{
                 animation: `fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards`,
                 animationDelay: `${index * 0.1}s`,
-                opacity: 0
+                opacity: 0,
+                transformStyle: 'preserve-3d'
               }}
             >
-              {/* Gradient overlay on hover */}
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${isDarkMode
-                ? 'bg-gradient-to-br from-highlight/10 to-transparent'
-                : 'bg-gradient-to-br from-[#1DD0A7]/10 to-transparent'
+              {/* Hover Glow Gradient */}
+              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${isDarkMode
+                ? 'bg-[radial-gradient(circle_at_center,rgba(94,238,255,0.15),transparent_70%)]'
+                : 'bg-[radial-gradient(circle_at_center,rgba(29,208,167,0.15),transparent_70%)]'
                 }`}></div>
 
               {/* Category Badge */}
-              <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-['JetBrains_Mono'] ${isDarkMode
-                ? 'bg-highlight/20 text-highlight border border-highlight/30'
-                : 'bg-[#1DD0A7]/20 text-[#1DD0A7] border border-[#1DD0A7]/30'
-                }`}>
-                {project.category}
+              <div className="absolute top-6 right-6 z-20">
+                <span className={`px-3 py-1 rounded-full text-xs font-['JetBrains_Mono'] font-bold tracking-wide border backdrop-blur-md ${isDarkMode
+                  ? 'bg-black/30 text-highlight border-highlight/30'
+                  : 'bg-white/30 text-[#1DD0A7] border-[#1DD0A7]/30'
+                  }`}>
+                  {project.category}
+                </span>
               </div>
 
-              {/* Project Icon */}
-              <div className={`project-image relative w-full h-[220px] rounded-xl mb-6 overflow-hidden flex items-center justify-center p-6 transition-transform duration-500 group-hover:scale-105 ${isDarkMode
-                ? 'bg-gradient-to-br from-highlight/10 to-transparent'
-                : 'bg-gradient-to-br from-[#1DD0A7]/10 to-transparent'
-                }`} id={`project-image-${project.id}`}>
+              {/* Project Image */}
+              <div className="relative w-full h-[240px] rounded-2xl overflow-hidden mb-6 group-hover:-translate-y-1 transition-transform duration-500">
+                <div className={`absolute inset-0 z-10 transition-colors duration-500 ${isDarkMode ? 'bg-black/20 group-hover:bg-transparent' : 'bg-black/10 group-hover:bg-transparent'
+                  }`}></div>
                 <img
                   src={project.image}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  alt={project.title}
                 />
-
-                {/* Shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               </div>
 
-              {/* Project Content */}
-              <div className="relative z-10">
+              {/* Content */}
+              <div className="relative z-10 px-2">
                 <h3
-                  className={`text-2xl font-['Syne'] font-bold mb-3 transition-colors duration-300 ${isDarkMode ? 'text-highlight group-hover:text-[#5EEEFF]' : 'text-[#E1E8FF] group-hover:text-[#1DD0A7]'
+                  className={`text-2xl font-['Syne'] font-bold mb-3 transition-colors duration-300 ${isDarkMode ? 'text-white group-hover:text-highlight' : 'text-white group-hover:text-[#1DD0A7]'
                     }`}
                 >
                   {project.title}
                 </h3>
 
                 <p
-                  className={`text-sm font-['DM_Sans'] mb-6 leading-relaxed ${isDarkMode ? 'text-body-text' : 'text-white/80'}`}
+                  className={`text-sm font-['DM_Sans'] mb-6 leading-relaxed line-clamp-3 ${isDarkMode ? 'text-gray-400' : 'text-gray-200'}`}
                 >
                   {project.description}
                 </p>
 
                 {/* Technologies */}
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {project.technologies.map((tech) => (
+                  {project.technologies.slice(0, 4).map((tech) => ( // Showing top 4 to prevent clutter
                     <span
                       key={tech}
-                      className={`text-xs px-3 py-1.5 rounded-lg font-['JetBrains_Mono'] transition-all duration-300 hover:scale-110 ${isDarkMode
-                        ? 'bg-[rgba(136,146,176,0.15)] text-[rgba(136,146,176,0.9)] border border-[rgba(136,146,176,0.2)]'
-                        : 'bg-white/10 text-white/90 border border-white/20'
+                      className={`text-[10px] uppercase tracking-wider px-2 py-1 rounded border transition-all duration-300 ${isDarkMode
+                        ? 'bg-white/5 text-gray-400 border-white/10 group-hover:border-highlight/30 group-hover:text-highlight'
+                        : 'bg-white/10 text-gray-200 border-white/20 group-hover:border-[#1DD0A7]/30 group-hover:text-[#1DD0A7]'
                         }`}
                     >
                       {tech}
                     </span>
                   ))}
+                  {project.technologies.length > 4 && (
+                    <span className={`text-[10px] px-2 py-1 rounded border ${isDarkMode ? 'bg-white/5 border-white/10 text-gray-500' : 'bg-white/10 border-white/20 text-gray-300'}`}>
+                      +{project.technologies.length - 4}
+                    </span>
+                  )}
                 </div>
-
-
               </div>
             </div>
           ))}
