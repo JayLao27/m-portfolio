@@ -44,46 +44,30 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
       <div className="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-16 relative z-10">
         {/* Text Content */}
-        <div className={`space-y-8 scroll-animate ${isVisible ? 'show' : ''}`}>
+        <div className={`space-y-8 scroll-animate ${isVisible ? 'show' : ''} order-2 max-md:order-1`}>
           <div className="relative">
-            <div className="absolute -top-4 -left-8 w-20 h-20 border-l-4 border-t-4 border-highlight/30"></div>
-            <h2
-              className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[5rem] font-bold mb-8 relative max-md:text-[3.5rem] leading-none`}
-            >
-              About
-              <span className="block text-gradient mt-2">Me</span>
+            <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[4rem] font-bold mb-6 leading-tight`}>
+              Beyond the <span className="text-gradient">Screen</span>
             </h2>
-            <div className="absolute -bottom-4 left-0">
-              <div className="flex gap-2">
-                <div className="w-16 h-1 bg-highlight"></div>
-                <div className="w-8 h-1 bg-highlight/50"></div>
-                <div className="w-4 h-1 bg-highlight/30"></div>
-              </div>
-            </div>
           </div>
 
-          <div className={`text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text' : 'text-[#FFFFFF]'} space-y-6 mt-12 scroll-animate scroll-animate-delay-1 ${isVisible ? 'show' : ''}`}>
-            <p className="relative pl-6 border-l-2 border-highlight/30 hover:border-highlight transition-colors duration-300">
-              Hi! I am{' '}
-              <span className="text-highlight font-semibold font-['Syne'] text-xl">Jay Lao</span>.
-              I started my journey into computers from an early age. I have been exposed to computers
-              from childhood, beginning to explore and learn about them when I was just{' '}
-              <span className="text-highlight font-medium">5 years old</span>.
-            </p>
 
-            <p className="relative pl-6 border-l-2 border-highlight/30 hover:border-highlight transition-colors duration-300">
-              Now, I am working freely on making things based on my values
-              and principles. I value{' '}
-              <span className={`font-medium ${isDarkMode ? 'text-[#CCD6F6]' : 'text-[#E1E8FF]'}`}>
-                continuous learning
-              </span>{' '}
-              and creating meaningful solutions.
+          <div className={`space-y-6 text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/90' : 'text-white/80'}`}>
+            <p>
+              Hi, I’m <span className="text-highlight font-bold">Jay Lao</span>. I’ve been interested in computers from a young age, starting to explore and learn about them when I was around <span className="inline-block px-3 py-1 rounded-full bg-highlight/10 border border-highlight/20 text-highlight text-sm font-bold align-middle mx-1">five years old</span>. Over time, that curiosity grew into a deeper understanding and appreciation for technology.
             </p>
-            <p>Here's what I'm working on lately:</p>
+            <p>
+              Today, I work independently on projects that reflect my values and principles. I focus on continuous learning and building practical, meaningful solutions that solve real problems.
+            </p>
+          </div>
 
-            {/* Skills/Interests Tags */}
-            <div className={`flex flex-wrap gap-3 pt-4 scroll-animate scroll-animate-delay-2 ${isVisible ? 'show' : ''}`}>
-              {['Machine Learning', 'Web Development', 'Cybersecurity'].map((skill) => (
+          {/* Current Focus */}
+          <div className="space-y-4">
+            <h3 className={`font-['Syne'] text-lg ${isDarkMode ? 'text-white' : 'text-white'}`}>
+              Here's what I'm working on lately:
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              {['Machine Learning', 'Cybersecurity', 'Software Engineering'].map((skill) => (
                 <span
                   key={skill}
                   className={`px-4 py-2 rounded-full text-sm font-['JetBrains_Mono'] border transition-all duration-300 hover:scale-105 hover:shadow-lg ${isDarkMode
@@ -97,12 +81,15 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             </div>
           </div>
 
-          {/* Decorative quote */}
-          <div className={`mt-8 p-6 rounded-2xl glass-effect border-l-4 border-highlight relative scroll-animate scroll-animate-delay-3 ${isVisible ? 'show' : ''} ${isDarkMode ? 'bg-white/5' : 'bg-black/10'}`}>
-            <svg className="absolute top-4 left-4 w-8 h-8 text-highlight/30" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
-            </svg>
-            <p className={`font-['DM_Sans'] italic text-base ${isDarkMode ? 'text-body-text/80' : 'text-white/80'} pl-8`}>
+          {/* Connecting Line Start */}
+          <div className={`absolute left-[-2rem] bottom-[-8rem] w-[2px] h-32 bg-gradient-to-b ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#1DD0A7]/50 to-transparent'
+            } max-md:hidden`}></div>
+
+
+
+          {/* Quote */}
+          <div className={`mt-8 p-6 rounded-2xl glass-effect border-l-4 border-highlight relative ${isDarkMode ? 'bg-white/5' : 'bg-black/10'}`}>
+            <p className={`font-['DM_Sans'] italic text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-200'}`}>
               "The only way to do great work is to love what you do and never stop learning."
             </p>
           </div>
@@ -116,13 +103,6 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             <div className="absolute -inset-8 rounded-2xl border border-highlight/10 -z-20"></div>
 
             <ProfileImage isDarkMode={isDarkMode} />
-
-            {/* Floating badge */}
-            <div className={`absolute -bottom-6 -right-6 px-6 py-3 rounded-full glass-effect border ${isDarkMode ? 'border-highlight/30' : 'border-[#1DD0A7]/30'} backdrop-blur-xl animate-float`}>
-              <p className="text-highlight font-['JetBrains_Mono'] text-sm font-medium tracking-wider">
-                Available for Projects
-              </p>
-            </div>
           </div>
         </div>
       </div>
