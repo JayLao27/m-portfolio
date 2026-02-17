@@ -10,8 +10,26 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
   isDarkMode,
   imageAlt = 'Profile'
 }) => {
+  const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
-  const imageContainerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return
+
+    const rect = containerRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+
+    // Calculate rotation based on cursor position
+    const rotateX = ((y - centerY) / centerY) * -15 // Limits rotation to ±15deg
+    const rotateY = ((x - centerX) / centerX) * 15
+
+    setRotation({ x: rotateX, y: rotateY })
+  }
 
   const handleMouseEnter = () => {
     setIsHovering(true)
@@ -19,110 +37,91 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
 
   const handleMouseLeave = () => {
     setIsHovering(false)
+    setRotation({ x: 0, y: 0 })
+  }
+
+  const transformStyle = {
+    transform: isHovering
+      ? `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale3d(1.05, 1.05, 1.05)`
+      : 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+    transition: isHovering ? 'transform 0.1s ease-out' : 'transform 0.5s ease-out'
+  }
+
+  const glareStyle = {
+    background: `radial-gradient(circle at ${50 - rotation.y * 3}% ${50 - rotation.x * 3}%, rgba(255,255,255,0.4) 0%, transparent 50%)`,
+    opacity: isHovering ? 0.6 : 0,
+    transition: 'opacity 0.3s ease-out'
   }
 
   return (
     <div
-      ref={imageContainerRef}
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative w-[320px] h-[400px] rounded-2xl flex items-center justify-center transition-all duration-700 cursor-pointer overflow-hidden group`}
-      style={{
-        background: isDarkMode
-          ? isHovering
-            ? 'linear-gradient(135deg, rgba(94,238,255,0.2), rgba(136,146,176,0.1))'
-            : 'linear-gradient(135deg, rgba(136,146,176,0.1), transparent)'
-          : isHovering
-            ? 'linear-gradient(135deg, rgba(29,208,167,0.2), rgba(10,43,47,0.1))'
-            : 'linear-gradient(135deg, rgba(10,43,47,0.05), transparent)',
-        border: isHovering
-          ? isDarkMode
-            ? '2px solid rgba(94,238,255,0.5)'
-            : '2px solid rgba(29,208,167,0.5)'
-          : isDarkMode
-            ? '1px solid rgba(136,146,176,0.2)'
-            : '1px solid rgba(10,43,47,0.1)',
-        boxShadow: isHovering
-          ? isDarkMode
-            ? '0 0 0 4px rgba(94,238,255,0.1), 0 20px 60px rgba(94,238,255,0.3), inset 0 0 80px rgba(94,238,255,0.1)'
-            : '0 0 0 4px rgba(29,208,167,0.1), 0 20px 60px rgba(29,208,167,0.3), inset 0 0 80px rgba(29,208,167,0.1)'
-          : isDarkMode
-            ? '0 10px 40px rgba(0,0,0,0.3)'
-            : '0 10px 40px rgba(0,0,0,0.2)'
-      }}
+      className="relative w-[320px] h-[400px] flex items-center justify-center cursor-pointer group perspecitve-container"
+      style={{ perspective: '1000px' }}
     >
-      {/* Animated border effect */}
-      <div 
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+      {/* Main 3D Container */}
+      <div
+        className={`relative w-full h-full rounded-2xl transition-all duration-300 ${isDarkMode ? 'shadow-2xl shadow-highlight/20' : 'shadow-2xl shadow-[#1DD0A7]/20'
+          }`}
         style={{
-          background: isDarkMode
-            ? 'linear-gradient(45deg, transparent 30%, rgba(94,238,255,0.3) 50%, transparent 70%)'
-            : 'linear-gradient(45deg, transparent 30%, rgba(29,208,167,0.3) 50%, transparent 70%)',
-          backgroundSize: '200% 200%',
-          animation: isHovering ? 'shimmer 3s ease-in-out infinite' : 'none'
+          ...transformStyle,
+          transformStyle: 'preserve-3d'
         }}
-      ></div>
+      >
+        {/* Border / Frame Layer */}
+        <div
+          className={`absolute inset-0 rounded-2xl border-2 transition-colors duration-300 ${isDarkMode
+            ? 'border-highlight/30 bg-dark-bg/80'
+            : 'border-[#1DD0A7]/30 bg-white/80'
+            } backdrop-blur-sm`}
+          style={{ transform: 'translateZ(-20px)' }}
+        ></div>
 
-      {/* Corner accents */}
-      <div className={`absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 transition-all duration-500 ${
-        isHovering 
-          ? isDarkMode ? 'border-highlight' : 'border-[#1DD0A7]'
-          : 'border-transparent'
-      }`}></div>
-      <div className={`absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 transition-all duration-500 ${
-        isHovering 
-          ? isDarkMode ? 'border-highlight' : 'border-[#1DD0A7]'
-          : 'border-transparent'
-      }`}></div>
-      <div className={`absolute bottom-2 left-2 w-8 h-8 border-b-2 border-l-2 transition-all duration-500 ${
-        isHovering 
-          ? isDarkMode ? 'border-highlight' : 'border-[#1DD0A7]'
-          : 'border-transparent'
-      }`}></div>
-      <div className={`absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 transition-all duration-500 ${
-        isHovering 
-          ? isDarkMode ? 'border-highlight' : 'border-[#1DD0A7]'
-          : 'border-transparent'
-      }`}></div>
+        {/* Decorative Grid / Tech Background */}
+        <div
+          className="absolute inset-2 rounded-xl opacity-30 overflow-hidden"
+          style={{ transform: 'translateZ(-10px)' }}
+        >
+          <div className={`w-full h-full ${isDarkMode
+            ? 'bg-[linear-gradient(rgba(94,238,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(94,238,255,0.1)_1px,transparent_1px)]'
+            : 'bg-[linear-gradient(rgba(29,208,167,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(29,208,167,0.1)_1px,transparent_1px)]'
+            }`}
+            style={{ backgroundSize: '20px 20px' }}
+          ></div>
+        </div>
 
-      {/* Image */}
-      <img
-        className="h-[360px] rounded-2xl transition-all duration-700 object-cover relative z-10"
-        style={{
-          transform: isHovering ? 'scale(1.08) rotate(2deg)' : 'scale(1)',
-          filter: isHovering ? 'brightness(1.1) contrast(1.05)' : 'brightness(1) contrast(1)'
-        }}
-        src={isHovering ? '/images/Museum(2).jpg' : '/images/Meseum1.png'}
-        alt={imageAlt}
-      />
+        {/* Image Layer */}
+        <div
+          className="absolute inset-4 rounded-xl overflow-hidden shadow-lg"
+          style={{ transform: 'translateZ(20px)' }}
+        >
+          <img
+            src={isHovering ? '/images/Museum(2).jpg' : '/images/Meseum1.png'}
+            alt={imageAlt}
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          />
 
-      {/* Overlay gradient on hover */}
-      <div 
-        className={`absolute inset-0 rounded-2xl transition-opacity duration-700 pointer-events-none ${
-          isHovering ? 'opacity-100' : 'opacity-0'
-        }`}
-        style={{
-          background: isDarkMode
-            ? 'linear-gradient(to top, rgba(94,238,255,0.15), transparent)'
-            : 'linear-gradient(to top, rgba(29,208,167,0.15), transparent)'
-        }}
-      ></div>
+          {/* Holographic Overlay */}
+          <div className={`absolute inset-0 mix-blend-overlay opacity-0 group-hover:opacity-40 transition-opacity duration-300 ${isDarkMode ? 'bg-gradient-to-tr from-highlight via-purple-500 to-highlight' : 'bg-gradient-to-tr from-[#1DD0A7] via-blue-400 to-[#1DD0A7]'
+            }`}></div>
+        </div>
 
-      {/* Scan line effect */}
-      <div 
-        className={`absolute inset-0 rounded-2xl transition-opacity duration-700 pointer-events-none ${
-          isHovering ? 'opacity-100' : 'opacity-0'
-        }`}
-        style={{
-          background: `repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            ${isDarkMode ? 'rgba(94,238,255,0.03)' : 'rgba(29,208,167,0.03)'} 2px,
-            ${isDarkMode ? 'rgba(94,238,255,0.03)' : 'rgba(29,208,167,0.03)'} 4px
-          )`
-        }}
-      ></div>
+        {/* Glare/Shine Effect */}
+        <div
+          className="absolute inset-0 rounded-2xl pointer-events-none mix-blend-overlay"
+          style={{
+            ...glareStyle,
+            transform: 'translateZ(50px)'
+          }}
+        ></div>
+
+        {/* Floating Corner Accents */}
+        <div className={`absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 ${isDarkMode ? 'border-highlight' : 'border-[#1DD0A7]'} transition-all duration-300 group-hover:top-[-10px] group-hover:left-[-10px]`} style={{ transform: 'translateZ(30px)' }}></div>
+        <div className={`absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 ${isDarkMode ? 'border-highlight' : 'border-[#1DD0A7]'} transition-all duration-300 group-hover:bottom-[-10px] group-hover:right-[-10px]`} style={{ transform: 'translateZ(30px)' }}></div>
+      </div>
     </div>
   )
 }
