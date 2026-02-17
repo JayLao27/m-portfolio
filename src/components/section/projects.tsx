@@ -138,7 +138,7 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
         </div>
 
         <p className={`mt-8 text-xl font-['DM_Sans'] ${isDarkMode ? 'text-body-text' : 'text-white/80'} max-w-2xl mx-auto leading-relaxed`}>
-          A collection of projects showcasing my expertise in machine learning, web development, and IoT solutions.
+          A collection of projects showcasing my curiosity in machine learning, web development, and IoT solutions.
         </p>
 
         {/* Category Filters */}
