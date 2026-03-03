@@ -81,6 +81,52 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             </div>
           </div>
 
+          {/* Tech Stack */}
+          <div className="space-y-4">
+            <h3 className={`font-['Syne'] text-lg ${isDarkMode ? 'text-white' : 'text-white'}`}>
+              Tools I build with:
+            </h3>
+            <div className="space-y-3">
+              {[
+                {
+                  category: 'Languages',
+                  icon: '{ }',
+                  items: ['Python', 'Java', 'C++', 'PHP', 'JavaScript', 'HTML / CSS'],
+                },
+                {
+                  category: 'Frameworks & Libraries',
+                  icon: '⚡',
+                  items: ['Laravel', 'Tailwind CSS', 'Bootstrap', 'Scikit-learn', 'JavaFX', 'Streamlit'],
+                },
+                {
+                  category: 'Databases & Tools',
+                  icon: '🗄',
+                  items: ['MySQL', 'Jupyter Notebook', 'Vite'],
+                },
+              ].map(({ category, icon, items }) => (
+                <div key={category} className={`p-4 rounded-xl border transition-all duration-300 ${isDarkMode ? 'bg-white/3 border-white/10 hover:border-highlight/30' : 'bg-black/10 border-white/10 hover:border-[#1DD0A7]/30'}`}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className={`font-['JetBrains_Mono'] text-xs font-bold ${isDarkMode ? 'text-highlight' : 'text-[#1DD0A7]'}`}>{icon}</span>
+                    <span className={`font-['JetBrains_Mono'] text-xs uppercase tracking-widest ${isDarkMode ? 'text-white/40' : 'text-white/50'}`}>{category}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {items.map((tech) => (
+                      <span
+                        key={tech}
+                        className={`px-3 py-1 rounded-md text-xs font-['JetBrains_Mono'] border transition-all duration-300 hover:scale-105 cursor-default ${isDarkMode
+                          ? 'bg-highlight/5 border-highlight/15 text-body-text/70 hover:bg-highlight/15 hover:text-highlight hover:border-highlight/40'
+                          : 'bg-white/5 border-white/15 text-white/60 hover:bg-[#1DD0A7]/15 hover:text-[#1DD0A7] hover:border-[#1DD0A7]/40'
+                        }`}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Connecting Line Start */}
           <div className={`absolute left-[-2rem] bottom-[-8rem] w-[2px] h-32 bg-gradient-to-b ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#1DD0A7]/50 to-transparent'
             } max-md:hidden`}></div>
