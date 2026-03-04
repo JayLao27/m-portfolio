@@ -14,17 +14,19 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* scroll-behavior handled by Locomotive Scroll */
   }
 }
 
 @layer utilities {
+
   /* Custom animations */
   @keyframes fadeInUp {
     from {
       opacity: 0;
       transform: translateY(30px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -32,18 +34,24 @@
   }
 
   @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: translateY(0px);
     }
+
     50% {
       transform: translateY(-20px);
     }
   }
 
   @keyframes glow {
-    0%, 100% {
+
+    0%,
+    100% {
       box-shadow: 0 0 20px rgba(94, 238, 255, 0.3);
     }
+
     50% {
       box-shadow: 0 0 40px rgba(94, 238, 255, 0.6);
     }
@@ -53,6 +61,7 @@
     0% {
       background-position: -1000px 0;
     }
+
     100% {
       background-position: 1000px 0;
     }
@@ -63,6 +72,7 @@
       opacity: 0;
       transform: translateX(-50px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
@@ -74,6 +84,7 @@
       opacity: 0;
       transform: translateX(50px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
@@ -85,6 +96,7 @@
       opacity: 0;
       transform: translateY(-20px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -95,15 +107,19 @@
     from {
       width: 0;
     }
+
     to {
       width: 100%;
     }
   }
 
   @keyframes blink {
-    0%, 100% {
+
+    0%,
+    100% {
       border-color: transparent;
     }
+
     50% {
       border-color: currentColor;
     }
@@ -111,18 +127,32 @@
 
   .animate-fade-in-up {
     animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 1; /* Ensure it stays visible after animation */
+    opacity: 1;
+    /* Ensure it stays visible after animation */
   }
 
-  /* Scroll animation classes */
-  .scroll-animate {
+  /* Scroll animation classes — triggered by Locomotive Scroll is-inview */
+  .scroll-animate,
+  .scroll-animate-subtle {
     opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .scroll-animate.show {
+  .scroll-animate {
+    transform: translateY(60px);
+  }
+
+  .scroll-animate-subtle {
+    transform: translateY(20px);
+  }
+
+  .scroll-animate.show,
+  .scroll-animate.is-inview,
+  [data-scroll-reveal].is-inview .scroll-animate,
+  .scroll-animate-subtle.show,
+  .scroll-animate-subtle.is-inview,
+  [data-scroll-reveal].is-inview .scroll-animate-subtle {
     opacity: 1;
     transform: translateY(0);
   }
@@ -172,16 +202,17 @@
     transition-delay: 0.4s;
   }
 
-  .section-contact .scroll-animate {
-    transition-delay: 0.4s;
+  .section-contact .scroll-animate,
+  .section-contact .scroll-animate-subtle {
+    transition-delay: 0.1s;
   }
 
   .section-contact .scroll-animate-delay-1 {
-    transition-delay: 0.5s;
+    transition-delay: 0.2s;
   }
 
   .section-contact .scroll-animate-delay-2 {
-    transition-delay: 0.6s;
+    transition-delay: 0.3s;
   }
 
   .animate-float {
@@ -193,24 +224,24 @@
   }
 
   .animate-shimmer {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent);
     background-size: 200% 100%;
     animation: shimmer 3s infinite;
   }
 
   .animate-slide-left {
     animation: slideInFromLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 1; /* Ensure it stays visible after animation */
+    opacity: 1;
+    /* Ensure it stays visible after animation */
   }
 
   .animate-slide-right {
     animation: slideInFromRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 1; /* Ensure it stays visible after animation */
+    opacity: 1;
+    /* Ensure it stays visible after animation */
   }
 
   .animate-slide-down {
