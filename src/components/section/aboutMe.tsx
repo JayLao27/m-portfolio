@@ -1,50 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { ProfileImage } from '../ProfileImage'
 
 export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true)
-          }
-        })
-      },
-      {
-        threshold: 0.3, // Trigger when 30% of the section is visible
-        rootMargin: '0px 0px 0px 0px'
-      }
-    )
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
-      }
-    }
-  }, [])
 
   return (
     <section
-      ref={sectionRef}
       id="about"
+      data-scroll-reveal
       className="section-about min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12 relative overflow-hidden"
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className={`absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#1DD0A7]/5'} animate-float`}></div>
+        <div className={`absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#1DD0A7]/5'} animate-float`} data-scroll data-scroll-speed="-1"></div>
       </div>
 
       <div className="grid grid-cols-2 gap-20 items-center max-md:grid-cols-1 max-md:gap-16 relative z-10">
         {/* Text Content */}
-        <div className={`space-y-8 scroll-animate ${isVisible ? 'show' : ''} order-2 max-md:order-1`}>
+        <div className="space-y-8 scroll-animate order-2 max-md:order-1">
           <div className="relative">
             <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[4rem] font-bold mb-6 leading-tight`}>
               Beyond the <span className="text-gradient">Screen</span>
@@ -116,7 +90,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                         className={`px-3 py-1 rounded-md text-xs font-['JetBrains_Mono'] border transition-all duration-300 hover:scale-105 cursor-default ${isDarkMode
                           ? 'bg-highlight/5 border-highlight/15 text-body-text/70 hover:bg-highlight/15 hover:text-highlight hover:border-highlight/40'
                           : 'bg-white/5 border-white/15 text-white/60 hover:bg-[#1DD0A7]/15 hover:text-[#1DD0A7] hover:border-[#1DD0A7]/40'
-                        }`}
+                          }`}
                       >
                         {tech}
                       </span>
@@ -142,7 +116,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
         </div>
 
         {/* Profile Image */}
-        <div className={`flex justify-center items-center scroll-animate scroll-animate-delay-2 ${isVisible ? 'show' : ''}`}>
+        <div className="flex justify-center items-center scroll-animate scroll-animate-delay-2">
           <div className="relative">
             {/* Decorative frame */}
             <div className="absolute -inset-4 rounded-2xl border border-highlight/20 -z-10"></div>
