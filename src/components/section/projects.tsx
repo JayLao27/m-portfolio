@@ -60,9 +60,7 @@ const projectsData: Project[] = [
 
 export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const sectionRef = useRef<HTMLElement>(null)
   const [activeFilter, setActiveFilter] = useState('All')
-  const [isVisible, setIsVisible] = useState(false)
   const categories = ['All', 'Machine Learning', 'IoT & Embedded', 'Web Application', 'Desktop Application']
 
   const filteredProjects = activeFilter === 'All'
@@ -84,45 +82,21 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
     return () => container.removeEventListener('wheel', handleWheel)
   }, [])
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true)
-          }
-        })
-      },
-      {
-        threshold: 0.3, // Trigger when 30% of the section is visible
-        rootMargin: '0px 0px 0px 0px'
-      }
-    )
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
-      }
-    }
-  }, [])
 
   return (
     <section
-      ref={sectionRef}
       id="projects"
+      data-scroll-reveal
       className="section-projects min-h-screen pt-32 px-[10%] pb-20 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-16 relative overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className={`absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#1DD0A7]/5'} animate-float`} style={{ animationDelay: '1s' }}></div>
+        <div className={`absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#1DD0A7]/5'} animate-float`} style={{ animationDelay: '1s' }} data-scroll data-scroll-speed="2"></div>
       </div>
 
       {/* Header */}
-      <div className={`mb-20 text-center relative z-10 scroll-animate ${isVisible ? 'show' : ''}`}>
+      <div className="mb-20 text-center relative z-10 scroll-animate" >
         {/* Connecting Line Receiver */}
         <div className={`absolute left-[10%] top-[-8rem] w-[2px] h-32 bg-gradient-to-t ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#1DD0A7]/50 to-transparent'
           } max-md:hidden`}></div>
@@ -165,11 +139,13 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       {/* Projects Grid/Scroll Container */}
       <div
         ref={scrollContainerRef}
-        className={`project-scroll overflow-x-auto pb-8 scrollbar-hide relative z-10 scroll-animate scroll-animate-delay-1 ${isVisible ? 'show' : ''}`}
+        className={`project-scroll overflow-x-auto pb-8 scrollbar-hide relative z-10 scroll-animate scroll-animate-delay-1`}
+        data-scroll
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none'
         }}
+        data-lenis-prevent
       >
         <div className="flex gap-8 min-w-max px-4">
           {filteredProjects.map((project, index) => (
