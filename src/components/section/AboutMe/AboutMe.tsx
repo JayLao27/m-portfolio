@@ -60,7 +60,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
               {
                 category: 'Frameworks & Libraries',
                 icon: '⚡',
-                items: ['Laravel', 'Tailwind CSS', 'Bootstrap', 'Scikit-learn', 'JavaFX', 'Streamlit'],
+                items: ['React', 'Next.js', 'Laravel', 'Tailwind CSS', 'Bootstrap', 'Scikit-learn', 'JavaFX', 'Streamlit'],
               },
               {
                 category: 'Databases & Tools',
