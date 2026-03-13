@@ -1,0 +1,122 @@
+import React from 'react'
+import { ProfileImage } from '../../ProfileImage'
+
+export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
+  return (
+    <section
+      id="about"
+      data-scroll-reveal
+      className="section-about min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12 relative overflow-hidden"
+    >
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className={`absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#1DD0A7]/5'} animate-float`} data-parallax="slow" data-parallax-speed="1.5"></div>
+      </div>
+
+      {/* Two columns: Left (photo + heading + bio) | Right (tech stack) */}
+      <div className="grid grid-cols-2 gap-16 items-start max-md:grid-cols-1 max-md:gap-12 relative z-10">
+
+        <div className="space-y-10 scroll-animate" data-parallax="slide-left" data-parallax-speed="0.8" data-parallax-delay="0.1">
+          {/* Profile Image */}
+          <div className="relative inline-block">
+            <div className="absolute -inset-4 rounded-2xl border border-highlight/20 -z-10"></div>
+            <div className="absolute -inset-8 rounded-2xl border border-highlight/10 -z-20"></div>
+            <ProfileImage isDarkMode={isDarkMode} />
+          </div>
+
+          {/* "Beyond the Screen" heading + bio — left-aligned below photo */}
+          <div>
+            <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[4rem] font-bold mb-6 leading-tight max-md:text-[3rem]`}>
+              Beyond the <span className="text-gradient">Screen</span>
+            </h2>
+
+            <div className={`mb-[120px] space-y-5 text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/90' : 'text-white/80'}`}>
+              <p>
+                Hi, I'm <span className="text-highlight font-bold">Jay Lao</span>. I've been interested in computers from a young age, starting to explore and learn about them when I was around <span className="inline-block px-3 py-1 rounded-full bg-highlight/10 border border-highlight/20 text-highlight text-sm font-bold align-middle mx-1">five years old</span>. Over time, that curiosity grew into a deeper understanding and appreciation for technology.
+              </p>
+              <p>
+                Today, I work independently on projects that reflect my values and principles. I focus on continuous learning and building practical, meaningful solutions that solve real problems.
+              </p>
+            </div>
+
+          </div>
+
+          {/* Connecting Line Start */}
+          <div className={`absolute left-[-2rem] bottom-[-8rem] w-[2px] h-32 bg-gradient-to-b ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#1DD0A7]/50 to-transparent'
+            } max-md:hidden`}></div>
+        </div>
+
+        {/* Right Column: Tech Stack + Current Focus */}
+        <div className="mt-[120px] space-y-6 scroll-animate" data-parallax="slide-right" data-parallax-speed="0.8" data-parallax-delay="0.15">
+          <h3 className={`font-['Syne'] text-xl font-bold ${isDarkMode ? 'text-white' : 'text-white'}`}>
+            Tools I build with:
+          </h3>
+          <div className="space-y-3">
+            {[
+              {
+                category: 'Languages',
+                icon: '{ }',
+                items: ['Python', 'Java', 'C++', 'PHP', 'JavaScript', 'HTML / CSS'],
+              },
+              {
+                category: 'Frameworks & Libraries',
+                icon: '⚡',
+                items: ['Laravel', 'Tailwind CSS', 'Bootstrap', 'Scikit-learn', 'JavaFX', 'Streamlit'],
+              },
+              {
+                category: 'Databases & Tools',
+                icon: '🗄',
+                items: ['MySQL', 'Jupyter Notebook', 'Vite'],
+              },
+            ].map(({ category, icon, items }) => (
+              <div key={category} className={`p-4 rounded-xl border transition-all duration-300 ${isDarkMode ? 'bg-white/3 border-white/10 hover:border-highlight/30' : 'bg-black/10 border-white/10 hover:border-[#1DD0A7]/30'}`}>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className={`font-['JetBrains_Mono'] text-xs font-bold ${isDarkMode ? 'text-highlight' : 'text-[#1DD0A7]'}`}>{icon}</span>
+                  <span className={`font-['JetBrains_Mono'] text-xs uppercase tracking-widest ${isDarkMode ? 'text-white/40' : 'text-white/50'}`}>{category}</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {items.map((tech) => (
+                    <span
+                      key={tech}
+                      className={`px-3 py-1 rounded-md text-xs font-['JetBrains_Mono'] border transition-all duration-300 hover:scale-105 cursor-default ${isDarkMode
+                        ? 'bg-highlight/5 border-highlight/15 text-body-text/70 hover:bg-highlight/15 hover:text-highlight hover:border-highlight/40'
+                        : 'bg-white/5 border-white/15 text-white/60 hover:bg-[#1DD0A7]/15 hover:text-[#1DD0A7] hover:border-[#1DD0A7]/40'
+                        }`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Current Focus */}
+          <div className="space-y-4 mt-4">
+            <h3 className={`font-['Syne'] text-lg ${isDarkMode ? 'text-white' : 'text-white'}`}>
+              Here's what I'm working on lately:
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              {['Machine Learning', 'Cybersecurity', 'Software Engineering'].map((skill) => (
+                <span
+                  key={skill}
+                  className={`px-4 py-2 rounded-full text-sm font-['JetBrains_Mono'] border transition-all duration-300 hover:scale-105 hover:shadow-lg ${isDarkMode
+                    ? 'bg-highlight/10 border-highlight/30 text-highlight hover:bg-highlight/20'
+                    : 'bg-[#1DD0A7]/10 border-[#1DD0A7]/30 text-[#1DD0A7] hover:bg-[#1DD0A7]/20'
+                    }`}
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+
+            <div className={` p-6 rounded-2xl glass-effect border-l-4 border-highlight relative ${isDarkMode ? 'bg-white/5' : 'bg-black/10'}`} data-parallax="fade" data-parallax-delay="0.3">
+              <p className={`font-['DM_Sans'] italic text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-200'}`}>
+                "The only way to do great work is to love what you do and never stop learning."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
