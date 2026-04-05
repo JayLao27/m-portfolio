@@ -135,12 +135,12 @@
   .scroll-animate,
   .scroll-animate-subtle {
     opacity: 0;
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .scroll-animate {
-    transform: translateY(60px);
+    transform: translateY(90px);
   }
 
   .scroll-animate-subtle {
@@ -158,61 +158,61 @@
   }
 
   .scroll-animate-delay-1 {
-    transition-delay: 0.1s;
+    transition-delay: 0.05s;
   }
 
   .scroll-animate-delay-2 {
-    transition-delay: 0.2s;
+    transition-delay: 0.05s;
   }
 
   .scroll-animate-delay-3 {
-    transition-delay: 0.3s;
+    transition-delay: 0.05s;
   }
 
   .scroll-animate-delay-4 {
-    transition-delay: 0.4s;
+    transition-delay: 0.05s;
   }
 
   /* Section-level delays for cascading animations */
   .section-about .scroll-animate {
-    transition-delay: 0s;
+    transition-delay: 0.05s;
   }
 
   .section-about .scroll-animate-delay-1 {
-    transition-delay: 0.1s;
+    transition-delay: 0.05s;
   }
 
   .section-about .scroll-animate-delay-2 {
-    transition-delay: 0.2s;
+    transition-delay: 0.05s;
   }
 
   .section-about .scroll-animate-delay-3 {
-    transition-delay: 0.3s;
+    transition-delay: 0.05s;
   }
 
   .section-projects .scroll-animate {
-    transition-delay: 0.2s;
+    transition-delay: 0.05s;
   }
 
   .section-projects .scroll-animate-delay-1 {
-    transition-delay: 0.3s;
+    transition-delay: 0.05s;
   }
 
   .section-projects .scroll-animate-delay-2 {
-    transition-delay: 0.4s;
+    transition-delay: 0.05s;
   }
 
   .section-contact .scroll-animate,
   .section-contact .scroll-animate-subtle {
-    transition-delay: 0.1s;
+    transition-delay: 0.05s;
   }
 
   .section-contact .scroll-animate-delay-1 {
-    transition-delay: 0.2s;
+    transition-delay: 0.05s;
   }
 
   .section-contact .scroll-animate-delay-2 {
-    transition-delay: 0.3s;
+    transition-delay: 0.05s;
   }
 
   /* Parallax scroll animation utilities */
