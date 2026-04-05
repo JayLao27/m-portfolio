@@ -15,26 +15,26 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       {/* Two columns: Left (photo + heading + bio) | Right (tech stack) */}
       <div className="grid grid-cols-2 gap-16 items-start max-md:grid-cols-1 max-md:gap-12 relative z-10">
 
+
+          {/* "Beyond the Screen" heading + bio — left-aligned below photo */}
+          <div>
+            <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[3rem] font-bold mb-[40px] leading-tight max-md:text-[3rem]`}>
+              Beyond the Screen
+            </h2>
+
         <div className="space-y-10 scroll-animate" data-parallax="slide-left" data-parallax-speed="0.8" data-parallax-delay="0.1">
           {/* Profile Image */}
-          <div className="relative inline-block">
+          <div className="relative inline-block md:ml-12 max-md:ml-0">
             <div className="absolute -inset-4 rounded-2xl border border-highlight/20 -z-10"></div>
             <div className="absolute -inset-8 rounded-2xl border border-highlight/10 -z-20"></div>
             <ProfileImage isDarkMode={isDarkMode} />
           </div>
-
-          {/* "Beyond the Screen" heading + bio — left-aligned below photo */}
-          <div>
-            <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[4rem] font-bold mb-6 leading-tight max-md:text-[3rem]`}>
-              Beyond the <span className="text-gradient">Screen</span>
-            </h2>
-
             <div className={`mb-[120px] space-y-5 text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/90' : 'text-white/80'}`}>
               <p>
-                Hi, I'm <span className="text-highlight font-bold">Jay Lao</span>. I've been interested in computers from a young age, starting to explore and learn about them when I was around <span className="inline-block px-3 py-1 rounded-full bg-highlight/10 border border-highlight/20 text-highlight text-sm font-bold align-middle mx-1">five years old</span>. Over time, that curiosity grew into a deeper understanding and appreciation for technology.
+                Hi, I'm <span className="text-highlight font-bold">Jay Lao</span>. My interest in technology started early, around <span className="inline-block px-3 py-1 rounded-full bg-highlight/10 border border-highlight/20 text-highlight text-sm font-bold align-middle mx-1">five years old</span>, and has since grown into a strong foundation in software development and problem-solving.
               </p>
               <p>
-                Today, I work independently on projects that reflect my values and principles. I focus on continuous learning and building practical, meaningful solutions that solve real problems.
+                Today, I focus on building practical, high-impact solutions with a strong interest in <span className="text-highlight font-semibold">Machine Learning</span> and <span className="text-highlight font-semibold">Software Engineering</span>. I enjoy designing systems that are efficient, scalable, and user-focused, while continuously improving through hands-on projects and lifelong learning.
               </p>
             </div>
 
@@ -46,8 +46,8 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
         </div>
 
         {/* Right Column: Tech Stack + Current Focus */}
-        <div className="mt-[120px] space-y-6 scroll-animate" data-parallax="slide-right" data-parallax-speed="0.8" data-parallax-delay="0.15">
-          <h3 className={`font-['Syne'] text-xl font-bold ${isDarkMode ? 'text-white' : 'text-white'}`}>
+        <div className=" space-y-6 scroll-animate" data-parallax="slide-right" data-parallax-speed="0.8" data-parallax-delay="0.15">
+          <h3 className={`font-['Syne'] text-[1.5rem] font-bold ${isDarkMode ? 'text-white' : 'text-white'}`}>
             Tools I build with:
           </h3>
           <div className="space-y-3">
