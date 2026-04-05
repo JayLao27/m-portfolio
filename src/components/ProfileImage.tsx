@@ -59,7 +59,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative w-[320px] h-[400px] flex items-center justify-center cursor-pointer group perspecitve-container"
+      className=" relative w-[420px] h-[280px] max-md:w-[320px] max-md:h-[213px] flex items-center justify-center cursor-pointer group perspecitve-container"
       style={{ perspective: '1000px' }}
     >
       {/* Main 3D Container */}
