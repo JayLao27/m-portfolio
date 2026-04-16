@@ -18,7 +18,10 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
           {/* "Beyond the Screen" heading + bio — left-aligned below photo */}
           <div>
-            <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[3rem] font-bold mb-[40px] leading-tight max-md:text-[3rem]`}>
+            <span className={`inline-block mb-3 px-3 py-1 rounded-full text-xs tracking-[0.2em] uppercase font-['JetBrains_Mono'] border ${isDarkMode ? 'text-highlight border-highlight/30 bg-highlight/5' : 'text-[#1DD0A7] border-[#1DD0A7]/30 bg-[#1DD0A7]/10'}`}>
+              About Me
+            </span>
+            <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[3rem] font-bold mb-8 leading-tight max-md:text-[2.5rem]`}>
               Beyond the Screen
             </h2>
 
@@ -29,9 +32,9 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             <div className="absolute -inset-8 rounded-2xl border border-highlight/10 -z-20"></div>
             <ProfileImage isDarkMode={isDarkMode} />
           </div>
-            <div className={`mb-[120px] space-y-5 text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/90' : 'text-white/80'}`}>
+            <div className={`mb-8 max-w-[62ch] space-y-5 text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/90' : 'text-white/80'}`}>
               <p>
-                Hi, I'm <span className="text-highlight font-bold">Jay Lao</span>. My interest in technology started early, around <span className="inline-block px-3 py-1 rounded-full bg-highlight/10 border border-highlight/20 text-highlight text-sm font-bold align-middle mx-1">five years old</span>, and has since grown into a strong foundation in software development and problem-solving.
+                Hi, I'm <span className="text-highlight font-bold">Jay Lao</span>. My interest in technology started early, around <span className="inline-block px-3 py-1 rounded-full bg-highlight/10 border border-highlight/20 text-highlight text-sm font-bold align-middle mx-1">age five</span>, and has since grown into a strong foundation in software development and problem-solving.
               </p>
               <p>
                 Today, I focus on building practical, high-impact solutions with a strong interest in <span className="text-highlight font-semibold">Machine Learning</span> and <span className="text-highlight font-semibold">Software Engineering</span>. I enjoy designing systems that are efficient, scalable, and user-focused, while continuously improving through hands-on projects and lifelong learning.
@@ -109,7 +112,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
               ))}
             </div>
 
-            <div className={` p-6 rounded-2xl glass-effect border-l-4 border-highlight relative ${isDarkMode ? 'bg-white/5' : 'bg-black/10'}`} data-parallax="fade" data-parallax-delay="0.3">
+            <div className={`p-5 rounded-2xl glass-effect border-l-4 border-highlight relative shadow-[0_10px_30px_rgba(0,0,0,0.12)] ${isDarkMode ? 'bg-white/5' : 'bg-black/10'}`} data-parallax="fade" data-parallax-delay="0.3">
               <p className={`font-['DM_Sans'] italic text-base ${isDarkMode ? 'text-gray-300' : 'text-gray-200'}`}>
                 "The only way to do great work is to love what you do and never stop learning."
               </p>

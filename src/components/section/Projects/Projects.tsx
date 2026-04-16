@@ -147,7 +147,7 @@ export const Projects: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
         }}
         data-lenis-prevent
       >
-        <div className="flex gap-8 min-w-max px-4">
+        <div className="flex gap-8 min-w-max px-4 mt-2">
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
