@@ -15,13 +15,8 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       {/* Two columns: Left (photo + heading + bio) | Right (tech stack) */}
       <div className="grid grid-cols-2 gap-16 items-start max-md:grid-cols-1 max-md:gap-12 relative z-10">
 
-        {/* "Beyond the Screen" heading + bio — left-aligned below photo */}
-          
           {/* "Beyond the Screen" heading + bio — left-aligned below photo */}
           <div>
-            <span className={`inline-block mb-3 px-3 py-1 rounded-full text-xs tracking-[0.2em] uppercase font-['JetBrains_Mono'] border ${isDarkMode ? 'text-highlight border-highlight/30 bg-highlight/5' : 'text-[#1DD0A7] border-[#1DD0A7]/30 bg-[#1DD0A7]/10'}`}>
-              About Me
-            </span>
             <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[3rem] font-bold mb-[40px] leading-tight max-md:text-[3rem]`}>
               Beyond the Screen
             </h2>
