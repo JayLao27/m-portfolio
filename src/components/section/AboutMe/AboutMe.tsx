@@ -16,17 +16,17 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       <div className="grid grid-cols-2 gap-16 items-start max-md:grid-cols-1 max-md:gap-12 relative z-10">
 
           {/* "Beyond the Screen" heading + bio — left-aligned below photo */}
-          <div>
-            <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[3rem] font-bold mb-[40px] leading-tight max-md:text-[3rem]`}>
-              Beyond the Screen
-            </h2>
 
-        <div className="space-y-10 scroll-animate" data-parallax="slide-left" data-parallax-speed="0.8" data-parallax-delay="0.1">
+        <div className="space-y-2 scroll-animate-subtle" data-parallax="slide-left" data-parallax-speed="0.8" data-parallax-delay="0.1">
           {/* Profile Image */}
-          <div className="relative inline-block md:ml-12 max-md:ml-0">
+          <div className="relative mx-auto inline-block -mt-1 max-md:ml-0">
             <div className="absolute -inset-4 rounded-2xl border border-highlight/20 -z-10"></div>
             <div className="absolute -inset-8 rounded-2xl border border-highlight/10 -z-20"></div>
             <ProfileImage isDarkMode={isDarkMode} />
+          <div>
+            <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[3rem] font-bold leading-tight max-md:text-[3rem]`}>
+              Beyond the Screen
+            </h2>
           </div>
             <div className={`mb-[40px] space-y-5 text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/90' : 'text-white/80'}`}>
               <p>
