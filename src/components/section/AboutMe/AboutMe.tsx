@@ -22,11 +22,11 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
           <div className="relative mx-auto inline-block -mt-1 max-md:ml-0">
             <div className="absolute -inset-4 rounded-2xl border border-highlight/20 -z-10"></div>
             <div className="absolute -inset-8 rounded-2xl border border-highlight/10 -z-20"></div>
-            <ProfileImage isDarkMode={isDarkMode} />
-          <div>
             <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[3rem] font-bold leading-tight max-md:text-[3rem]`}>
               Beyond the Screen
             </h2>
+            <ProfileImage isDarkMode={isDarkMode} />
+          <div>
           </div>
             <div className={`mb-[40px] space-y-5 text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/90' : 'text-white/80'}`}>
               <p>
