@@ -19,16 +19,15 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
         <div className="space-y-2 scroll-animate-subtle" data-parallax="slide-left" data-parallax-speed="0.8" data-parallax-delay="0.1">
           {/* Profile Image */}
-          <div className="relative mx-auto inline-block -mt-1 max-md:ml-0">
+          <div className="relative flex flex-col items-center mx-auto -mt-1 max-md:ml-0 text-center">
             <div className="absolute -inset-4 rounded-2xl border border-highlight/20 -z-10"></div>
             <div className="absolute -inset-8 rounded-2xl border border-highlight/10 -z-20"></div>
-            <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[3rem] font-bold leading-tight max-md:text-[3rem]`}>
+            <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[3rem] font-bold leading-tight max-md:text-[3rem] mb-4`}>
               Beyond the Screen
             </h2>
             <ProfileImage isDarkMode={isDarkMode} />
-          <div>
-          </div>
-            <div className={`mb-[40px] space-y-5 text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/90' : 'text-white/80'}`}>
+            <div className="w-full text-left">
+              <div className={`mt-10 mb-[40px] space-y-5 text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/90' : 'text-white/80'}`}>
               <p>
                 Hi, I'm <span className="text-highlight font-bold">Jay Lao</span>. My interest in technology started early, around <span className="inline-block px-3 py-1 rounded-full bg-highlight/10 border border-highlight/20 text-highlight text-sm font-bold align-middle mx-1">five years old</span>, and has since grown into a strong foundation in software development and problem-solving.
               </p>
@@ -38,12 +37,13 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             </div>
 
             <a
-              href="/resume.pdf"
+              href="/Jay_Lao.pdf"
               download
               className={`inline-flex items-center gap-2 rounded-full border px-5 py-3 text-sm font-['JetBrains_Mono'] transition-all duration-300 hover:scale-[1.02] ${isDarkMode ? 'border-highlight/25 bg-highlight/10 text-highlight hover:bg-highlight/20' : 'border-[#1DD0A7]/25 bg-[#1DD0A7]/10 text-[#1DD0A7] hover:bg-[#1DD0A7]/20'}`}
             >
               Download PDF Resume
             </a>
+            </div>
 
           </div>
 
