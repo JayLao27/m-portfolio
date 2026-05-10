@@ -45,7 +45,7 @@ export function LayoutDesign({ isDarkMode, children }: LayoutDesignProps) {
         </div>
 
         <div className="relative z-10" data-scroll-section>
-          {children}
+          {children}  
 
           <footer
             className={`relative z-10 py-12 text-center border-t ${isDarkMode ? 'border-white/5' : 'border-white/10'}`}
