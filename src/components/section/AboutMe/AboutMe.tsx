@@ -36,13 +36,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
               </p>
             </div>
 
-            <a
-              href="/Jay_Lao.pdf"
-              download
-              className={`inline-flex items-center gap-2 rounded-full border px-5 py-3 text-sm font-['JetBrains_Mono'] transition-all duration-300 hover:scale-[1.02] ${isDarkMode ? 'border-highlight/25 bg-highlight/10 text-highlight hover:bg-highlight/20' : 'border-[#1DD0A7]/25 bg-[#1DD0A7]/10 text-[#1DD0A7] hover:bg-[#1DD0A7]/20'}`}
-            >
-              Download PDF Resume
-            </a>
+         
             </div>
 
           </div>
