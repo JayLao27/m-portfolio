@@ -1,5 +1,5 @@
 import React from 'react'
-import { ProfileImage } from '../../ProfileImage'
+import { ProfileImage } from '../../ui/ProfileImage'
 
 export const AboutMe: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   return (

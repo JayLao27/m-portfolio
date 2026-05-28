@@ -4,8 +4,8 @@ import { AboutMe } from './components/section/AboutMe/AboutMe'
 import { Hero } from './components/section/Hero/Hero'
 import { Projects } from './components/section/Projects/Projects'
 import { Contact } from './components/section/Contact/Contact'
-import { LayoutDesign } from './components/LayoutDesign'
-import { Chatbot } from './components/Chatbot'
+import { LayoutDesign } from './components/layout/LayoutDesign'
+import { Chatbot } from './components/chat/Chatbot'
 
 function Layout() {
   const [isDarkMode, setIsDarkMode] = useState(true)

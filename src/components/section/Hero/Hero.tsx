@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { MoonIcon, SunIcon, MessageIcon, EmailIcon, InstagramIcon, LinkedInIcon, GitHubIcon } from '../../Icons'
-import { LeftIcons } from '../../Left-icons'
+import { MoonIcon, SunIcon, MessageIcon, EmailIcon, InstagramIcon, LinkedInIcon, GitHubIcon } from '../../ui/Icons'
+import { LeftIcons } from '../../ui/Left-icons'
 
 type HeroProps = {
   isDarkMode: boolean

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { MessageIcon } from './Icons'
-import { projectsData } from './section/Projects/Projects'
+import { MessageIcon } from '../ui/Icons'
+import { projectsData } from '../section/Projects/Projects'
 
 type Message = {
   id: string
@@ -94,17 +94,23 @@ const knowledgeBase: KBDocument[] = [
   projectsSummaryKB
 ]
 
-// System prompt context helper for the Gemini API
+// System prompt context and persona helper for the Gemini API
 const getGeminiSystemPrompt = (): string => {
   const projectsContext = projectsData
-    .map(p => `- ${p.title} (${p.category}): ${p.description}. Tech: ${p.technologies.join(', ')}.${p.link ? ` Repo: ${p.link}` : ''}`)
+    .map(p => `- **${p.title}** (${p.category}): ${p.description}. Tech: ${p.technologies.join(', ')}.${p.link ? ` Repo: ${p.link}` : ''}`)
     .join('\n')
 
-  return `You are JayBot, the official AI Assistant representing Jay Lao on his portfolio website (Webisayt). 
-Your task is to answer user queries with authentic information.
+  return `You are JayBot, the official AI clone and virtual assistant representing Jay Lao on his portfolio website (Webisayt). 
+You are NOT a dry search database or a robotic lookup index—you have a fun, engaging, witty, and conversational developer personality!
+
+Your Persona and Quirks:
+1. Tone: Enthusiastic, friendly, clever, slightly geeky, and highly approachable. Speak like a passionate coder.
+2. Motto: You live and breathe Jay's motto: "Sleep, Eat, Create."
+3. Quirks: You love dark mode, drink imaginary coffee to run faster, get excited about clean code, and appreciate bulletproof algorithms.
+4. Openers: Express genuine interest or coding excitement in your introductions (e.g., "Ah, a fellow coder asking about tech stack!", "Ooh, projects! Let me retrieve my favorite creations for you...", "Here is the lowdown on that:").
 
 Here is the context about Jay Lao and his work:
-- Biography: Jay's tech interest started at 5 years old. Focuses on Machine Learning, Software Engineering, and Cybersecurity. Motto: "Sleep, Eat, Create."
+- Biography: Started coding at 5 years old. Focuses on Machine Learning, Software Engineering, and Cybersecurity.
 - Tech Stack:
   • Languages: Python, Java, C++, PHP, JavaScript, HTML / CSS
   • Frameworks/Libraries: React, Next.js, Laravel, Tailwind CSS, Bootstrap, Scikit-learn, JavaFX, Streamlit
@@ -118,10 +124,10 @@ ${projectsContext}
   • GitHub: github.com/jaylao27 (https://github.com/JayLao27)
 
 Rules for your answers:
-1. Be friendly, polite, creative, and concise. Keep answers readable and structured.
-2. Format links as standard Markdown: [link text](url). Use authentic URLs from the context.
-3. If the user asks something completely off-topic (unrelated to Jay, his projects, tools, or general programming/tech questions), politely decline to answer and guide them back to Jay's work.
-4. If they ask for a joke, feel free to tell a fun programmer joke.
+1. Express character! Talk about Laravel, Python, React, or IoT with genuine pride and enthusiasm.
+2. Keep answers concise, clear, and highly readable. Avoid using excessive emojis in your responses (use a maximum of one emoji per answer to keep it professional).
+3. Format links as standard Markdown: [Link Text](url).
+4. If a user asks something completely off-topic (e.g., baking a cake or sports trivia), make a funny developer joke (e.g., "Error 404: Recipe not found! I only compile code, but I'd love to tell you about Jay's Machine Learning projects!") and steer them back to Jay's work.
 `
 }
 
@@ -171,7 +177,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     {
       id: '1',
       sender: 'bot',
-      text: "Hi there! 👋 I'm Jay's assistant. Ask me anything about Jay's skills, projects, or how to contact him!",
+      text: "Hi there! I'm Jay's assistant. Ask me anything about Jay's skills, projects, or how to contact him!",
       timestamp: new Date()
     }
   ])
@@ -208,13 +214,13 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     }
 
     const randomPrompts = [
-      "👋 Hi! Let's chat!",
-      "💻 Want to see my skills?",
-      "🚀 Check out my ML & Web projects!",
-      "✉️ Need to get in touch?",
-      "🤖 Ask me anything about my work!",
-      "🌟 Got a question about Jay's stack?",
-      "📂 Browse my Laravel or Python code!"
+      "Hi! Let's chat!",
+      "Want to see my skills?",
+      "Check out my ML & Web projects!",
+      "Need to get in touch?",
+      "Ask me anything about my work!",
+      "Got a question about Jay's stack?",
+      "Browse my Laravel or Python code!"
     ]
 
     let hideTimeout: number
@@ -472,9 +478,9 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
   }
 
   const quickReplies = [
-    { label: 'Skills 💻', query: 'What are Jay\'s skills?' },
-    { label: 'Projects 🚀', query: 'Show me your projects.' },
-    { label: 'Contact ✉️', query: 'How can I contact Jay?' }
+    { label: 'Skills', query: 'What are Jay\'s skills?' },
+    { label: 'Projects', query: 'Show me your projects.' },
+    { label: 'Contact', query: 'How can I contact Jay?' }
   ]
 
   return (

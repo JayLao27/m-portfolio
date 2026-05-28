@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { EmailIcon, InstagramIcon, LinkedInIcon } from '../../Icons'
+import { EmailIcon, InstagramIcon, LinkedInIcon } from '../../ui/Icons'
 
 export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   const [formData, setFormData] = useState({

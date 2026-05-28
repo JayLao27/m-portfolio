@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
-import { AdvancedCursorSpotlight } from './AdvancedCursorSpotlight'
-import { LocomotiveScrollProvider } from './locomotive-scroll'
-import { useScrollReveal } from '../hooks/useScrollReveal'
-import { useParallax } from '../hooks/useParallax'
+import { AdvancedCursorSpotlight } from '../effects/AdvancedCursorSpotlight'
+import { LocomotiveScrollProvider } from '../effects/locomotive-scroll'
+import { useScrollReveal } from '../../hooks/useScrollReveal'
+import { useParallax } from '../../hooks/useParallax'
 
 type LayoutDesignProps = {
   isDarkMode: boolean
