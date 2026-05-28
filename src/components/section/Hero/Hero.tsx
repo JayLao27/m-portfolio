@@ -5,9 +5,10 @@ import { LeftIcons } from '../../Left-icons'
 type HeroProps = {
   isDarkMode: boolean
   toggleTheme: () => void
+  onChatOpen: () => void
 }
 
-export const Hero: React.FC<HeroProps> = ({ isDarkMode, toggleTheme }) => {
+export const Hero: React.FC<HeroProps> = ({ isDarkMode, toggleTheme, onChatOpen }) => {
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [visible, setVisible] = useState(true)
   const [showHeader, setShowHeader] = useState(false)
@@ -224,13 +225,13 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode, toggleTheme }) => {
           className={`absolute right-8 flex items-center justify-center max-md:right-4 max-sm:hidden transition-all duration-700 ease-out ${showText4 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
             }`}
         >
-          <a
-            href="#contact"
-            className="rounded-full bg-[#448BB2] border-none text-white cursor-pointer flex items-center justify-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(68,139,178,0.4)] hover:scale-110 animate-glow"
-            aria-label="Contact"
+          <button
+            onClick={onChatOpen}
+            className="rounded-full bg-[#448BB2] border-none text-white cursor-pointer flex items-center justify-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(68,139,178,0.4)] hover:scale-110 animate-glow focus:outline-none"
+            aria-label="Chatbot"
           >
             <MessageIcon className="text-white" />
-          </a>
+          </button>
         </div>
       </section>
     </>
