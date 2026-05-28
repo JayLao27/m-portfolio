@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 
-interface Project {
+export interface Project {
   id: number
   title: string
   description: string
@@ -10,7 +10,7 @@ interface Project {
   image: string
 }
 
-const projectsData: Project[] = [
+export const projectsData: Project[] = [
   {
     id: 1,
     title: 'Real Estate Pricing Prediction',
