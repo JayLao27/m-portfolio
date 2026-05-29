@@ -16,7 +16,7 @@ type ChatbotProps = {
   onOpen: () => void
 }
 
-// RAG Knowledge Base Document Type
+// RAG Knowledge Base Document Type 
 interface KBDocument {
   title: string
   keywords: string[]
