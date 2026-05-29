@@ -94,8 +94,8 @@ const knowledgeBase: KBDocument[] = [
   projectsSummaryKB
 ]
 
-// System prompt context and persona helper for the Gemini API
-const getGeminiSystemPrompt = (): string => {
+// System prompt context and persona helper for the chatbot API
+const getSystemPrompt = (): string => {
   const projectsContext = projectsData
     .map(p => `- **${p.title}** (${p.category}): ${p.description}. Tech: ${p.technologies.join(', ')}.${p.link ? ` Repo: ${p.link}` : ''}`)
     .join('\n')
@@ -127,47 +127,51 @@ Rules for your answers:
 1. Express character! Talk about Laravel, Python, React, or IoT with genuine pride and enthusiasm.
 2. Keep answers concise, clear, and highly readable. Avoid using excessive emojis in your responses (use a maximum of one emoji per answer to keep it professional).
 3. Format links as standard Markdown: [Link Text](url).
-4. If a user asks something completely off-topic (e.g., baking a cake or sports trivia), make a funny developer joke (e.g., "Error 404: Recipe not found! I only compile code, but I'd love to tell you about Jay's Machine Learning projects!") and steer them back to Jay's work.
+4. You are a fully capable, general-purpose AI assistant. Answer any random, coding, mathematical, or general knowledge questions the user asks directly. You do not need to decline or restrict answers to Jay's work; however, if a natural opportunity arises, you can relate the response back to Jay's tools or projects.
 `
 }
 
-// Call Google Gemini API directly via HTTP fetch
-const callGeminiAPI = async (
+// Call Groq API via OpenAI-compatible HTTP endpoint
+const callGroqAPI = async (
   chatHistory: Message[],
   apiKey: string
 ): Promise<string> => {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`
+  const url = 'https://api.groq.com/openai/v1/chat/completions'
 
-  const formattedHistory = chatHistory.slice(-6).map(msg => ({
-    role: msg.sender === 'user' ? 'user' : 'model',
-    parts: [{ text: msg.text }]
-  }))
+  const messages = [
+    {
+      role: 'system',
+      content: getSystemPrompt()
+    },
+    ...chatHistory.slice(-6).map(msg => ({
+      role: msg.sender === 'user' ? 'user' : 'assistant',
+      content: msg.text
+    }))
+  ]
 
   const response = await fetch(url, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
     },
     body: JSON.stringify({
-      systemInstruction: {
-        parts: [{ text: getGeminiSystemPrompt() }]
-      },
-      contents: formattedHistory,
-      generationConfig: {
-        maxOutputTokens: 300,
-        temperature: 0.7
-      }
+      model: 'openai/gpt-oss-120b',
+      messages: messages,
+      temperature: 1,
+      max_tokens: 1024,
+      top_p: 1
     })
   })
 
   if (!response.ok) {
-    throw new Error(`API returned status ${response.status}`)
+    throw new Error(`Groq API returned status ${response.status}`)
   }
 
   const data = await response.json()
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text
+  const text = data.choices?.[0]?.message?.content
   if (!text) {
-    throw new Error("Empty response from Gemini API")
+    throw new Error("Empty response from Groq API")
   }
   return text.trim()
 }
@@ -291,7 +295,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
       .sort((a, b) => b.score - a.score);
 
     if (matches.length === 0) {
-      return "I couldn't find a direct answer to that, but Jay is an expert developer! You can email him at **cjaylao447@gmail.com** or use the contact form at the bottom of the page to ask him directly! ✉️";
+      return "I'm currently running in offline search mode, so I can only answer questions related to Jay's biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the Gemini API key is configured correctly in the project's environment variables!";
     }
 
     // Return top match
@@ -322,12 +326,12 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     setInputValue('')
     setIsTyping(true)
 
-    // Check for Gemini API key in local environment variables
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY
+    // Check for Groq API key in local environment variables
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY
 
     if (apiKey) {
       try {
-        const responseText = await callGeminiAPI(updatedMessages, apiKey)
+        const responseText = await callGroqAPI(updatedMessages, apiKey)
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
           sender: 'bot',
@@ -338,7 +342,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
         setIsTyping(false)
         return
       } catch (err) {
-        console.error("Gemini API error, falling back to local RAG retrieval:", err)
+        console.error("Groq API error, falling back to local RAG retrieval:", err)
       }
     }
 
