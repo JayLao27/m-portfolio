@@ -95,7 +95,7 @@ const knowledgeBase: KBDocument[] = [
 ]
 
 // System prompt context and persona helper for the chatbot API
-const getSystemPrompt = (): string => {
+export const getSystemPrompt = (): string => {
   const projectsContext = projectsData
     .map(p => `- **${p.title}** (${p.category}): ${p.description}. Tech: ${p.technologies.join(', ')}.${p.link ? ` Repo: ${p.link}` : ''}`)
     .join('\n')
@@ -132,10 +132,12 @@ Rules for your answers:
 }
 
 // Call Groq API directly via HTTP fetch
-const callGroqAPI = async (
+// Call Groq API directly via HTTP fetch with streaming support
+const callGroqAPIStreaming = async (
   chatHistory: Message[],
-  apiKey: string
-): Promise<string> => {
+  apiKey: string,
+  onChunk: (text: string) => void
+): Promise<void> => {
   const url = 'https://api.groq.com/openai/v1/chat/completions'
 
   const messages = [
@@ -156,12 +158,12 @@ const callGroqAPI = async (
       'Authorization': `Bearer ${apiKey}`
     },
     body: JSON.stringify({
-      model: 'meta-llama/llama-prompt-guard-2-86m',
+      model: 'llama-3.1-8b-instant',
       messages: messages,
       temperature: 1,
-      max_completion_tokens: 1,
+      max_completion_tokens: 1024,
       top_p: 1,
-      stream: false,
+      stream: true,
       stop: null
     })
   })
@@ -175,12 +177,37 @@ const callGroqAPI = async (
     throw new Error(`Groq API returned status ${response.status}${errorDetail}`)
   }
 
-  const data = await response.json()
-  const text = data.choices?.[0]?.message?.content
-  if (!text) {
-    throw new Error("Empty response from Groq API")
+  const reader = response.body?.getReader()
+  const decoder = new TextDecoder("utf-8")
+  if (!reader) {
+    throw new Error("Response body is not readable")
   }
-  return text.trim()
+
+  let buffer = ""
+  while (true) {
+    const { value, done } = await reader.read()
+    if (done) break
+    buffer += decoder.decode(value, { stream: true })
+    const lines = buffer.split("\n")
+    buffer = lines.pop() || ""
+
+    for (const line of lines) {
+      const trimmed = line.trim()
+      if (!trimmed) continue
+      if (trimmed === "data: [DONE]") continue
+      if (trimmed.startsWith("data: ")) {
+        try {
+          const json = JSON.parse(trimmed.slice(6))
+          const content = json.choices?.[0]?.delta?.content
+          if (content) {
+            onChunk(content)
+          }
+        } catch (e) {
+          console.warn("Failed to parse SSE JSON line:", trimmed, e)
+        }
+      }
+    }
+  }
 }
 
 export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, onOpen }) => {
@@ -342,15 +369,31 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
 
     if (apiKey) {
       try {
-        const responseText = await callGroqAPI(updatedMessages, apiKey)
-        const botMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          sender: 'bot',
-          text: responseText,
-          timestamp: new Date()
-        }
-        setMessages((prev) => [...prev, botMessage])
-        setIsTyping(false)
+        const botMessageId = (Date.now() + 1).toString()
+        let accumulatedText = ""
+
+        await callGroqAPIStreaming(updatedMessages, apiKey, (chunk) => {
+          accumulatedText += chunk
+          setIsTyping(false) // Hide typing indicator once text starts streaming
+          setMessages((prev) => {
+            const exists = prev.some(msg => msg.id === botMessageId)
+            if (exists) {
+              return prev.map(msg =>
+                msg.id === botMessageId ? { ...msg, text: accumulatedText } : msg
+              )
+            } else {
+              return [
+                ...prev,
+                {
+                  id: botMessageId,
+                  sender: 'bot',
+                  text: accumulatedText,
+                  timestamp: new Date()
+                }
+              ]
+            }
+          })
+        })
         return
       } catch (err: any) {
         console.error("Groq API error, falling back to local RAG retrieval:", err)
