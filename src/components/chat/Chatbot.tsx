@@ -131,47 +131,43 @@ Rules for your answers:
 `
 }
 
-// Call Groq API via OpenAI-compatible HTTP endpoint
-const callGroqAPI = async (
+// Call Google Gemini API directly via HTTP fetch
+const callGeminiAPI = async (
   chatHistory: Message[],
   apiKey: string
 ): Promise<string> => {
-  const url = 'https://api.groq.com/openai/v1/chat/completions'
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`
 
-  const messages = [
-    {
-      role: 'system',
-      content: getSystemPrompt()
-    },
-    ...chatHistory.slice(-6).map(msg => ({
-      role: msg.sender === 'user' ? 'user' : 'assistant',
-      content: msg.text
-    }))
-  ]
+  const formattedHistory = chatHistory.slice(-6).map(msg => ({
+    role: msg.sender === 'user' ? 'user' : 'model',
+    parts: [{ text: msg.text }]
+  }))
 
   const response = await fetch(url, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      model: 'meta-llama/llama-prompt-guard-2-86m',
-      messages: messages,
-      temperature: 1,
-      max_completion_tokens: 1,
-      top_p: 1
+      systemInstruction: {
+        parts: [{ text: getSystemPrompt() }]
+      },
+      contents: formattedHistory,
+      generationConfig: {
+        maxOutputTokens: 300,
+        temperature: 0.7
+      }
     })
   })
 
   if (!response.ok) {
-    throw new Error(`Groq API returned status ${response.status}`)
+    throw new Error(`Gemini API returned status ${response.status}`)
   }
 
   const data = await response.json()
-  const text = data.choices?.[0]?.message?.content
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text
   if (!text) {
-    throw new Error("Empty response from Groq API")
+    throw new Error("Empty response from Gemini API")
   }
   return text.trim()
 }
@@ -295,7 +291,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
       .sort((a, b) => b.score - a.score);
 
     if (matches.length === 0) {
-      return "I'm currently running in offline search mode, so I can only answer questions related to Jay's biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the Groq API key is configured correctly in the project's environment variables!";
+      return "I'm currently running in offline search mode, so I can only answer questions related to Jay's biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the Gemini API key is configured correctly in the project's environment variables!";
     }
 
     // Return top match
@@ -326,12 +322,12 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     setInputValue('')
     setIsTyping(true)
 
-    // Check for Groq API key in local environment variables
-    const apiKey = import.meta.env.VITE_GROQ_API_KEY
+    // Check for Gemini API key in local environment variables
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY
 
     if (apiKey) {
       try {
-        const responseText = await callGroqAPI(updatedMessages, apiKey)
+        const responseText = await callGeminiAPI(updatedMessages, apiKey)
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
           sender: 'bot',
@@ -342,7 +338,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
         setIsTyping(false)
         return
       } catch (err) {
-        console.error("Groq API error, falling back to local RAG retrieval:", err)
+        console.error("Gemini API error, falling back to local RAG retrieval:", err)
       }
     }
 
