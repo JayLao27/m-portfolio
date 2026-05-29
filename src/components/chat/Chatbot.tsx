@@ -156,10 +156,10 @@ const callGroqAPI = async (
       'Authorization': `Bearer ${apiKey}`
     },
     body: JSON.stringify({
-      model: 'openai/gpt-oss-120b',
+      model: 'meta-llama/llama-prompt-guard-2-86m',
       messages: messages,
       temperature: 1,
-      max_tokens: 1024,
+      max_completion_tokens: 1,
       top_p: 1
     })
   })
@@ -295,7 +295,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
       .sort((a, b) => b.score - a.score);
 
     if (matches.length === 0) {
-      return "I'm currently running in offline search mode, so I can only answer questions related to Jay's biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the Gemini API key is configured correctly in the project's environment variables!";
+      return "I'm currently running in offline search mode, so I can only answer questions related to Jay's biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the Groq API key is configured correctly in the project's environment variables!";
     }
 
     // Return top match
@@ -396,7 +396,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     const answer = retrieveKnowledge(input)
     
     // If it's a fallback answer, don't prepend prefixes
-    if (answer.includes("I couldn't find a direct answer") || answer.includes("I'm here to help")) {
+    if (answer.includes("offline search mode") || answer.includes("I'm here to help")) {
       return answer
     }
     
