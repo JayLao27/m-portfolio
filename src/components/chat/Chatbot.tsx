@@ -131,43 +131,53 @@ Rules for your answers:
 `
 }
 
-// Call Google Gemini API directly via HTTP fetch
-const callGeminiAPI = async (
+// Call OpenRouter API directly via HTTP fetch
+const callOpenRouterAPI = async (
   chatHistory: Message[],
   apiKey: string
 ): Promise<string> => {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`
+  const url = 'https://openrouter.ai/api/v1/chat/completions'
 
-  const formattedHistory = chatHistory.slice(-6).map(msg => ({
-    role: msg.sender === 'user' ? 'user' : 'model',
-    parts: [{ text: msg.text }]
-  }))
+  const messages = [
+    {
+      role: 'system',
+      content: getSystemPrompt()
+    },
+    ...chatHistory.slice(-6).map(msg => ({
+      role: msg.sender === 'user' ? 'user' : 'assistant',
+      content: msg.text
+    }))
+  ]
 
   const response = await fetch(url, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+      'HTTP-Referer': window.location.origin,
+      'X-Title': 'Webisayt Portfolio Chatbot'
     },
     body: JSON.stringify({
-      systemInstruction: {
-        parts: [{ text: getSystemPrompt() }]
-      },
-      contents: formattedHistory,
-      generationConfig: {
-        maxOutputTokens: 300,
-        temperature: 0.7
-      }
+      model: 'deepseek/deepseek-v4-flash:free',
+      messages: messages,
+      temperature: 0.7,
+      max_tokens: 300
     })
   })
 
   if (!response.ok) {
-    throw new Error(`Gemini API returned status ${response.status}`)
+    let errorDetail = ""
+    try {
+      const errData = await response.json()
+      errorDetail = `: ${errData.error?.message || JSON.stringify(errData)}`
+    } catch (_) {}
+    throw new Error(`OpenRouter API returned status ${response.status}${errorDetail}`)
   }
 
   const data = await response.json()
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text
+  const text = data.choices?.[0]?.message?.content
   if (!text) {
-    throw new Error("Empty response from Gemini API")
+    throw new Error("Empty response from OpenRouter API")
   }
   return text.trim()
 }
@@ -246,7 +256,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     }
   }, [showFAB, isOpen])
 
-  const retrieveKnowledge = (query: string): string => {
+  const retrieveKnowledge = (query: string, apiError: string | null): string => {
     const tokens = query
       .toLowerCase()
       .replace(/[.,/#!$%^&*;:{}=\-_`~()?]/g, "")
@@ -291,7 +301,10 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
       .sort((a, b) => b.score - a.score);
 
     if (matches.length === 0) {
-      return "I'm currently running in offline search mode, so I can only answer questions related to Jay's biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the Gemini API key is configured correctly in the project's environment variables!";
+      if (apiError) {
+        return `I'm currently running in offline search mode because the OpenRouter API call failed with the following error:\n\n> **${apiError}**\n\nPlease check your configuration, API key, or quota/status. In offline mode, I can only answer questions related to Jay's biography, skills, projects, or contact info.`;
+      }
+      return "I'm currently running in offline search mode, so I can only answer questions related to Jay's biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the OpenRouter API key is configured correctly in the project's environment variables!";
     }
 
     // Return top match
@@ -322,12 +335,13 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     setInputValue('')
     setIsTyping(true)
 
-    // Check for Gemini API key in local environment variables
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY
+    // Check for OpenRouter API key in local environment variables
+    const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY
+    let apiError: string | null = null
 
     if (apiKey) {
       try {
-        const responseText = await callGeminiAPI(updatedMessages, apiKey)
+        const responseText = await callOpenRouterAPI(updatedMessages, apiKey)
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
           sender: 'bot',
@@ -337,14 +351,15 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
         setMessages((prev) => [...prev, botMessage])
         setIsTyping(false)
         return
-      } catch (err) {
-        console.error("Gemini API error, falling back to local RAG retrieval:", err)
+      } catch (err: any) {
+        console.error("OpenRouter API error, falling back to local RAG retrieval:", err)
+        apiError = err.message || String(err)
       }
     }
 
     // Local RAG Fallback
     setTimeout(() => {
-      const responseText = getBotResponse(text)
+      const responseText = getBotResponse(text, apiError)
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         sender: 'bot',
@@ -356,7 +371,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     }, 1200)
   }
 
-  const getBotResponse = (input: string): string => {
+  const getBotResponse = (input: string, apiError: string | null): string => {
     const text = input.toLowerCase().trim()
     
     // Simple greeting handler
@@ -389,7 +404,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     }
 
     // Use client-side RAG retrieval
-    const answer = retrieveKnowledge(input)
+    const answer = retrieveKnowledge(input, apiError)
     
     // If it's a fallback answer, don't prepend prefixes
     if (answer.includes("offline search mode") || answer.includes("I'm here to help")) {
@@ -575,7 +590,11 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
         </div>
 
         {/* Message Box */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+        <div 
+          className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar"
+          onWheel={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+        >
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
