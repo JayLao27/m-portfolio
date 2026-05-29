@@ -131,12 +131,12 @@ Rules for your answers:
 `
 }
 
-// Call OpenRouter API directly via HTTP fetch
-const callOpenRouterAPI = async (
+// Call Groq API directly via HTTP fetch
+const callGroqAPI = async (
   chatHistory: Message[],
   apiKey: string
 ): Promise<string> => {
-  const url = 'https://openrouter.ai/api/v1/chat/completions'
+  const url = 'https://api.groq.com/openai/v1/chat/completions'
 
   const messages = [
     {
@@ -153,15 +153,16 @@ const callOpenRouterAPI = async (
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
-      'HTTP-Referer': window.location.origin,
-      'X-Title': 'Webisayt Portfolio Chatbot'
+      'Authorization': `Bearer ${apiKey}`
     },
     body: JSON.stringify({
-      model: 'deepseek/deepseek-v4-flash:free',
+      model: 'meta-llama/llama-prompt-guard-2-86m',
       messages: messages,
-      temperature: 0.7,
-      max_tokens: 300
+      temperature: 1,
+      max_completion_tokens: 1,
+      top_p: 1,
+      stream: false,
+      stop: null
     })
   })
 
@@ -171,13 +172,13 @@ const callOpenRouterAPI = async (
       const errData = await response.json()
       errorDetail = `: ${errData.error?.message || JSON.stringify(errData)}`
     } catch (_) {}
-    throw new Error(`OpenRouter API returned status ${response.status}${errorDetail}`)
+    throw new Error(`Groq API returned status ${response.status}${errorDetail}`)
   }
 
   const data = await response.json()
   const text = data.choices?.[0]?.message?.content
   if (!text) {
-    throw new Error("Empty response from OpenRouter API")
+    throw new Error("Empty response from Groq API")
   }
   return text.trim()
 }
@@ -302,9 +303,9 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
 
     if (matches.length === 0) {
       if (apiError) {
-        return `I'm currently running in offline search mode because the OpenRouter API call failed with the following error:\n\n> **${apiError}**\n\nPlease check your configuration, API key, or quota/status. In offline mode, I can only answer questions related to Jay's biography, skills, projects, or contact info.`;
+        return `I'm currently running in offline search mode because the Groq API call failed with the following error:\n\n> **${apiError}**\n\nPlease check your configuration, API key, or quota/status. In offline mode, I can only answer questions related to Jay's biography, skills, projects, or contact info.`;
       }
-      return "I'm currently running in offline search mode, so I can only answer questions related to Jay's biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the OpenRouter API key is configured correctly in the project's environment variables!";
+      return "I'm currently running in offline search mode, so I can only answer questions related to Jay's biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the Groq API key is configured correctly in the project's environment variables!";
     }
 
     // Return top match
@@ -335,13 +336,13 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     setInputValue('')
     setIsTyping(true)
 
-    // Check for OpenRouter API key in local environment variables
-    const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY
+    // Check for Groq API key in local environment variables
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY
     let apiError: string | null = null
 
     if (apiKey) {
       try {
-        const responseText = await callOpenRouterAPI(updatedMessages, apiKey)
+        const responseText = await callGroqAPI(updatedMessages, apiKey)
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
           sender: 'bot',
@@ -352,7 +353,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
         setIsTyping(false)
         return
       } catch (err: any) {
-        console.error("OpenRouter API error, falling back to local RAG retrieval:", err)
+        console.error("Groq API error, falling back to local RAG retrieval:", err)
         apiError = err.message || String(err)
       }
     }
