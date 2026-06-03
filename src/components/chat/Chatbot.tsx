@@ -58,7 +58,6 @@ const staticKnowledgeBase: KBDocument[] = [
   }
 ]
 
-// Dynamically generate knowledge base entries for individual projects from Projects.tsx
 const projectKnowledgeBase: KBDocument[] = projectsData.map(project => {
   const titleKeywords = project.title.toLowerCase().split(/\s+/)
   const categoryKeywords = project.category.toLowerCase().split(/\s+/)
