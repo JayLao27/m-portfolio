@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { MessageIcon } from '../ui/Icons'
 import { projectsData } from '../section/Projects/Projects'
 
@@ -92,7 +92,7 @@ const knowledgeBase: KBDocument[] = [
 ]
 
 // System prompt context and persona helper for the chatbot API
-export const getSystemPrompt = (): string => {
+const getSystemPrompt = (): string => {
   const projectsContext = projectsData
     .map(p => `- **${p.title}** (${p.category}): ${p.description}. Tech: ${p.technologies.join(', ')}.${p.link ? ` Repo: ${p.link}` : ''}`)
     .join('\n')
@@ -170,7 +170,9 @@ const callGroqAPIStreaming = async (
     try {
       const errData = await response.json()
       errorDetail = `: ${errData.error?.message || JSON.stringify(errData)}`
-    } catch (_) {}
+    } catch {
+      // Ignore JSON parsing errors for error detail extraction
+    }
     throw new Error(`Groq API returned status ${response.status}${errorDetail}`)
   }
 
@@ -207,81 +209,7 @@ const callGroqAPIStreaming = async (
   }
 }
 
-export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, onOpen }) => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      sender: 'bot',
-      text: "Hi there! I'm Jay's assistant. Ask me anything about Jay's skills, projects, or how to contact him!",
-      timestamp: new Date()
-    }
-  ])
-  const [inputValue, setInputValue] = useState('')
-  const [isTyping, setIsTyping] = useState(false)
-  const [showFAB, setShowFAB] = useState(false)
-  const [tooltipText, setTooltipText] = useState('')
-  const [showTooltip, setShowTooltip] = useState(false)
-  const chatEndRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show FAB if scrolled past 300px
-      if (window.scrollY > 300) {
-        setShowFAB(true)
-      } else {
-        setShowFAB(false)
-      }
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  useEffect(() => {
-    // Scroll to bottom whenever messages or typing state changes
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, isTyping])
-
-  // Periodic random tooltip prompts for the FAB
-  useEffect(() => {
-    if (!showFAB || isOpen) {
-      setShowTooltip(false)
-      return
-    }
-
-    const randomPrompts = [
-      "Hi! Let's chat!",
-      "Want to see my skills?",
-      "Check out my ML & Web projects!",
-      "Need to get in touch?",
-      "Ask me anything about my work!",
-      "Got a question about Jay's stack?",
-      "Browse my Laravel or Python code!"
-    ]
-
-    let hideTimeout: number
-
-    const triggerTooltip = () => {
-      setTooltipText(randomPrompts[Math.floor(Math.random() * randomPrompts.length)])
-      setShowTooltip(true)
-      hideTimeout = window.setTimeout(() => {
-        setShowTooltip(false)
-      }, 5000)
-    }
-
-    // Initial show
-    const initialTimeout = window.setTimeout(triggerTooltip, 4000)
-
-    // Interval loop
-    const interval = window.setInterval(triggerTooltip, 16000)
-
-    return () => {
-      window.clearTimeout(initialTimeout)
-      window.clearTimeout(hideTimeout)
-      window.clearInterval(interval)
-    }
-  }, [showFAB, isOpen])
-
-  const retrieveKnowledge = (query: string, apiError: string | null): string => {
+const retrieveKnowledge = (query: string, apiError: string | null): string => {
     const tokens = query
       .toLowerCase()
       .replace(/[.,/#!$%^&*;:{}=\-_`~()?]/g, "")
@@ -345,74 +273,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     return responseText;
   }
 
-  const handleSend = async (text: string) => {
-    if (!text.trim()) return
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      sender: 'user',
-      text: text,
-      timestamp: new Date()
-    }
-
-    const updatedMessages = [...messages, userMessage]
-    setMessages(updatedMessages)
-    setInputValue('')
-    setIsTyping(true)
-
-    // Check for Groq API key in local environment variables
-    const apiKey = import.meta.env.VITE_GROQ_API_KEY
-    let apiError: string | null = null
-
-    if (apiKey) {
-      try {
-        const botMessageId = (Date.now() + 1).toString()
-        let accumulatedText = ""
-
-        await callGroqAPIStreaming(updatedMessages, apiKey, (chunk) => {
-          accumulatedText += chunk
-          setIsTyping(false) // Hide typing indicator once text starts streaming
-          setMessages((prev) => {
-            const exists = prev.some(msg => msg.id === botMessageId)
-            if (exists) {
-              return prev.map(msg =>
-                msg.id === botMessageId ? { ...msg, text: accumulatedText } : msg
-              )
-            } else {
-              return [
-                ...prev,
-                {
-                  id: botMessageId,
-                  sender: 'bot',
-                  text: accumulatedText,
-                  timestamp: new Date()
-                }
-              ]
-            }
-          })
-        })
-        return
-      } catch (err: any) {
-        console.error("Groq API error, falling back to local RAG retrieval:", err)
-        apiError = err.message || String(err)
-      }
-    }
-
-    // Local RAG Fallback
-    setTimeout(() => {
-      const responseText = getBotResponse(text, apiError)
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        sender: 'bot',
-        text: responseText,
-        timestamp: new Date()
-      }
-      setMessages((prev) => [...prev, botMessage])
-      setIsTyping(false)
-    }, 1200)
-  }
-
-  const getBotResponse = (input: string, apiError: string | null): string => {
+const getBotResponse = (input: string, apiError: string | null): string => {
     const text = input.toLowerCase().trim()
     
     // Simple greeting handler
@@ -463,6 +324,161 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
     
     return conversationalPrefixes[Math.floor(Math.random() * conversationalPrefixes.length)] + answer
   }
+
+export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, onOpen }) => {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: '1',
+      sender: 'bot',
+      text: "Hi there! I'm Jay's assistant. Ask me anything about Jay's skills, projects, or how to contact him!",
+      timestamp: new Date()
+    }
+  ])
+  const [inputValue, setInputValue] = useState('')
+  const [isTyping, setIsTyping] = useState(false)
+  const [showFAB, setShowFAB] = useState(false)
+  const [tooltipText, setTooltipText] = useState('')
+  const [showTooltip, setShowTooltip] = useState(false)
+  const chatEndRef = useRef<HTMLDivElement>(null)
+
+  // SUGGESTION: Implement a 'Clear Conversation' feature to allow resetting the chat history.
+  const handleClearChat = useCallback(() => {
+    setMessages([
+      {
+        id: '1',
+        sender: 'bot',
+        text: "Hi there! I'm Jay's assistant. Ask me anything about Jay's skills, projects, or how to contact him!",
+        timestamp: new Date()
+      }
+    ])
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show FAB if scrolled past 300px
+      if (window.scrollY > 300) {
+        setShowFAB(true)
+      } else {
+        setShowFAB(false)
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    // Scroll to bottom whenever messages or typing state changes
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, isTyping])
+
+  // Periodic random tooltip prompts for the FAB
+  useEffect(() => {
+    if (!showFAB || isOpen) {
+      const timeoutId = setTimeout(() => {
+        setShowTooltip(false)
+      }, 0)
+      return () => clearTimeout(timeoutId)
+    }
+
+    const randomPrompts = [
+      "Hi! Let's chat!",
+      "Want to see my skills?",
+      "Check out my ML & Web projects!",
+      "Need to get in touch?",
+      "Ask me anything about my work!",
+      "Got a question about Jay's stack?",
+      "Browse my Laravel or Python code!"
+    ]
+
+    let hideTimeout: number
+
+    const triggerTooltip = () => {
+      setTooltipText(randomPrompts[Math.floor(Math.random() * randomPrompts.length)])
+      setShowTooltip(true)
+      hideTimeout = window.setTimeout(() => {
+        setShowTooltip(false)
+      }, 5000)
+    }
+
+    // Initial show
+    const initialTimeout = window.setTimeout(triggerTooltip, 4000)
+
+    // Interval loop
+    const interval = window.setInterval(triggerTooltip, 16000)
+
+    return () => {
+      window.clearTimeout(initialTimeout)
+      window.clearTimeout(hideTimeout)
+      window.clearInterval(interval)
+    }
+  }, [showFAB, isOpen])
+
+  const handleSend = useCallback(async (text: string) => {
+    if (!text.trim()) return
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      sender: 'user',
+      text: text,
+      timestamp: new Date()
+    }
+
+    const updatedMessages = [...messages, userMessage]
+    setMessages(updatedMessages)
+    setInputValue('')
+    setIsTyping(true)
+
+    // Check for Groq API key in local environment variables
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY
+    let apiError: string | null = null
+
+    if (apiKey) {
+      try {
+        const botMessageId = (Date.now() + 1).toString()
+        let accumulatedText = ""
+
+        await callGroqAPIStreaming(updatedMessages, apiKey, (chunk) => {
+          accumulatedText += chunk
+          setIsTyping(false) // Hide typing indicator once text starts streaming
+          setMessages((prev) => {
+            const exists = prev.some(msg => msg.id === botMessageId)
+            if (exists) {
+              return prev.map(msg =>
+                msg.id === botMessageId ? { ...msg, text: accumulatedText } : msg
+              )
+            } else {
+              return [
+                ...prev,
+                {
+                  id: botMessageId,
+                  sender: 'bot',
+                  text: accumulatedText,
+                  timestamp: new Date()
+                }
+              ]
+            }
+          })
+        })
+        return
+      } catch (err: unknown) {
+        console.error("Groq API error, falling back to local RAG retrieval:", err)
+        apiError = err instanceof Error ? err.message : String(err)
+      }
+    }
+
+    // Local RAG Fallback
+    setTimeout(() => {
+      const responseText = getBotResponse(text, apiError)
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        sender: 'bot',
+        text: responseText,
+        timestamp: new Date()
+      }
+      setMessages((prev) => [...prev, botMessage])
+      setIsTyping(false)
+    }, 1200)
+  }, [messages])
 
   // Safe markdown and formatting parser
   const parseMarkdown = (text: string) => {
@@ -617,17 +633,34 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
               <span className="text-[10px] opacity-60">AI Assistant</span>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
-              isDarkMode ? 'hover:bg-white/10 text-name-text hover:text-white' : 'hover:bg-slate-200 text-slate-500 hover:text-slate-900'
-            }`}
-            aria-label="Close chat"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={handleClearChat}
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+                isDarkMode ? 'hover:bg-white/10 text-name-text hover:text-white' : 'hover:bg-slate-200 text-slate-500 hover:text-slate-900'
+              }`}
+              title="Clear conversation"
+              aria-label="Clear conversation history"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+            <button
+              onClick={onClose}
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+                isDarkMode ? 'hover:bg-white/10 text-name-text hover:text-white' : 'hover:bg-slate-200 text-slate-500 hover:text-slate-900'
+              }`}
+              aria-label="Close chat"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Message Box */}
