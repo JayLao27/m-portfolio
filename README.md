@@ -26,3 +26,6 @@ A personal portfolio website built with React, TypeScript, and Vite, focused on 
 
 - **Visual Enhancements**  
   Includes grain textures and animated gradients for added depth without heavy visuals.
+
+- **AI Chatbot Assistant**  
+  Features JayBot, an AI-powered conversational clone of Jay Lao, built with local RAG retrieval fallback and Groq streaming API integration.
