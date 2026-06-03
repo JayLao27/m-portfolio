@@ -16,7 +16,6 @@ type ChatbotProps = {
   onOpen: () => void
 }
 
-// RAG Knowledge Base Document Type 
 interface KBDocument {
   title: string
   keywords: string[]
@@ -24,7 +23,6 @@ interface KBDocument {
   category: string
 }
 
-// Chunks of biography and tech knowledge
 const staticKnowledgeBase: KBDocument[] = [
   {
     title: "Jay Lao's Profile & Biography",
