@@ -1,4 +1,5 @@
-import { useEffect, useRef, createContext, useContext, type ReactNode } from 'react'
+/* eslint-disable react-refresh/only-export-components */
+import { useEffect, useState, createContext, useContext, type ReactNode } from 'react'
 import LocomotiveScroll from 'locomotive-scroll'
 import 'locomotive-scroll/dist/locomotive-scroll.css'
 
@@ -13,20 +14,23 @@ interface LocomotiveScrollProviderProps {
 }
 
 export function LocomotiveScrollProvider({ children }: LocomotiveScrollProviderProps) {
-    const scrollRef = useRef<LocomotiveScroll | null>(null)
+    const [scroll, setScroll] = useState<LocomotiveScroll | null>(null)
 
     useEffect(() => {
-        const scroll = new LocomotiveScroll()
-        scrollRef.current = scroll
+        const scrollInstance = new LocomotiveScroll()
+        const timeoutId = setTimeout(() => {
+            setScroll(scrollInstance)
+        }, 0)
 
         return () => {
-            scroll.destroy()
-            scrollRef.current = null
+            clearTimeout(timeoutId)
+            scrollInstance.destroy()
+            setScroll(null)
         }
     }, [])
 
     return (
-        <LocomotiveScrollContext.Provider value={scrollRef.current}>
+        <LocomotiveScrollContext.Provider value={scroll}>
             {children}
         </LocomotiveScrollContext.Provider>
     )
