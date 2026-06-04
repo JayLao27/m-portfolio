@@ -1,7 +1,80 @@
 import React, { useState } from 'react'
 import { EmailIcon, InstagramIcon, LinkedInIcon } from '../../ui/Icons'
 
-export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
+export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'graphite' | 'cream' }> = ({ isDarkMode, theme }) => {
+  const getGlowClass = () => {
+    switch (theme) {
+      case 'cream': return 'bg-[#0F9B6E]/5'
+      case 'dim': return 'bg-[#1DD0A7]/5'
+      case 'graphite': return 'bg-[#0ea5e9]/5'
+      default: return 'bg-highlight/5'
+    }
+  }
+
+  const getHighlightBgClass = (opacity: '' | '/50' | '/30' | '/10' | '/20') => {
+    switch (theme) {
+      case 'cream': return `bg-[#0F9B6E]${opacity === '' ? '' : opacity}`
+      case 'dim': return `bg-[#1DD0A7]${opacity === '' ? '' : opacity}`
+      case 'graphite': return `bg-[#0ea5e9]${opacity === '' ? '' : opacity}`
+      default: return `bg-highlight${opacity === '' ? '' : opacity}`
+    }
+  }
+
+  const getHighlightTextClass = () => {
+    switch (theme) {
+      case 'cream': return 'text-[#0F9B6E]'
+      case 'dim': return 'text-[#1DD0A7]'
+      case 'graphite': return 'text-[#0ea5e9]'
+      default: return 'text-highlight'
+    }
+  }
+
+
+  const getFocusClass = () => {
+    switch (theme) {
+      case 'cream': return 'focus:ring-[#0F9B6E]/40 focus:border-[#0F9B6E]/40'
+      case 'dim': return 'focus:ring-[#1DD0A7]/50 focus:border-[#1DD0A7]/50'
+      case 'graphite': return 'focus:ring-[#0ea5e9]/50 focus:border-[#0ea5e9]/50'
+      default: return 'focus:ring-highlight/50 focus:border-highlight/50'
+    }
+  }
+
+  const getButtonClass = () => {
+    switch (theme) {
+      case 'cream': return 'bg-[#0F9B6E] text-white hover:bg-[#0d855e] disabled:bg-[#0F9B6E]/50 hover:shadow-[#0F9B6E]/20'
+      case 'dim': return 'bg-[#1DD0A7] text-[#15202B] hover:bg-[#1DD0A7]/90 disabled:bg-[#1DD0A7]/50 hover:shadow-[#1DD0A7]/30'
+      case 'graphite': return 'bg-[#0ea5e9] text-[#121620] hover:bg-[#0ea5e9]/90 disabled:bg-[#0ea5e9]/50 hover:shadow-[#0ea5e9]/30'
+      default: return 'bg-highlight text-dark-bg hover:bg-highlight/90 disabled:bg-highlight/50 hover:shadow-highlight/30'
+    }
+  }
+
+  const getEmailLinkClass = () => {
+    switch (theme) {
+      case 'cream': return 'bg-[#0F9B6E]/10 text-[#0F9B6E] border-2 border-[#0F9B6E]/50 hover:bg-[#0F9B6E] hover:text-white hover:shadow-[#0F9B6E]/20'
+      case 'dim': return 'bg-[#1DD0A7]/10 text-[#1DD0A7] border-2 border-[#1DD0A7]/50 hover:bg-[#1DD0A7] hover:text-[#15202B] hover:shadow-[#1DD0A7]/30'
+      case 'graphite': return 'bg-[#0ea5e9]/10 text-[#0ea5e9] border-2 border-[#0ea5e9]/50 hover:bg-[#0ea5e9] hover:text-[#121620] hover:shadow-[#0ea5e9]/30'
+      default: return 'bg-highlight/10 text-highlight border-2 border-highlight/50 hover:bg-highlight hover:text-dark-bg hover:shadow-highlight/30'
+    }
+  }
+
+  const getCardThemeClass = () => {
+    switch (theme) {
+      case 'cream': return 'bg-slate-50 hover:bg-[#0F9B6E]/10 border border-slate-100 hover:border-[#0F9B6E]/30 shadow-sm'
+      case 'dim': return 'bg-white/5 hover:bg-[#1DD0A7]/10 border border-white/5 hover:border-[#1DD0A7]/30'
+      case 'graphite': return 'bg-white/5 hover:bg-[#0ea5e9]/10 border border-white/5 hover:border-[#0ea5e9]/30'
+      default: return 'bg-white/5 hover:bg-highlight/10 border border-white/5 hover:border-highlight/30'
+    }
+  }
+
+  const getSocialIconContainerClass = () => {
+    switch (theme) {
+      case 'cream': return 'bg-[#0F9B6E]/10 text-[#0F9B6E] group-hover:bg-[#0F9B6E] group-hover:text-white'
+      case 'dim': return 'bg-[#1DD0A7]/10 text-[#1DD0A7] group-hover:bg-[#1DD0A7] group-hover:text-[#15202B]'
+      case 'graphite': return 'bg-[#0ea5e9]/10 text-[#0ea5e9] group-hover:bg-[#0ea5e9] group-hover:text-[#121620]'
+      default: return 'bg-highlight/10 text-highlight group-hover:bg-highlight group-hover:text-dark-bg'
+    }
+  }
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,24 +97,60 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitStatus('idle')
 
-    // Simulate form submission
-    setTimeout(() => {
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+
+    if (!accessKey) {
+      console.warn("Web3Forms access key is missing. Simulation mode or error shown.")
+      // Simulating fallback behavior if key is missing or prompt user to configure it
+      setTimeout(() => {
+        setIsSubmitting(false)
+        setSubmitStatus('error')
+      }, 1000)
+      return
+    }
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          from_name: "Jay Lao Portfolio"
+        })
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', subject: '', message: '' })
+      } else {
+        console.error("Submission failed:", data)
+        setSubmitStatus('error')
+      }
+    } catch (err) {
+      console.error("Submission network error:", err)
+      setSubmitStatus('error')
+    } finally {
       setIsSubmitting(false)
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
-
-      // Reset success message after 5 seconds
-      setTimeout(() => setSubmitStatus('idle'), 5000)
-    }, 1500)
+    }
   }
 
   const contactInfo = [
     {
       icon: <EmailIcon className="w-6 h-6" />,
       title: 'Email',
-      value: 'cjaylao447@gmail.com',
-      link: 'mailto:cjaylao447@gmail.com'
+      value: 'jaylao03271@gmail.com',
+      link: 'mailto:jaylao03271@gmail.com'
     },
     {
       icon: <LinkedInIcon className="w-6 h-6" />,
@@ -70,12 +179,13 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   return (
     <section
       id="contact"
+      data-scroll
       data-scroll-reveal
       className="section-contact min-h-screen pt-32 px-[10%] pb-20 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-16 relative overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className={`absolute top-1/4 left-0 w-[600px] h-[600px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#1DD0A7]/5'} animate-float`} style={{ animationDelay: '1.5s' }} data-parallax="slow" data-parallax-speed="1.5"></div>
-        <div className={`absolute bottom-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#1DD0A7]/5'} animate-float`} data-parallax="fast" data-parallax-speed="0.8"></div>
+        <div className={`absolute top-1/4 left-0 w-[600px] h-[600px] rounded-full blur-3xl ${getGlowClass()} animate-float`} style={{ animationDelay: '1.5s' }} data-parallax="slow" data-parallax-speed="1.5"></div>
+        <div className={`absolute bottom-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl ${getGlowClass()} animate-float`} data-parallax="fast" data-parallax-speed="0.8"></div>
       </div>
 
       {/* Header */}
@@ -83,20 +193,20 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
         <div className="inline-block">
           <div className="relative">
             <h2
-              className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-[#E1E8FF]'} text-[5rem] font-bold mb-4 max-md:text-[3.5rem] leading-none`}
+              className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-light-tagline-text'} text-[5rem] font-bold mb-4 max-md:text-[3.5rem] leading-none`}
             >
               Get In
               <span className="block text-gradient">Touch</span>
             </h2>
             <div className="flex justify-center gap-2 mt-4">
-              <div className="w-20 h-1 bg-highlight"></div>
-              <div className="w-12 h-1 bg-highlight/50"></div>
-              <div className="w-6 h-1 bg-highlight/30"></div>
+              <div className={`w-20 h-1 ${getHighlightBgClass('')}`}></div>
+              <div className={`w-12 h-1 ${getHighlightBgClass('/50')}`}></div>
+              <div className={`w-6 h-1 ${getHighlightBgClass('/30')}`}></div>
             </div>
           </div>
         </div>
 
-        <p className={`mt-8 text-lg font-['DM_Sans'] ${isDarkMode ? 'text-body-text' : 'text-white/80'} max-w-2xl mx-auto`}>
+        <p className={`mt-8 text-lg font-['DM_Sans'] ${isDarkMode ? 'text-body-text' : 'text-light-body-text'} max-w-2xl mx-auto`}>
           I'm always open to new opportunities and collaborations. Feel free to reach out!
         </p>
       </div>
@@ -106,8 +216,8 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
         {/* Left Side - Contact Information */}
         <div className="space-y-8">
-          <div className={`p-8 rounded-2xl glass-effect border ${isDarkMode ? 'border-white/10' : 'border-white/20'}`}>
-            <h3 className={`text-2xl font-['Syne'] font-bold mb-6 ${isDarkMode ? 'text-highlight' : 'text-[#1DD0A7]'}`}>
+          <div className={`p-8 rounded-2xl glass-effect border ${isDarkMode ? 'border-white/10' : 'border-slate-200 bg-white/70 shadow-sm'}`}>
+            <h3 className={`text-2xl font-['Syne'] font-bold mb-6 ${getHighlightTextClass()}`}>
               Contact Information
             </h3>
 
@@ -118,28 +228,21 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                   href={item.link}
                   target={item.link.startsWith('http') ? '_blank' : '_self'}
                   rel={item.link.startsWith('http') ? 'noopener noreferrer' : ''}
-                  className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-300 hover:scale-105 group ${isDarkMode
-                    ? 'bg-white/5 hover:bg-highlight/10 border border-white/5 hover:border-highlight/30'
-                    : 'bg-white/10 hover:bg-[#1DD0A7]/10 border border-white/10 hover:border-[#1DD0A7]/30'
-                    }`}
+                  className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-300 hover:scale-105 group ${getCardThemeClass()}`}
                 >
-                  <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-300 ${isDarkMode
-                    ? 'bg-highlight/10 text-highlight group-hover:bg-highlight group-hover:text-dark-bg'
-                    : 'bg-[#1DD0A7]/10 text-[#1DD0A7] group-hover:bg-[#1DD0A7] group-hover:text-white'
-                    }`}>
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-300 ${getSocialIconContainerClass()}`}>
                     {item.icon}
                   </div>
                   <div className="flex-1">
-                    <p className={`text-sm font-['JetBrains_Mono'] ${isDarkMode ? 'text-body-text/60' : 'text-white/60'}`}>
+                    <p className={`text-sm font-['JetBrains_Mono'] ${isDarkMode ? 'text-body-text/60' : 'text-light-body-text/60'}`}>
                       {item.title}
                     </p>
-                    <p className={`font-['DM_Sans'] font-medium ${isDarkMode ? 'text-body-text' : 'text-white'}`}>
+                    <p className={`font-['DM_Sans'] font-medium ${isDarkMode ? 'text-body-text' : 'text-light-name-text'}`}>
                       {item.value}
                     </p>
                   </div>
                   <svg
-                    className={`w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 ${isDarkMode ? 'text-highlight' : 'text-[#1DD0A7]'
-                      }`}
+                    className={`w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 ${getHighlightTextClass()}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -152,11 +255,11 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
           </div>
 
           {/* Additional Info Card */}
-          <div className={`p-8 rounded-2xl glass-effect border ${isDarkMode ? 'border-white/10' : 'border-white/20'}`}>
-            <h3 className={`text-xl font-['Syne'] font-bold mb-4 ${isDarkMode ? 'text-highlight' : 'text-[#1DD0A7]'}`}>
+          <div className={`p-8 rounded-2xl glass-effect border ${isDarkMode ? 'border-white/10' : 'border-slate-200 bg-white/70 shadow-sm'}`}>
+            <h3 className={`text-xl font-['Syne'] font-bold mb-4 ${getHighlightTextClass()}`}>
               Let's Work Together
             </h3>
-            <p className={`font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/80' : 'text-white/80'}`}>
+            <p className={`font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/80' : 'text-light-body-text/90'}`}>
               I'm currently available for freelance projects, collaborations, and full-time opportunities.
               Whether you have a question or just want to say hi, my inbox is always open!
             </p>
@@ -165,8 +268,8 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
         </div>
 
         {/* Right Side - Contact Form */}
-        <div className={`p-8 rounded-2xl glass-effect border ${isDarkMode ? 'border-white/10' : 'border-white/20'}`}>
-          <h3 className={`text-2xl font-['Syne'] font-bold mb-6 ${isDarkMode ? 'text-highlight' : 'text-[#1DD0A7]'}`}>
+        <div className={`p-8 rounded-2xl glass-effect border ${isDarkMode ? 'border-white/10' : 'border-slate-200 bg-white/70 shadow-sm'}`}>
+          <h3 className={`text-2xl font-['Syne'] font-bold mb-6 ${getHighlightTextClass()}`}>
             Send Me a Message
           </h3>
 
@@ -175,7 +278,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             <div>
               <label
                 htmlFor="name"
-                className={`block text-sm font-['JetBrains_Mono'] mb-2 ${isDarkMode ? 'text-body-text' : 'text-white'}`}
+                className={`block text-sm font-['JetBrains_Mono'] mb-2 ${isDarkMode ? 'text-body-text' : 'text-light-body-text'}`}
               >
                 Your Name *
               </label>
@@ -187,8 +290,8 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                 onChange={handleChange}
                 required
                 className={`w-full px-4 py-3 rounded-lg font-['DM_Sans'] transition-all duration-300 focus:outline-none focus:ring-2 ${isDarkMode
-                  ? 'bg-white/5 border border-white/10 text-body-text placeholder-body-text/40 focus:ring-highlight/50 focus:border-highlight/50'
-                  : 'bg-white/10 border border-white/20 text-white placeholder-white/40 focus:ring-[#1DD0A7]/50 focus:border-[#1DD0A7]/50'
+                  ? `bg-white/5 border border-white/10 text-body-text placeholder-body-text/40 ${getFocusClass()}`
+                  : `bg-white border border-slate-200 text-light-name-text placeholder-slate-400 ${getFocusClass()} shadow-sm`
                   }`}
                 placeholder="Name"
               />
@@ -198,7 +301,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             <div>
               <label
                 htmlFor="email"
-                className={`block text-sm font-['JetBrains_Mono'] mb-2 ${isDarkMode ? 'text-body-text' : 'text-white'}`}
+                className={`block text-sm font-['JetBrains_Mono'] mb-2 ${isDarkMode ? 'text-body-text' : 'text-light-body-text'}`}
               >
                 Your Email *
               </label>
@@ -210,8 +313,8 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                 onChange={handleChange}
                 required
                 className={`w-full px-4 py-3 rounded-lg font-['DM_Sans'] transition-all duration-300 focus:outline-none focus:ring-2 ${isDarkMode
-                  ? 'bg-white/5 border border-white/10 text-body-text placeholder-body-text/40 focus:ring-highlight/50 focus:border-highlight/50'
-                  : 'bg-white/10 border border-white/20 text-white placeholder-white/40 focus:ring-[#1DD0A7]/50 focus:border-[#1DD0A7]/50'
+                  ? `bg-white/5 border border-white/10 text-body-text placeholder-body-text/40 ${getFocusClass()}`
+                  : `bg-white border border-slate-200 text-light-name-text placeholder-slate-400 ${getFocusClass()} shadow-sm`
                   }`}
                 placeholder="Name@example.com"
               />
@@ -221,7 +324,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             <div>
               <label
                 htmlFor="subject"
-                className={`block text-sm font-['JetBrains_Mono'] mb-2 ${isDarkMode ? 'text-body-text' : 'text-white'}`}
+                className={`block text-sm font-['JetBrains_Mono'] mb-2 ${isDarkMode ? 'text-body-text' : 'text-light-body-text'}`}
               >
                 Subject *
               </label>
@@ -233,8 +336,8 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                 onChange={handleChange}
                 required
                 className={`w-full px-4 py-3 rounded-lg font-['DM_Sans'] transition-all duration-300 focus:outline-none focus:ring-2 ${isDarkMode
-                  ? 'bg-white/5 border border-white/10 text-body-text placeholder-body-text/40 focus:ring-highlight/50 focus:border-highlight/50'
-                  : 'bg-white/10 border border-white/20 text-white placeholder-white/40 focus:ring-[#1DD0A7]/50 focus:border-[#1DD0A7]/50'
+                  ? `bg-white/5 border border-white/10 text-body-text placeholder-body-text/40 ${getFocusClass()}`
+                  : `bg-white border border-slate-200 text-light-name-text placeholder-slate-400 ${getFocusClass()} shadow-sm`
                   }`}
                 placeholder="Project Inquiry"
               />
@@ -244,7 +347,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             <div>
               <label
                 htmlFor="message"
-                className={`block text-sm font-['JetBrains_Mono'] mb-2 ${isDarkMode ? 'text-body-text' : 'text-white'}`}
+                className={`block text-sm font-['JetBrains_Mono'] mb-2 ${isDarkMode ? 'text-body-text' : 'text-light-body-text'}`}
               >
                 Message *
               </label>
@@ -256,8 +359,8 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
                 required
                 rows={6}
                 className={`w-full px-4 py-3 rounded-lg font-['DM_Sans'] transition-all duration-300 focus:outline-none focus:ring-2 resize-none ${isDarkMode
-                  ? 'bg-white/5 border border-white/10 text-body-text placeholder-body-text/40 focus:ring-highlight/50 focus:border-highlight/50'
-                  : 'bg-white/10 border border-white/20 text-white placeholder-white/40 focus:ring-[#1DD0A7]/50 focus:border-[#1DD0A7]/50'
+                  ? `bg-white/5 border border-white/10 text-body-text placeholder-body-text/40 ${getFocusClass()}`
+                  : `bg-white border border-slate-200 text-light-name-text placeholder-slate-400 ${getFocusClass()} shadow-sm`
                   }`}
                 placeholder="Tell me about your project..."
               />
@@ -267,10 +370,7 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 flex items-center justify-center gap-3 ${isDarkMode
-                ? 'bg-highlight text-dark-bg hover:bg-highlight/90 disabled:bg-highlight/50'
-                : 'bg-[#1DD0A7] text-white hover:bg-[#0F9B6E] disabled:bg-[#1DD0A7]/50'
-                } hover:scale-105 hover:shadow-lg hover:shadow-highlight/30 disabled:cursor-not-allowed disabled:hover:scale-100`}
+              className={`w-full px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 flex items-center justify-center gap-3 ${getButtonClass()} hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:hover:scale-100`}
             >
               {isSubmitting ? (
                 <>
@@ -292,9 +392,18 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
             {/* Success Message */}
             {submitStatus === 'success' && (
-              <div className={`p-4 rounded-lg ${isDarkMode ? 'bg-highlight/10 border border-highlight/30' : 'bg-[#1DD0A7]/10 border border-[#1DD0A7]/30'}`}>
-                <p className={`text-sm font-['DM_Sans'] text-center ${isDarkMode ? 'text-highlight' : 'text-[#1DD0A7]'}`}>
+              <div className={`p-4 rounded-lg ${theme === 'cream' ? 'bg-[#0F9B6E]/10 border border-[#0F9B6E]/30' : theme === 'dim' ? 'bg-[#1DD0A7]/10 border border-[#1DD0A7]/30' : theme === 'graphite' ? 'bg-[#0ea5e9]/10 border border-[#0ea5e9]/30' : 'bg-highlight/10 border border-highlight/30'}`}>
+                <p className={`text-sm font-['DM_Sans'] text-center ${getHighlightTextClass()}`}>
                   ✓ Message sent successfully! I'll get back to you soon.
+                </p>
+              </div>
+            )}
+
+            {/* Error Message */}
+            {submitStatus === 'error' && (
+              <div className="p-4 rounded-lg bg-rose-500/10 border border-rose-500/30">
+                <p className="text-sm font-['DM_Sans'] text-center text-rose-500">
+                  ✗ Failed to send message. Please ensure `VITE_WEB3FORMS_ACCESS_KEY` is configured in your `.env` file.
                 </p>
               </div>
             )}
@@ -304,19 +413,16 @@ export const Contact: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
       {/* Bottom CTA */}
       <div className="mt-20 text-center relative z-10 scroll-animate-subtle scroll-animate-delay-2" data-parallax="slide-up" data-parallax-delay="0.4">
-        <div className={`inline-block p-8 rounded-2xl glass-effect border ${isDarkMode ? 'border-white/10' : 'border-white/20'}`}>
-          <p className={`text-lg font-['DM_Sans'] mb-4 ${isDarkMode ? 'text-body-text' : 'text-white'}`}>
+        <div className={`inline-block p-8 rounded-2xl glass-effect border ${isDarkMode ? 'border-white/10' : 'border-slate-200 bg-white/70 shadow-sm'}`}>
+          <p className={`text-lg font-['DM_Sans'] mb-4 ${isDarkMode ? 'text-body-text' : 'text-light-body-text'}`}>
             Prefer a direct email?
           </p>
           <a
-            href="mailto:cjaylao447@gmail.com"
-            className={`contact-email-link inline-flex items-center gap-3 px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 ${isDarkMode
-              ? 'bg-highlight/10 text-highlight border-2 border-highlight/50 hover:bg-highlight hover:text-dark-bg'
-              : 'bg-[#1DD0A7]/10 text-[#1DD0A7] border-2 border-[#1DD0A7]/50 hover:bg-[#1DD0A7] hover:text-white'
-              } hover:scale-105 hover:shadow-lg hover:shadow-highlight/30`}
+            href="mailto:jaylao03271@gmail.com"
+            className={`contact-email-link inline-flex items-center gap-3 px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 ${getEmailLinkClass()} hover:scale-105 hover:shadow-lg`}
           >
             <EmailIcon className="w-5 h-5" />
-            cjaylao447@gmail.com
+            jaylao03271@gmail.com
           </a>
         </div>
       </div>
