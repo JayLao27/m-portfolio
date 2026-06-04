@@ -10,7 +10,7 @@ export function useScrollReveal() {
           }
         })
       },
-      { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
+      { threshold: 0.01, rootMargin: '0px' }
     )
 
     const elements = document.querySelectorAll('[data-scroll-reveal]')
@@ -19,3 +19,4 @@ export function useScrollReveal() {
     return () => observer.disconnect()
   }, [])
 }
+
