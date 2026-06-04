@@ -8,25 +8,25 @@ import { LayoutDesign } from './components/layout/LayoutDesign'
 import { Chatbot } from './components/chat/Chatbot'
 
 function Layout() {
-  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [theme, setTheme] = useState<'dark' | 'dim' | 'graphite' | 'cream'>('dark')
   const [isChatOpen, setIsChatOpen] = useState(false)
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode)
-  }
+  const isDarkMode = theme !== 'cream'
 
   return (
-    <LayoutDesign isDarkMode={isDarkMode}>
+    <LayoutDesign isDarkMode={isDarkMode} theme={theme}>
       <Hero 
         isDarkMode={isDarkMode} 
-        toggleTheme={toggleTheme} 
+        theme={theme}
+        setTheme={setTheme} 
         onChatOpen={() => setIsChatOpen(true)} 
       />
-      <AboutMe isDarkMode={isDarkMode} />
-      <Projects isDarkMode={isDarkMode} />
-      <Contact isDarkMode={isDarkMode} />
+      <AboutMe isDarkMode={isDarkMode} theme={theme} />
+      <Projects isDarkMode={isDarkMode} theme={theme} />
+      <Contact isDarkMode={isDarkMode} theme={theme} />
       <Chatbot 
         isDarkMode={isDarkMode} 
+        theme={theme}
         isOpen={isChatOpen} 
         onClose={() => setIsChatOpen(false)} 
         onOpen={() => setIsChatOpen(true)} 
