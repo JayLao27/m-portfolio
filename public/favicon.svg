@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <!-- Gradients for Dark Mode -->
+    <linearGradient id="jGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#39F1DA" />
+      <stop offset="100%" stop-color="#00B4D8" />
+    </linearGradient>
+    <linearGradient id="lGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CCD6F6" />
+      <stop offset="100%" stop-color="#48CAE4" />
+    </linearGradient>
+
+    <!-- Gradients for Light Mode -->
+    <linearGradient id="jGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1DD0A7" />
+      <stop offset="100%" stop-color="#0077B6" />
+    </linearGradient>
+    <linearGradient id="lGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#285B9D" />
+      <stop offset="100%" stop-color="#1DD0A7" />
+    </linearGradient>
+  </defs>
+  <style>
+    .hex { stroke: #39F1DA; fill: none; stroke-width: 8px; }
+    .j-let { stroke: url(#jGradDark); fill: none; stroke-width: 14px; stroke-linecap: round; stroke-linejoin: round; }
+    .l-let { stroke: url(#lGradDark); fill: none; stroke-width: 14px; stroke-linecap: round; stroke-linejoin: round; }
+    @media (prefers-color-scheme: light) {
+      .hex { stroke: #1DD0A7; }
+      .j-let { stroke: url(#jGradLight); }
+      .l-let { stroke: url(#lGradLight); }
+    }
+  </style>
+  <path class="hex" d="M 100,10 L 173,50 L 173,150 L 100,190 L 27,150 L 27,50 Z" />
+  <path class="j-let" d="M 65,70 C 90,70 90,115 90,120 C 90,140 75,148 60,135" />
+  <path class="l-let" d="M 115,70 L 115,140 L 145,140" />
+</svg>
