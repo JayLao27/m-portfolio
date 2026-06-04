@@ -2,17 +2,63 @@ import React, { useState, useRef } from 'react'
 
 interface ProfileImageProps {
   isDarkMode: boolean
+  theme: 'dark' | 'dim' | 'graphite' | 'cream'
   imageSrc?: string
   imageAlt?: string
 }
 
 export const ProfileImage: React.FC<ProfileImageProps> = ({
-  isDarkMode,
+  theme,
   imageAlt = 'Profile'
 }) => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  const getContainerShadowClass = () => {
+    switch (theme) {
+      case 'cream': return 'shadow-2xl shadow-[#0F9B6E]/15'
+      case 'dim': return 'shadow-2xl shadow-[#1DD0A7]/20'
+      case 'graphite': return 'shadow-2xl shadow-[#0ea5e9]/20'
+      default: return 'shadow-2xl shadow-highlight/20'
+    }
+  }
+
+  const getBorderLayerClass = () => {
+    switch (theme) {
+      case 'cream': return 'border-[#0F9B6E]/30 bg-white/80'
+      case 'dim': return 'border-[#1DD0A7]/30 bg-[#15202B]/80'
+      case 'graphite': return 'border-[#0ea5e9]/30 bg-[#1E2530]/80'
+      default: return 'border-highlight/30 bg-dark-bg/80'
+    }
+  }
+
+  const getGridBgClass = () => {
+    switch (theme) {
+      case 'cream': return 'bg-[linear-gradient(rgba(15,155,110,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(15,155,110,0.1)_1px,transparent_1px)]'
+      case 'dim': return 'bg-[linear-gradient(rgba(29,208,167,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(29,208,167,0.1)_1px,transparent_1px)]'
+      case 'graphite': return 'bg-[linear-gradient(rgba(14,165,233,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.1)_1px,transparent_1px)]'
+      default: return 'bg-[linear-gradient(rgba(94,238,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(94,238,255,0.1)_1px,transparent_1px)]'
+    }
+  }
+
+  const getHoloOverlayClass = () => {
+    switch (theme) {
+      case 'cream': return 'bg-gradient-to-tr from-[#0F9B6E] via-blue-400 to-[#0F9B6E]'
+      case 'dim': return 'bg-gradient-to-tr from-[#1DD0A7] via-emerald-400 to-[#1DD0A7]'
+      case 'graphite': return 'bg-gradient-to-tr from-[#0ea5e9] via-purple-500 to-[#0ea5e9]'
+      default: return 'bg-gradient-to-tr from-highlight via-purple-500 to-highlight'
+    }
+  }
+
+  const getCornerBorderClass = () => {
+    switch (theme) {
+      case 'cream': return 'border-[#0F9B6E]'
+      case 'dim': return 'border-[#1DD0A7]'
+      case 'graphite': return 'border-[#0ea5e9]'
+      default: return 'border-highlight'
+    }
+  }
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return
@@ -64,8 +110,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
     >
       {/* Main 3D Container */}
       <div
-        className={`relative w-full h-full rounded-2xl transition-all duration-300 ${isDarkMode ? 'shadow-2xl shadow-highlight/20' : 'shadow-2xl shadow-[#1DD0A7]/20'
-          }`}
+        className={`relative w-full h-full rounded-2xl transition-all duration-300 ${getContainerShadowClass()}`}
         style={{
           ...transformStyle,
           transformStyle: 'preserve-3d'
@@ -73,10 +118,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
       >
         {/* Border / Frame Layer */}
         <div
-          className={`absolute inset-0 rounded-2xl border-2 transition-colors duration-300 ${isDarkMode
-            ? 'border-highlight/30 bg-dark-bg/80'
-            : 'border-[#1DD0A7]/30 bg-white/80'
-            } backdrop-blur-sm`}
+          className={`absolute inset-0 rounded-2xl border-2 transition-colors duration-300 ${getBorderLayerClass()} backdrop-blur-sm`}
           style={{ transform: 'translateZ(-20px)' }}
         ></div>
 
@@ -85,10 +127,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
           className="absolute inset-2 rounded-xl opacity-30 overflow-hidden"
           style={{ transform: 'translateZ(-10px)' }}
         >
-          <div className={`w-full h-full ${isDarkMode
-            ? 'bg-[linear-gradient(rgba(94,238,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(94,238,255,0.1)_1px,transparent_1px)]'
-            : 'bg-[linear-gradient(rgba(29,208,167,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(29,208,167,0.1)_1px,transparent_1px)]'
-            }`}
+          <div className={`w-full h-full ${getGridBgClass()}`}
             style={{ backgroundSize: '20px 20px' }}
           ></div>
         </div>
@@ -105,8 +144,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
           />
 
           {/* Holographic Overlay */}
-          <div className={`absolute inset-0 mix-blend-overlay opacity-0 group-hover:opacity-40 transition-opacity duration-300 ${isDarkMode ? 'bg-gradient-to-tr from-highlight via-purple-500 to-highlight' : 'bg-gradient-to-tr from-[#1DD0A7] via-blue-400 to-[#1DD0A7]'
-            }`}></div>
+          <div className={`absolute inset-0 mix-blend-overlay opacity-0 group-hover:opacity-40 transition-opacity duration-300 ${getHoloOverlayClass()}`}></div>
         </div>
 
         {/* Glare/Shine Effect */}
@@ -119,8 +157,8 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({
         ></div>
 
         {/* Floating Corner Accents */}
-        <div className={`absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 ${isDarkMode ? 'border-highlight' : 'border-[#1DD0A7]'} transition-all duration-300 group-hover:top-[-10px] group-hover:left-[-10px]`} style={{ transform: 'translateZ(30px)' }}></div>
-        <div className={`absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 ${isDarkMode ? 'border-highlight' : 'border-[#1DD0A7]'} transition-all duration-300 group-hover:bottom-[-10px] group-hover:right-[-10px]`} style={{ transform: 'translateZ(30px)' }}></div>
+        <div className={`absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 ${getCornerBorderClass()} transition-all duration-300 group-hover:top-[-10px] group-hover:left-[-10px]`} style={{ transform: 'translateZ(30px)' }}></div>
+        <div className={`absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 ${getCornerBorderClass()} transition-all duration-300 group-hover:bottom-[-10px] group-hover:right-[-10px]`} style={{ transform: 'translateZ(30px)' }}></div>
       </div>
     </div>
   )
