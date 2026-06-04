@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react'
 
 interface AdvancedCursorSpotlightProps {
-  isDarkMode: boolean
+  theme: 'dark' | 'dim' | 'graphite' | 'cream'
   intensity?: number
   size?: number
 }
 
 export const AdvancedCursorSpotlight: React.FC<AdvancedCursorSpotlightProps> = ({ 
-  isDarkMode,
+  theme,
   intensity = 0.2,
   size = 500
 }) => {
@@ -70,19 +70,22 @@ export const AdvancedCursorSpotlight: React.FC<AdvancedCursorSpotlightProps> = (
         size
       )
 
-      if (isDarkMode) {
-        gradient.addColorStop(0, `rgba(94, 238, 255, ${intensity * 0.8})`)
-        gradient.addColorStop(0.2, `rgba(94, 238, 255, ${intensity * 0.4})`)
-        gradient.addColorStop(0.4, `rgba(94, 238, 255, ${intensity * 0.2})`)
-        gradient.addColorStop(0.6, `rgba(94, 238, 255, ${intensity * 0.1})`)
-        gradient.addColorStop(1, 'rgba(94, 238, 255, 0)')
-      } else {
-        gradient.addColorStop(0, `rgba(29, 208, 167, ${intensity * 0.8})`)
-        gradient.addColorStop(0.2, `rgba(29, 208, 167, ${intensity * 0.4})`)
-        gradient.addColorStop(0.4, `rgba(29, 208, 167, ${intensity * 0.2})`)
-        gradient.addColorStop(0.6, `rgba(29, 208, 167, ${intensity * 0.1})`)
-        gradient.addColorStop(1, 'rgba(29, 208, 167, 0)')
+      const getSpotlightRGB = () => {
+        switch (theme) {
+          case 'cream': return '15, 155, 110' // Forest Green
+          case 'dim': return '29, 208, 167' // Emerald Teal
+          case 'graphite': return '14, 165, 233' // Sky Blue
+          default: return '94, 238, 255' // Neon Cyan
+        }
       }
+
+      const rgb = getSpotlightRGB()
+
+      gradient.addColorStop(0, `rgba(${rgb}, ${intensity * 0.8})`)
+      gradient.addColorStop(0.2, `rgba(${rgb}, ${intensity * 0.4})`)
+      gradient.addColorStop(0.4, `rgba(${rgb}, ${intensity * 0.2})`)
+      gradient.addColorStop(0.6, `rgba(${rgb}, ${intensity * 0.1})`)
+      gradient.addColorStop(1, `rgba(${rgb}, 0)`)
 
       ctx.fillStyle = gradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -97,15 +100,9 @@ export const AdvancedCursorSpotlight: React.FC<AdvancedCursorSpotlightProps> = (
         size * 0.3
       )
 
-      if (isDarkMode) {
-        innerGradient.addColorStop(0, `rgba(94, 238, 255, ${intensity * 1.5})`)
-        innerGradient.addColorStop(0.5, `rgba(94, 238, 255, ${intensity * 0.5})`)
-        innerGradient.addColorStop(1, 'rgba(94, 238, 255, 0)')
-      } else {
-        innerGradient.addColorStop(0, `rgba(29, 208, 167, ${intensity * 1.5})`)
-        innerGradient.addColorStop(0.5, `rgba(29, 208, 167, ${intensity * 0.5})`)
-        innerGradient.addColorStop(1, 'rgba(29, 208, 167, 0)')
-      }
+      innerGradient.addColorStop(0, `rgba(${rgb}, ${intensity * 1.5})`)
+      innerGradient.addColorStop(0.5, `rgba(${rgb}, ${intensity * 0.5})`)
+      innerGradient.addColorStop(1, `rgba(${rgb}, 0)`)
 
       ctx.fillStyle = innerGradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -123,7 +120,7 @@ export const AdvancedCursorSpotlight: React.FC<AdvancedCursorSpotlightProps> = (
         cancelAnimationFrame(animationFrameId.current)
       }
     }
-  }, [isDarkMode, intensity, size])
+  }, [theme, intensity, size])
 
   return (
     <canvas
