@@ -45,8 +45,8 @@
 
 .hex-path {
   fill: none;
-  stroke: #e8e8e8;
-  stroke-width: 2;
+  stroke: rgba(57, 241, 218, 0.35);
+  stroke-width: 3;
   stroke-linecap: round;
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
@@ -80,13 +80,20 @@
 
 .j-path {
   fill: none;
-  stroke: #e8e8e8;
-  stroke-width: 3;
+  stroke: #39f1da;
+  stroke-width: 12;
   stroke-linecap: round;
   stroke-linejoin: round;
-  font-family: 'Poppins', sans-serif;
-  stroke-dasharray: 0;
-  stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 8px rgba(57, 241, 218, 0.4));
+}
+
+.l-path {
+  fill: none;
+  stroke: #ccd6f6;
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 8px rgba(204, 214, 246, 0.4));
 }
 
 @keyframes fadeInLogo {
