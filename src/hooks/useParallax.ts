@@ -23,6 +23,11 @@ gsap.registerPlugin(ScrollTrigger)
  */
 export function useParallax() {
     useEffect(() => {
+        let images: NodeListOf<HTMLImageElement> | null = null
+        const handleImageLoad = () => {
+            ScrollTrigger.refresh()
+        }
+
         const timer = setTimeout(() => {
             const elements = document.querySelectorAll<HTMLElement>('[data-parallax]')
 
@@ -169,10 +174,34 @@ export function useParallax() {
             })
 
             ScrollTrigger.refresh()
+
+            // Monitor image loads to refresh triggers when dimensions change
+            images = document.querySelectorAll('img')
+            images.forEach((img) => {
+                if (img.complete) {
+                    ScrollTrigger.refresh()
+                } else {
+                    img.addEventListener('load', handleImageLoad)
+                }
+            })
         }, 100)
+
+        // Setup multiple delayed refreshes for loading fonts, layout shifts, etc.
+        const refreshTimers = [500, 1000, 2000, 5000].map((delayTime) =>
+            setTimeout(() => {
+                ScrollTrigger.refresh()
+            }, delayTime)
+        )
+
+        window.addEventListener('load', handleImageLoad)
 
         return () => {
             clearTimeout(timer)
+            refreshTimers.forEach((t) => clearTimeout(t))
+            window.removeEventListener('load', handleImageLoad)
+            if (images) {
+                images.forEach((img) => img.removeEventListener('load', handleImageLoad))
+            }
             ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
         }
     }, [])
