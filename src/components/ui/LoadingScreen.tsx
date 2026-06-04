@@ -36,10 +36,12 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
           <path className="hex-path" d="M 100,10 L 173,50 L 173,150 L 100,190 L 27,150 L 27,50 Z"/>
         </svg>
 
-        {/* J Logo */}
+        {/* JL Logo */}
         <svg className="j-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
           {/* J */}
-          <path className="j-path" d="M 80,60 L 120,60 L 120,130 Q 120,150 100,150 Q 80,150 80,130"/>
+          <path className="j-path" d="M 65,70 C 90,70 90,115 90,120 C 90,140 75,148 60,135"/>
+          {/* L */}
+          <path className="l-path" d="M 115,70 L 115,140 L 145,140"/>
         </svg>
       </div>
     </div>
