@@ -11,6 +11,7 @@ type Message = {
 
 type ChatbotProps = {
   isDarkMode: boolean
+  theme: 'dark' | 'dim' | 'graphite' | 'cream'
   isOpen: boolean
   onClose: () => void
   onOpen: () => void
@@ -45,7 +46,7 @@ const staticKnowledgeBase: KBDocument[] = [
   {
     title: "Contact Information",
     keywords: ['contact', 'email', 'reach', 'linkedin', 'instagram', 'gmail', 'message', 'socials', 'hire', 'talk', 'send', 'mail', 'github', 'git'],
-    text: "You can reach Jay Lao here:\n\n• 📧 **Email**: cjaylao447@gmail.com\n• 🔗 **LinkedIn**: [linkedin.com/in/jaylao](https://www.linkedin.com/in/jaylao)\n• 📸 **Instagram**: [@xjay_lao](https://www.instagram.com/xjay_lao)\n• 💻 **GitHub**: [github.com/jaylao27](https://github.com/JayLao27)\n\nYou can also leave a message in the contact form at the bottom of this page!",
+    text: "You can reach Jay Lao here:\n\n• 📧 **Email**: jaylao03271@gmail.com\n• 🔗 **LinkedIn**: [linkedin.com/in/jaylao](https://www.linkedin.com/in/jaylao)\n• 📸 **Instagram**: [@xjay_lao](https://www.instagram.com/xjay_lao)\n• 💻 **GitHub**: [github.com/jaylao27](https://github.com/JayLao27)\n\nYou can also leave a message in the contact form at the bottom of this page!",
     category: "contact"
   },
   {
@@ -115,7 +116,7 @@ Here is the context about Jay Lao and his work:
 - Projects:
 ${projectsContext}
 - Contact Info:
-  • Email: cjaylao447@gmail.com
+  • Email: jaylao03271@gmail.com
   • LinkedIn: linkedin.com/in/jaylao (https://www.linkedin.com/in/jaylao)
   • Instagram: @xjay_lao (https://www.instagram.com/xjay_lao)
   • GitHub: github.com/jaylao27 (https://github.com/JayLao27)
@@ -325,7 +326,139 @@ const getBotResponse = (input: string, apiError: string | null): string => {
     return conversationalPrefixes[Math.floor(Math.random() * conversationalPrefixes.length)] + answer
   }
 
-export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, onOpen }) => {
+export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onClose, onOpen }) => {
+  const getAccentColor = () => {
+    switch (theme) {
+      case 'dim': return '#1DD0A7'
+      case 'graphite': return '#0ea5e9'
+      case 'cream': return '#0F9B6E'
+      default: return '#39F1DA'
+    }
+  }
+
+  const getChatBgClass = () => {
+    switch (theme) {
+      case 'dim': return 'bg-[#15202B]/95 border-[#1DD0A7]/20 text-body-text'
+      case 'graphite': return 'bg-[#1E2530]/95 border-[#0ea5e9]/20 text-[#94A3B8]'
+      case 'cream': return 'bg-[#FAF9F5]/95 border-slate-300 text-light-body-text shadow-2xl'
+      default: return 'bg-[#0A2B2F]/95 border-[#39F1DA]/20 text-name-text'
+    }
+  }
+
+  const getHeaderBorderClass = () => {
+    switch (theme) {
+      case 'dim': return 'border-[#1DD0A7]/15 bg-black/20'
+      case 'graphite': return 'border-[#0ea5e9]/15 bg-black/20'
+      case 'cream': return 'border-slate-100 bg-slate-50'
+      default: return 'border-[#39F1DA]/15 bg-black/20'
+    }
+  }
+
+  const getHeaderTitleClass = () => {
+    switch (theme) {
+      case 'cream': return 'text-light-name-text'
+      default: return 'text-white'
+    }
+  }
+
+  const getBubbleClass = (sender: 'bot' | 'user') => {
+    if (sender === 'user') {
+      switch (theme) {
+        case 'dim': return 'bg-[#1DD0A7] text-[#15202B] rounded-tr-none font-medium'
+        case 'graphite': return 'bg-[#0ea5e9] text-[#121620] rounded-tr-none font-medium'
+        case 'cream': return 'bg-[#0F9B6E] text-white rounded-tr-none font-medium'
+        default: return 'bg-[#39F1DA] text-[#0A2B2F] rounded-tr-none font-medium'
+      }
+    } else {
+      switch (theme) {
+        case 'dim': return 'bg-[#192734] text-body-text rounded-tl-none border border-[#1DD0A7]/5'
+        case 'graphite': return 'bg-[#121620] text-[#94A3B8] rounded-tl-none border border-[#0ea5e9]/5'
+        case 'cream': return 'bg-slate-100 text-light-body-text rounded-tl-none border border-slate-200/50'
+        default: return 'bg-[#112240] text-name-text rounded-tl-none border border-[#39F1DA]/5'
+      }
+    }
+  }
+
+  const getQuickReplyClass = () => {
+    switch (theme) {
+      case 'dim': return 'bg-[#192734] text-body-text border border-[#1DD0A7]/10 hover:border-[#1DD0A7] hover:text-white'
+      case 'graphite': return 'bg-[#121620] text-[#94A3B8] border border-[#0ea5e9]/10 hover:border-[#0ea5e9] hover:text-white'
+      case 'cream': return 'bg-slate-100 text-light-body-text border border-slate-200 hover:border-[#0F9B6E] hover:text-[#0F9B6E]'
+      default: return 'bg-[#112240] text-name-text border border-[#39F1DA]/10 hover:border-[#39F1DA] hover:text-white'
+    }
+  }
+
+  const getFormClass = () => {
+    switch (theme) {
+      case 'dim': return 'border-[#1DD0A7]/15 bg-black/25'
+      case 'graphite': return 'border-[#0ea5e9]/15 bg-black/25'
+      case 'cream': return 'border-slate-100 bg-white'
+      default: return 'border-[#39F1DA]/15 bg-black/25'
+    }
+  }
+
+  const getInputClass = () => {
+    switch (theme) {
+      case 'dim': return 'bg-[#192734] border border-[#1DD0A7]/10 focus:border-[#1DD0A7] text-white placeholder-slate-500'
+      case 'graphite': return 'bg-[#121620] border border-[#0ea5e9]/10 focus:border-[#0ea5e9] text-white placeholder-slate-500'
+      case 'cream': return 'bg-slate-100 border border-slate-200 focus:border-[#0F9B6E] text-slate-800 placeholder-slate-400'
+      default: return 'bg-[#112240] border border-[#39F1DA]/10 focus:border-[#39F1DA] text-white placeholder-slate-500'
+    }
+  }
+
+  const getButtonClass = () => {
+    switch (theme) {
+      case 'dim': return 'bg-[#1DD0A7] hover:bg-[#1DD0A7]/80 text-[#15202B]'
+      case 'graphite': return 'bg-[#0ea5e9] hover:bg-[#0ea5e9]/80 text-[#121620]'
+      case 'cream': return 'bg-[#0F9B6E] hover:bg-[#0F9B6E]/90 text-white'
+      default: return 'bg-[#39F1DA] hover:bg-[#39F1DA]/80 text-[#0A2B2F]'
+    }
+  }
+
+  const getFABGlowClass = () => {
+    switch (theme) {
+      case 'cream': return 'hover:shadow-[0_15px_30px_rgba(15,155,110,0.4)] shadow-[0_0_15px_rgba(15,155,110,0.1)]'
+      case 'dim': return 'hover:shadow-[0_15px_30px_rgba(29,208,167,0.4)] shadow-[0_0_15px_rgba(29,208,167,0.1)]'
+      case 'graphite': return 'hover:shadow-[0_15px_30px_rgba(14,165,233,0.4)] shadow-[0_0_15px_rgba(14,165,233,0.1)]'
+      default: return 'hover:shadow-[0_15px_30px_rgba(68,139,178,0.4)] shadow-[0_0_15px_rgba(68,139,178,0.1)]'
+    }
+  }
+
+  const getFABIconColorClass = () => {
+    switch (theme) {
+      case 'cream': return 'text-[#0F9B6E]'
+      case 'dim': return 'text-[#1DD0A7]'
+      case 'graphite': return 'text-[#0ea5e9]'
+      default: return 'text-[#448BB2]'
+    }
+  }
+
+  const getTooltipClass = () => {
+    switch (theme) {
+      case 'cream':
+        return 'bg-white border-slate-200 text-light-body-text shadow-slate-200'
+      case 'dim':
+        return 'bg-[#192734] border-[#1DD0A7]/30 text-white shadow-black/40'
+      case 'graphite':
+        return 'bg-[#121620] border-[#0ea5e9]/30 text-white shadow-black/40'
+      default:
+        return 'bg-[#112240] border-[#39F1DA]/30 text-white shadow-black/40'
+    }
+  }
+
+  const getTooltipArrowClass = () => {
+    switch (theme) {
+      case 'cream':
+        return 'bg-white border-slate-200'
+      case 'dim':
+        return 'bg-[#192734] border-[#1DD0A7]/30'
+      case 'graphite':
+        return 'bg-[#121620] border-[#0ea5e9]/30'
+      default:
+        return 'bg-[#112240] border-[#39F1DA]/30'
+    }
+  }
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -502,7 +635,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
             target="_blank"
             rel="noopener noreferrer"
             className={`underline font-semibold transition-colors duration-300 ${
-              isDarkMode ? 'text-highlight hover:text-white' : 'text-[#285B9D] hover:text-[#1DD0A7]'
+              isDarkMode ? 'text-highlight hover:text-white' : 'text-[#0F9B6E] hover:text-[#0d855e]'
             }`}
           >
             {match[1]}
@@ -567,34 +700,22 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
         <div
           className={`relative px-3.5 py-2 rounded-2xl text-xs font-['DM_Sans'] font-medium shadow-lg border transition-all duration-300 transform origin-right whitespace-nowrap ${
             showTooltip ? 'scale-100 opacity-100 translate-x-0' : 'scale-75 opacity-0 translate-x-4 pointer-events-none'
-          } ${
-            isDarkMode
-              ? 'bg-[#112240] border-[#39F1DA]/30 text-white shadow-black/40'
-              : 'bg-white border-[#285B9D]/20 text-[#285B9D] shadow-slate-200'
-          }`}
+          } ${getTooltipClass()}`}
         >
           {tooltipText}
           {/* Arrow */}
           <div 
-            className={`absolute top-1/2 -translate-y-1/2 -right-1 w-2 h-2 rotate-45 border-t border-r ${
-              isDarkMode 
-                ? 'bg-[#112240] border-[#39F1DA]/30' 
-                : 'bg-white border-[#285B9D]/20'
-            }`}
+            className={`absolute top-1/2 -translate-y-1/2 -right-1 w-2 h-2 rotate-45 border-t border-r ${getTooltipArrowClass()}`}
           />
         </div>
 
         <button
           onClick={onOpen}
-          className={`w-[62px] h-[52px] rounded-full flex items-center justify-center transition-all duration-300 hover:-translate-y-1.5 hover:scale-105 ${
-            isDarkMode 
-              ? 'hover:shadow-[0_15px_30px_rgba(68,139,178,0.4)]' 
-              : 'hover:shadow-[0_15px_30px_rgba(40,91,157,0.3)]'
-          }`}
+          className={`w-[62px] h-[52px] rounded-full flex items-center justify-center transition-all duration-300 hover:-translate-y-1.5 hover:scale-105 ${getFABGlowClass()}`}
           style={{ background: 'transparent', border: 'none', padding: 0 }}
           aria-label="Open Chatbot"
         >
-          <MessageIcon className="text-white drop-shadow-lg" />
+          <MessageIcon className={`${getFABIconColorClass()} drop-shadow-lg`} />
         </button>
       </div>
 
@@ -602,32 +723,26 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
       <div
         className={`fixed bottom-24 right-8 z-[2000] w-96 max-md:w-[calc(100vw-2rem)] max-md:right-4 h-[500px] rounded-2xl shadow-2xl flex flex-col transition-all duration-500 ease-out transform ${
           isOpen ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto' : 'translate-y-10 opacity-0 scale-95 pointer-events-none'
-        } ${
-          isDarkMode
-            ? 'bg-[#0A2B2F]/95 backdrop-blur-md border border-[#39F1DA]/20 text-name-text'
-            : 'bg-white/95 backdrop-blur-md border border-[#285B9D]/20 text-[#4A5568]'
-        }`}
+        } ${getChatBgClass()}`}
       >
         {/* Header */}
         <div
-          className={`px-4 py-3.5 rounded-t-2xl flex items-center justify-between border-b ${
-            isDarkMode ? 'border-[#39F1DA]/15 bg-black/20' : 'border-slate-100 bg-slate-50'
-          }`}
+          className={`px-4 py-3.5 rounded-t-2xl flex items-center justify-between border-b ${getHeaderBorderClass()}`}
         >
           <div className="flex items-center gap-3">
             <div className="relative w-8 h-8 rounded-full flex items-center justify-center bg-[#448BB2]/20">
               <svg width="20" height="17" viewBox="0 0 62 52" fill="none">
-                <rect x="20" y="21" width="22" height="16" rx="4" stroke={isDarkMode ? '#39F1DA' : '#285B9D'} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                <path d="M31 21v-6" stroke={isDarkMode ? '#39F1DA' : '#285B9D'} strokeWidth="4" strokeLinecap="round"/>
-                <circle cx="31" cy="12.5" r="2" fill={isDarkMode ? '#39F1DA' : '#285B9D'}/>
-                <circle cx="26.5" cy="28.5" r="2.5" fill={isDarkMode ? '#39F1DA' : '#285B9D'}/>
-                <circle cx="35.5" cy="28.5" r="2.5" fill={isDarkMode ? '#39F1DA' : '#285B9D'}/>
-                <path d="M17.5 29h2.5 M42 29h2.5" stroke={isDarkMode ? '#39F1DA' : '#285B9D'} strokeWidth="4"/>
+                <rect x="20" y="21" width="22" height="16" rx="4" stroke={getAccentColor()} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                <path d="M31 21v-6" stroke={getAccentColor()} strokeWidth="4" strokeLinecap="round"/>
+                <circle cx="31" cy="12.5" r="2" fill={getAccentColor()}/>
+                <circle cx="26.5" cy="28.5" r="2.5" fill={getAccentColor()}/>
+                <circle cx="35.5" cy="28.5" r="2.5" fill={getAccentColor()}/>
+                <path d="M17.5 29h2.5 M42 29h2.5" stroke={getAccentColor()} strokeWidth="4"/>
               </svg>
-              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[#0A2B2F] animate-pulse"></span>
+              <span className={`absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 ${theme === 'cream' ? 'border-slate-50' : 'border-[#0A2B2F]'} animate-pulse`}></span>
             </div>
             <div>
-              <h3 className={`font-['Syne'] font-bold text-sm leading-none ${isDarkMode ? 'text-white' : 'text-[#0A2B2F]'}`}>
+              <h3 className={`font-['Syne'] font-bold text-sm leading-none ${getHeaderTitleClass()}`}>
                 JayBot
               </h3>
               <span className="text-[10px] opacity-60">AI Assistant</span>
@@ -637,7 +752,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
             <button
               onClick={handleClearChat}
               className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
-                isDarkMode ? 'hover:bg-white/10 text-name-text hover:text-white' : 'hover:bg-slate-200 text-slate-500 hover:text-slate-900'
+                theme === 'cream' ? 'hover:bg-slate-200 text-slate-500 hover:text-slate-900' : 'hover:bg-white/10 text-name-text hover:text-white'
               }`}
               title="Clear conversation"
               aria-label="Clear conversation history"
@@ -652,7 +767,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
             <button
               onClick={onClose}
               className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
-                isDarkMode ? 'hover:bg-white/10 text-name-text hover:text-white' : 'hover:bg-slate-200 text-slate-500 hover:text-slate-900'
+                theme === 'cream' ? 'hover:bg-slate-200 text-slate-500 hover:text-slate-900' : 'hover:bg-white/10 text-name-text hover:text-white'
               }`}
               aria-label="Close chat"
             >
@@ -672,15 +787,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
-                className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${
-                  msg.sender === 'user'
-                    ? isDarkMode
-                      ? 'bg-[#39F1DA] text-[#0A2B2F] rounded-tr-none font-medium'
-                      : 'bg-[#285B9D] text-white rounded-tr-none font-medium'
-                    : isDarkMode
-                    ? 'bg-[#112240] text-name-text rounded-tl-none border border-[#39F1DA]/5'
-                    : 'bg-slate-100 text-[#4A5568] rounded-tl-none'
-                }`}
+                className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${getBubbleClass(msg.sender)}`}
               >
                 {parseMarkdown(msg.text)}
               </div>
@@ -691,12 +798,12 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
             <div className="flex justify-start">
               <div
                 className={`rounded-2xl px-4 py-3 rounded-tl-none flex items-center gap-1 ${
-                  isDarkMode ? 'bg-[#112240] border border-[#39F1DA]/5' : 'bg-slate-100'
+                  theme === 'cream' ? 'bg-slate-100 border border-slate-200/50' : 'bg-white/5 border border-white/5'
                 }`}
               >
-                <div className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDarkMode ? 'bg-[#39F1DA]' : 'bg-slate-400'}`} style={{ animationDelay: '0ms' }}></div>
-                <div className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDarkMode ? 'bg-[#39F1DA]' : 'bg-slate-400'}`} style={{ animationDelay: '150ms' }}></div>
-                <div className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDarkMode ? 'bg-[#39F1DA]' : 'bg-slate-400'}`} style={{ animationDelay: '300ms' }}></div>
+                <div className={`w-1.5 h-1.5 rounded-full animate-bounce ${theme === 'cream' ? 'bg-slate-400' : 'bg-current'}`} style={{ animationDelay: '0ms' }}></div>
+                <div className={`w-1.5 h-1.5 rounded-full animate-bounce ${theme === 'cream' ? 'bg-slate-400' : 'bg-current'}`} style={{ animationDelay: '150ms' }}></div>
+                <div className={`w-1.5 h-1.5 rounded-full animate-bounce ${theme === 'cream' ? 'bg-slate-400' : 'bg-current'}`} style={{ animationDelay: '300ms' }}></div>
               </div>
             </div>
           )}
@@ -704,16 +811,12 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
         </div>
 
         {/* Quick Replies */}
-        <div className={`px-4 py-2 flex flex-wrap gap-2 border-t ${isDarkMode ? 'border-[#39F1DA]/10 bg-black/10' : 'border-slate-50 bg-slate-50/50'}`}>
+        <div className={`px-4 py-2 flex flex-wrap gap-2 border-t ${theme === 'cream' ? 'border-slate-100 bg-slate-50/50' : 'border-white/5 bg-black/10'}`}>
           {quickReplies.map((reply, idx) => (
             <button
               key={idx}
               onClick={() => handleSend(reply.query)}
-              className={`text-xs px-2.5 py-1.5 rounded-full transition-all duration-300 ${
-                isDarkMode
-                  ? 'bg-[#112240] text-name-text border border-[#39F1DA]/10 hover:border-[#39F1DA] hover:text-white'
-                  : 'bg-slate-100 text-[#4A5568] border border-slate-200 hover:border-[#285B9D] hover:text-[#285B9D]'
-              }`}
+              className={`text-xs px-2.5 py-1.5 rounded-full transition-all duration-300 ${getQuickReplyClass()}`}
             >
               {reply.label}
             </button>
@@ -726,28 +829,18 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
             e.preventDefault()
             handleSend(inputValue)
           }}
-          className={`p-3 border-t flex gap-2 items-center rounded-b-2xl ${
-            isDarkMode ? 'border-[#39F1DA]/15 bg-black/25' : 'border-slate-100 bg-white'
-          }`}
+          className={`p-3 border-t flex gap-2 items-center rounded-b-2xl ${getFormClass()}`}
         >
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Ask me anything..."
-            className={`flex-1 px-4 py-2 text-sm rounded-full focus:outline-none transition-all ${
-              isDarkMode
-                ? 'bg-[#112240] border border-[#39F1DA]/10 focus:border-[#39F1DA] text-white placeholder-slate-500'
-                : 'bg-slate-100 border border-slate-200 focus:border-[#285B9D] text-slate-800 placeholder-slate-400'
-            }`}
+            className={`flex-1 px-4 py-2 text-sm rounded-full focus:outline-none transition-all ${getInputClass()}`}
           />
           <button
             type="submit"
-            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
-              isDarkMode
-                ? 'bg-[#39F1DA] hover:bg-[#39F1DA]/80 text-[#0A2B2F] hover:scale-105'
-                : 'bg-[#285B9D] hover:bg-[#285B9D]/90 text-white hover:scale-105'
-            }`}
+            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${getButtonClass()}`}
             aria-label="Send message"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -766,11 +859,11 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, isOpen, onClose, o
           background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: ${isDarkMode ? 'rgba(57, 241, 218, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
+          background: ${theme === 'cream' ? 'rgba(15, 155, 110, 0.1)' : theme === 'dim' ? 'rgba(29, 208, 167, 0.1)' : theme === 'graphite' ? 'rgba(14, 165, 233, 0.1)' : 'rgba(57, 241, 218, 0.1)'};
           border-radius: 99px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: ${isDarkMode ? 'rgba(57, 241, 218, 0.3)' : 'rgba(0, 0, 0, 0.2)'};
+          background: ${theme === 'cream' ? 'rgba(15, 155, 110, 0.3)' : theme === 'dim' ? 'rgba(29, 208, 167, 0.3)' : theme === 'graphite' ? 'rgba(14, 165, 233, 0.3)' : 'rgba(57, 241, 218, 0.3)'};
         }
       `}</style>
     </>
