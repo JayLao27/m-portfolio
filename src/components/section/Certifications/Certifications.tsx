@@ -102,7 +102,7 @@ const certificationsData: Certification[] = [
   },
   {
     id: 8,
-    title: 'Google I/O Extended 2025 Certificate',
+    title: 'Google I/O Extended 2026 Certificate',
     issuer: 'Google Developer Groups',
     issuerShort: 'GDG',
     date: '2026',
