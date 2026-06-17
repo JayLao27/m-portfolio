@@ -46,7 +46,7 @@ const staticKnowledgeBase: KBDocument[] = [
   {
     title: "Contact Information",
     keywords: ['contact', 'email', 'reach', 'linkedin', 'instagram', 'gmail', 'message', 'socials', 'hire', 'talk', 'send', 'mail', 'github', 'git'],
-    text: "You can reach Jay Lao here:\n\n• 📧 **Email**: jaylao03271@gmail.com\n• 🔗 **LinkedIn**: [linkedin.com/in/jaylao](https://www.linkedin.com/in/jaylao)\n• 📸 **Instagram**: [@xjay_lao](https://www.instagram.com/xjay_lao)\n• 💻 **GitHub**: [github.com/jaylao27](https://github.com/JayLao27)\n\nYou can also leave a message in the contact form at the bottom of this page!",
+    text: "You can reach Jay Lao here:\n\n• 📧 **Email**: jaylao03271@gmail.com\n• 🔗 **LinkedIn**: [linkedin.com/in/jaylao](https://www.linkedin.com/in/jaylao)\n• 📸 **Instagram**: [@xjay_lao](https://www.instagram.com/xjay_lao)\n• 💻 **GitHub**: [github.com/jaylao27](https://github.com/JayLao27)\n\nYou can also leave a message in the contact form at the bottom of this page, or simply tell me to **'send a message to Jay'** right here in this chat window!",
     category: "contact"
   },
   {
@@ -98,7 +98,7 @@ const getSystemPrompt = (): string => {
     .map(p => `- **${p.title}** (${p.category}): ${p.description}. Tech: ${p.technologies.join(', ')}.${p.link ? ` Repo: ${p.link}` : ''}`)
     .join('\n')
 
-  return `You are JayBot, the official AI clone and virtual assistant representing Jay Lao on his portfolio website (Webisayt). 
+  return `You are JayChat, the official AI clone and virtual assistant representing Jay Lao on his portfolio website (Webisayt). 
 You are NOT a dry search database or a robotic lookup index—you have a fun, engaging, witty, and conversational developer personality!
 
 Your Persona and Quirks:
@@ -472,6 +472,17 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
   const [showTooltip, setShowTooltip] = useState(false)
   const chatEndRef = useRef<HTMLDivElement>(null)
 
+  const [flowState, setFlowState] = useState<{
+    active: boolean
+    step: 'name' | 'email' | 'content' | 'confirm'
+    name?: string
+    email?: string
+    content?: string
+  }>({
+    active: false,
+    step: 'name'
+  })
+
   // SUGGESTION: Implement a 'Clear Conversation' feature to allow resetting the chat history.
   const handleClearChat = useCallback(() => {
     setMessages([
@@ -482,6 +493,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
         timestamp: new Date()
       }
     ])
+    setFlowState({ active: false, step: 'name' })
   }, [])
 
   useEffect(() => {
@@ -559,6 +571,183 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
     setInputValue('')
     setIsTyping(true)
 
+    const lowerText = text.toLowerCase().trim()
+
+    // Abort messaging flow if cancel signal received
+    if (flowState.active && (lowerText === 'cancel' || lowerText === 'exit' || lowerText === 'abort' || lowerText === 'cancel flow ❌' || lowerText === 'cancel flow')) {
+      setTimeout(() => {
+        const cancelMsg: Message = {
+          id: (Date.now() + 1).toString(),
+          sender: 'bot',
+          text: `Direct message sending cancelled. What else can I assist you with?`,
+          timestamp: new Date()
+        }
+        setMessages(prev => [...prev, cancelMsg])
+        setFlowState({ active: false, step: 'name' })
+        setIsTyping(false)
+      }, 600)
+      return
+    }
+
+    // If a direct messaging flow is active, intercept inputs
+    if (flowState.active) {
+      setTimeout(async () => {
+        if (flowState.step === 'name') {
+          setFlowState({
+            active: true,
+            step: 'email',
+            name: text.trim()
+          })
+          const botMsg: Message = {
+            id: (Date.now() + 1).toString(),
+            sender: 'bot',
+            text: `Nice to meet you, **${text.trim()}**! What is your email address so Jay can reply back to you?`,
+            timestamp: new Date()
+          }
+          setMessages(prev => [...prev, botMsg])
+          setIsTyping(false)
+        } 
+        
+        else if (flowState.step === 'email') {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+          if (!emailRegex.test(text.trim())) {
+            const botMsg: Message = {
+              id: (Date.now() + 1).toString(),
+              sender: 'bot',
+              text: `Hmm, that email doesn't look quite right. Please write a valid email address so Jay can reach you:`,
+              timestamp: new Date()
+            }
+            setMessages(prev => [...prev, botMsg])
+            setIsTyping(false)
+            return
+          }
+          
+          setFlowState(prev => ({
+            ...prev,
+            step: 'content',
+            email: text.trim()
+          }))
+          const botMsg: Message = {
+            id: (Date.now() + 1).toString(),
+            sender: 'bot',
+            text: `Perfect! What message would you like to send to Jay? Write your content below:`,
+            timestamp: new Date()
+          }
+          setMessages(prev => [...prev, botMsg])
+          setIsTyping(false)
+        } 
+        
+        else if (flowState.step === 'content') {
+          setFlowState(prev => ({
+            ...prev,
+            step: 'confirm',
+            content: text.trim()
+          }))
+          const botMsg: Message = {
+            id: (Date.now() + 1).toString(),
+            sender: 'bot',
+            text: `Here are the message details:\n\n• **Sender**: ${flowState.name}\n• **Email**: ${flowState.email}\n• **Message**: ${text.trim()}\n\nShall I send this message directly to Jay's inbox?`,
+            timestamp: new Date()
+          }
+          setMessages(prev => [...prev, botMsg])
+          setIsTyping(false)
+        } 
+        
+        else if (flowState.step === 'confirm') {
+          const answer = text.toLowerCase().trim()
+          if (answer === 'yes' || answer === 'send' || answer === 'y' || answer.includes('transmit') || answer.includes('ok') || answer.includes('yes, transmit! 🚀') || answer.includes('yes, send! 🚀')) {
+            const botMsgId = (Date.now() + 2).toString()
+            const sendingMsg: Message = {
+              id: botMsgId,
+              sender: 'bot',
+              text: `Sending email via Web3Forms API... 📡`,
+              timestamp: new Date()
+            }
+            setMessages(prev => [...prev, sendingMsg])
+            
+            const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+            if (!accessKey) {
+              setTimeout(() => {
+                setMessages(prev => prev.map(m => m.id === botMsgId ? {
+                  ...m,
+                  text: `❌ **Sending Error.** The Web3Forms access key is not configured in this project. Please contact Jay directly at jaylao03271@gmail.com.`
+                } : m))
+                setFlowState({ active: false, step: 'name' })
+                setIsTyping(false)
+              }, 1200)
+              return
+            }
+
+            try {
+              const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                  access_key: accessKey,
+                  name: flowState.name,
+                  email: flowState.email,
+                  subject: `Chatbot Portal: Message from ${flowState.name}`,
+                  message: flowState.content,
+                  from_name: 'Jay Portfolio'
+                })
+              })
+              const data = await response.json()
+              if (response.ok && data.success) {
+                setMessages(prev => prev.map(m => m.id === botMsgId ? {
+                  ...m,
+                  text: `🎉 **Success!** Your message has been successfully routed and delivered to Jay Lao. He will follow up with you at **${flowState.email}**.`
+                } : m))
+              } else {
+                setMessages(prev => prev.map(m => m.id === botMsgId ? {
+                  ...m,
+                  text: `❌ **Failed to send.** Gateway returned an error: ${data.message || 'Unknown issue'}. Please try again later.`
+                } : m))
+              }
+            } catch (err) {
+              setMessages(prev => prev.map(m => m.id === botMsgId ? {
+                ...m,
+                text: `❌ **Network timeout.** Failed to send. Please try again or reach out at jaylao03271@gmail.com.`
+              } : m))
+            } finally {
+              setFlowState({ active: false, step: 'name' })
+              setIsTyping(false)
+            }
+          } else {
+            const cancelMsg: Message = {
+              id: (Date.now() + 1).toString(),
+              sender: 'bot',
+              text: `Sending cancelled. Returning to general queries. How else can I assist you?`,
+              timestamp: new Date()
+            }
+            setMessages(prev => [...prev, cancelMsg])
+            setFlowState({ active: false, step: 'name' })
+            setIsTyping(false)
+          }
+        }
+      }, 800)
+      return
+    }
+
+    // If a direct messaging keyword is typed, trigger the flow
+    const triggers = ['send a message', 'message jay', 'send message', 'contact jay', 'email jay', 'write to jay', 'talk to jay', 'direct message', 'send a direct message']
+    if (triggers.some(t => lowerText === t || lowerText.includes(t))) {
+      setTimeout(() => {
+        setFlowState({
+          active: true,
+          step: 'name'
+        })
+        const botMsg: Message = {
+          id: (Date.now() + 1).toString(),
+          sender: 'bot',
+          text: `I can compile and route a direct email message to Jay Lao right now! Let's get it set up. First, what is your name?`,
+          timestamp: new Date()
+        }
+        setMessages(prev => [...prev, botMsg])
+        setIsTyping(false)
+      }, 800)
+      return
+    }
+
     // Check for Groq API key in local environment variables
     const apiKey = import.meta.env.VITE_GROQ_API_KEY
     let apiError: string | null = null
@@ -609,7 +798,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
       setMessages((prev) => [...prev, botMessage])
       setIsTyping(false)
     }, 1200)
-  }, [messages])
+  }, [messages, flowState])
 
   // Safe markdown and formatting parser
   const parseMarkdown = (text: string) => {
@@ -680,11 +869,18 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
     return parts.length > 0 ? parts : text
   }
 
-  const quickReplies = [
-    { label: 'Skills', query: 'What are Jay\'s skills?' },
-    { label: 'Projects', query: 'Show me your projects.' },
-    { label: 'Contact', query: 'How can I contact Jay?' }
-  ]
+  const quickReplies = flowState.active
+    ? flowState.step === 'confirm'
+      ? [
+          { label: 'Yes, Send! 🚀', query: 'yes' },
+          { label: 'Cancel ❌', query: 'cancel' }
+        ]
+      : [{ label: 'Cancel Flow ❌', query: 'cancel' }]
+    : [
+        { label: 'Skills 🛠️', query: 'What are Jay\'s skills?' },
+        { label: 'Projects 💻', query: 'Show me your projects.' },
+        { label: 'Message Jay ✉️', query: 'send a direct message' }
+      ]
 
   return (
     <>
@@ -728,20 +924,13 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
           className={`px-4 py-3.5 rounded-t-2xl flex items-center justify-between border-b ${getHeaderBorderClass()}`}
         >
           <div className="flex items-center gap-3">
-            <div className="relative w-8 h-8 rounded-full flex items-center justify-center bg-[#448BB2]/20">
-              <svg width="20" height="17" viewBox="0 0 62 52" fill="none">
-                <rect x="20" y="21" width="22" height="16" rx="4" stroke={getAccentColor()} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                <path d="M31 21v-6" stroke={getAccentColor()} strokeWidth="4" strokeLinecap="round"/>
-                <circle cx="31" cy="12.5" r="2" fill={getAccentColor()}/>
-                <circle cx="26.5" cy="28.5" r="2.5" fill={getAccentColor()}/>
-                <circle cx="35.5" cy="28.5" r="2.5" fill={getAccentColor()}/>
-                <path d="M17.5 29h2.5 M42 29h2.5" stroke={getAccentColor()} strokeWidth="4"/>
-              </svg>
+            <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border" style={{ borderColor: getAccentColor() }}>
+              <img src="/images/jaychat.jpg" alt="Jay" className="w-full h-full object-cover" />
               <span className={`absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 ${theme === 'cream' ? 'border-slate-50' : 'border-[#0A2B2F]'} animate-pulse`}></span>
             </div>
             <div>
               <h3 className={`font-['Syne'] font-bold text-sm leading-none ${getHeaderTitleClass()}`}>
-                JayBot
+                JayChat
               </h3>
               <span className="text-[10px] opacity-60">AI Assistant</span>
             </div>
@@ -783,9 +972,14 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
           onTouchMove={(e) => e.stopPropagation()}
         >
           {messages.map((msg) => (
-            <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div key={msg.id} className={`flex gap-2 items-start ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+              {msg.sender === 'bot' && (
+                <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 border" style={{ borderColor: theme === 'cream' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)' }}>
+                  <img src="/images/jaychat.jpg" alt="Jay" className="w-full h-full object-cover" />
+                </div>
+              )}
               <div
-                className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${getBubbleClass(msg.sender)}`}
+                className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm ${getBubbleClass(msg.sender)}`}
               >
                 {parseMarkdown(msg.text)}
               </div>
@@ -793,7 +987,10 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
           ))}
 
           {isTyping && (
-            <div className="flex justify-start">
+            <div className="flex justify-start gap-2 items-start">
+              <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 border" style={{ borderColor: theme === 'cream' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)' }}>
+                <img src="/images/jaychat.jpg" alt="Jay" className="w-full h-full object-cover" />
+              </div>
               <div
                 className={`rounded-2xl px-4 py-3 rounded-tl-none flex items-center gap-1 ${
                   theme === 'cream' ? 'bg-slate-100 border border-slate-200/50' : 'bg-white/5 border border-white/5'
