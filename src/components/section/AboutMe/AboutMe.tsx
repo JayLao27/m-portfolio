@@ -308,62 +308,6 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
                 </div>
               </div>
             </div>
-
-            {/* Google I/O Extended Certificate Card */}
-            <div
-              onClick={() => setActivePhoto("/Certif/Google_IO_2024.png")}
-              className={`relative p-6 rounded-2xl border overflow-hidden transition-all duration-300 group hover:-translate-y-0.5 cursor-pointer ${
-                isDarkMode
-                  ? 'bg-white/[0.04] border-white/[0.08] hover:border-white/20 hover:shadow-lg hover:shadow-black/20'
-                  : 'bg-white border-slate-200/80 shadow-sm hover:border-slate-300 hover:shadow-md'
-              }`}
-            >
-              {/* Google Brand colored accent bar on top */}
-              <div
-                className="absolute top-0 left-0 right-0 h-[2px] opacity-80"
-                style={{ background: 'linear-gradient(90deg, #4285F4 0%, #EA4335 25%, #FBBC05 50%, #34A853 100%)' }}
-              />
-
-              <div className="flex items-start gap-4">
-                <div
-                  className="mt-0.5 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-white/5 border border-white/10"
-                  style={{ 
-                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.02)',
-                    borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)'
-                  }}
-                >
-                  <img src="/Certif/Google_IO_2024.png" alt="Google I/O Extended" className="w-8 h-8 object-contain" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
-                    <h4
-                      className={`font-['Syne'] text-[1.0625rem] font-bold ${
-                        isDarkMode ? 'text-white' : 'text-light-name-text'
-                      }`}
-                    >
-                      Google I/O Extended
-                    </h4>
-                    <span 
-                      className="text-[9px] font-['JetBrains_Mono'] px-2 py-0.5 rounded font-bold uppercase tracking-wider border"
-                      style={{
-                        color: isDarkMode ? '#39F1DA' : '#0F9B6E',
-                        borderColor: isDarkMode ? 'rgba(57, 241, 218, 0.3)' : 'rgba(15, 155, 110, 0.3)',
-                        background: isDarkMode ? 'rgba(57, 241, 218, 0.06)' : 'rgba(15, 155, 110, 0.06)'
-                      }}
-                    >
-                      Certificate
-                    </span>
-                  </div>
-                  <p
-                    className={`font-['DM_Sans'] text-sm leading-relaxed ${
-                      isDarkMode ? 'text-gray-400' : 'text-light-body-text/80'
-                    }`}
-                  >
-                    Awarded certificate from Google I/O Extended, recognizing engagement with Google developer ecosystem, Android SDK, and Google AI integration.
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Transition wrapper for "More About Me" Solid Card (Replaces Tools on hover) */}
@@ -438,18 +382,43 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
                   
                   {/* Google I/O Extended Certificate Detail */}
                   <div 
-                    onClick={() => setActivePhoto("/Certif/Google_IO_2024.png")}
-                    className="col-span-2 border-t pt-4 cursor-pointer hover:bg-white/[0.02] p-1.5 rounded-lg transition-colors" 
+                    className="col-span-2 border-t pt-4" 
                     style={{ borderColor: theme === 'cream' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }}
                   >
-                    <p className={`text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider mb-1.5 ${theme === 'cream' ? 'text-slate-500' : 'text-slate-400'}`}>Organization Certification</p>
-                    <div className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-md flex items-center justify-center text-sm bg-white/5 border border-white/10" style={{ backgroundColor: theme === 'cream' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)', borderColor: theme === 'cream' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }}>
-                        <img src="/Certif/Google_IO_2024.png" alt="Google I/O" className="w-5 h-5 object-contain" />
+                    <p className={`text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider mb-2 ${theme === 'cream' ? 'text-slate-500' : 'text-slate-400'}`}>Organization Certifications</p>
+                    <div className="space-y-2.5">
+                      {/* 2026 Certificate */}
+                      <div 
+                        onClick={() => setActivePhoto("/Certif/Google_IO_2026.png")}
+                        className="flex items-start gap-3 cursor-pointer hover:bg-white/[0.03] p-1.5 rounded-lg transition-colors"
+                      >
+                        <div className="w-7 h-7 mt-0.5 rounded-md flex items-center justify-center text-sm bg-white/5 border border-white/10 flex-shrink-0" style={{ backgroundColor: theme === 'cream' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)', borderColor: theme === 'cream' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }}>
+                          <img src="/Certif/Google_IO_2026.png" alt="Google I/O" className="w-5 h-5 object-contain" />
+                        </div>
+                        <div>
+                          <p className="font-bold text-[13px]" style={{ color: theme === 'cream' ? '#0F9B6E' : '#39F1DA' }}>Google I/O Extended 2026</p>
+                          <p className={`text-[10px] font-semibold opacity-60 mb-0.5 ${theme === 'cream' ? 'text-slate-600' : 'text-slate-300'}`}>Google Developer Groups</p>
+                          <p className={`text-[11px] leading-snug ${theme === 'cream' ? 'text-slate-600' : 'text-slate-400'}`}>
+                            Participated in GDG Davao sessions covering Gemini AI integrations, Android development frames, and Firebase cloud services.
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-bold text-[14px]" style={{ color: theme === 'cream' ? '#0F9B6E' : '#39F1DA' }}>Google I/O Extended Certificate</p>
-                        <p className={`text-xs ${theme === 'cream' ? 'text-slate-500' : 'text-slate-400'}`}>Issued by Google Developer Groups (2024)</p>
+                      
+                      {/* 2024 Certificate */}
+                      <div 
+                        onClick={() => setActivePhoto("/Certif/Google_IO_2024.png")}
+                        className="flex items-start gap-3 cursor-pointer hover:bg-white/[0.03] p-1.5 rounded-lg transition-colors"
+                      >
+                        <div className="w-7 h-7 mt-0.5 rounded-md flex items-center justify-center text-sm bg-white/5 border border-white/10 flex-shrink-0" style={{ backgroundColor: theme === 'cream' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)', borderColor: theme === 'cream' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }}>
+                          <img src="/Certif/Google_IO_2024.png" alt="Google I/O" className="w-5 h-5 object-contain" />
+                        </div>
+                        <div>
+                          <p className="font-bold text-[13px]" style={{ color: theme === 'cream' ? '#0F9B6E' : '#39F1DA' }}>Google I/O Extended 2024</p>
+                          <p className={`text-[10px] font-semibold opacity-60 mb-0.5 ${theme === 'cream' ? 'text-slate-600' : 'text-slate-300'}`}>Google Developer Groups</p>
+                          <p className={`text-[11px] leading-snug ${theme === 'cream' ? 'text-slate-600' : 'text-slate-400'}`}>
+                            Attended GDG Davao talks focusing on Flutter advances, cloud structures, web performance, and workspace APIs.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -490,8 +459,37 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
 
           {/* Details */}
           <div className="mt-6 text-center max-w-xl px-4" onClick={(e) => e.stopPropagation()}>
-            <h3 className="font-['Syne'] text-xl font-bold text-white mb-2">Google I/O Extended Certificate</h3>
-            <p className="font-['DM_Sans'] text-sm text-gray-400">Google Developer Groups • 2024</p>
+            <h3 className="font-['Syne'] text-xl font-bold text-white mb-2">
+              {activePhoto === "/Certif/Google_IO_2026.png" ? "Google I/O Extended 2026 Certificate" : "Google I/O Extended 2024 Certificate"}
+            </h3>
+            <p className="font-['DM_Sans'] text-sm text-gray-400 mb-4">
+              Google Developer Groups • {activePhoto === "/Certif/Google_IO_2026.png" ? "2026" : "2024"}
+            </p>
+            {activePhoto === "/Certif/Google_IO_2026.png" ? (
+              <a 
+                href="https://apohub.gdgdavao.org/feedback/mXV9USdyKntxVzI9bhnt?token=WYv8BTn9FwzAUS0mtbVNUOLp7T2Y0gvuzproGEux-nk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-['JetBrains_Mono'] font-bold border border-white/20 text-white bg-white/5 hover:bg-white/10 hover:border-white/40 transition-all hover:scale-105"
+              >
+                Verify Credential
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M7 17L17 7M17 7H7M17 7v10" />
+                </svg>
+              </a>
+            ) : (
+              <a 
+                href="https://io.google/2024/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-['JetBrains_Mono'] font-bold border border-white/20 text-white bg-white/5 hover:bg-white/10 hover:border-white/40 transition-all hover:scale-105"
+              >
+                Verify Credential
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M7 17L17 7M17 7H7M17 7v10" />
+                </svg>
+              </a>
+            )}
           </div>
         </div>
       )}
