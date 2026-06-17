@@ -129,8 +129,6 @@ Rules for your answers:
 `
 }
 
-// Call Groq API directly via HTTP fetch
-// Call Groq API directly via HTTP fetch with streaming support
 const callGroqAPIStreaming = async (
   chatHistory: Message[],
   apiKey: string,
