@@ -125,6 +125,31 @@
     }
   }
 
+  @keyframes statPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes borderGlow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .animate-stat-pulse {
+    animation: statPulse 2.5s ease-in-out infinite;
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .dot-grid-light {
+    background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
   .animate-fade-in-up {
     animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 1;
@@ -368,9 +393,17 @@
   }
 
   .glass-effect {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-effect-light {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .text-gradient {
@@ -380,31 +413,97 @@
     background-clip: text;
   }
 
+  /* Hero subtle grid background */
+  .hero-grid-bg {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-grid-bg-light {
+    background-image:
+      linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Card lift on hover */
+  .card-lift {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.35s ease;
+  }
+
+  .card-lift:hover {
+    transform: translateY(-6px);
+  }
+
+  /* Perspective card — lighter for horizontal scroll contexts */
   .perspective-card {
     transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s ease;
   }
 
-  .perspective-card:hover {
-    transform: rotateX(2deg) rotateY(5deg) scale(1.02);
+  /* Shimmer effect for buttons */
+  @keyframes shimmerSlide {
+    0% { transform: translateX(-100%) skewX(-15deg); }
+    100% { transform: translateX(200%) skewX(-15deg); }
   }
 
-  /* Custom scrollbar */
+  .btn-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transform: translateX(-100%) skewX(-15deg);
+  }
+
+  .btn-shimmer:hover::after {
+    animation: shimmerSlide 0.7s ease forwards;
+  }
+
+  /* Section label style */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 2px;
+    border-radius: 9999px;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* Custom scrollbar — thinner, more refined */
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: rgba(10, 25, 47, 0.5);
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(94, 238, 255, 0.3);
-    border-radius: 5px;
+    background: rgba(94, 238, 255, 0.2);
+    border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(94, 238, 255, 0.5);
+    background: rgba(94, 238, 255, 0.45);
   }
 }
 
