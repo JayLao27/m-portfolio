@@ -20,7 +20,7 @@ const certificationsData: Certification[] = [
     title: 'Python for Data Science, AI & Development',
     issuer: 'IBM via Coursera',
     issuerShort: 'IBM',
-    date: 'Dec 2026',
+    date: 'Dec 2025',
     skills: ['Python', 'Pandas', 'NumPy', 'Data Science', 'AI'],
     link: 'https://coursera.org/share/4ca2be4346798683c15b578b01098d35',
     image: '/Certif/Coursera_Python.png',
@@ -32,7 +32,7 @@ const certificationsData: Certification[] = [
     title: 'AI for Cybersecurity Specialization',
     issuer: 'Johns Hopkins via Coursera',
     issuerShort: 'JHU',
-    date: 'Nov 2026',
+    date: 'Nov 2025',
     skills: ['Machine Learning', 'Threat Detection', 'AI', 'Network Security'],
     link: 'https://coursera.org/share/e820a6a12b0c2f8dcfc1a9543e63d69c',
     image: '/Certif/Coursera_Cybersecurity.png',
@@ -94,7 +94,6 @@ const certificationsData: Certification[] = [
     issuerShort: 'GDG',
     date: '2024',
     skills: ['Google APIs', 'Android SDK', 'Gemini AI', 'Cloud Computing', 'Web Tech'],
-    link: 'https://io.google/2024/',
     image: '/Certif/Google_IO_2024.png',
     accentColor: '#4285F4',
     accentRgb: '66,133,244',
@@ -107,7 +106,6 @@ const certificationsData: Certification[] = [
     issuerShort: 'GDG',
     date: '2026',
     skills: ['Google APIs', 'Android SDK', 'Gemini AI', 'Cloud Computing', 'Web Tech'],
-    link: 'https://apohub.gdgdavao.org/feedback/mXV9USdyKntxVzI9bhnt?token=WYv8BTn9FwzAUS0mtbVNUOLp7T2Y0gvuzproGEux-nk',
     image: '/Certif/Google_IO_2026.png',
     accentColor: '#4285F4',
     accentRgb: '66,133,244',
@@ -116,7 +114,21 @@ const certificationsData: Certification[] = [
 ]
 
 /* ─── Hero Card (large, left column) ─── */
-function HeroCard({ cert, isDarkMode }: { cert: Certification; isDarkMode: boolean }) {
+function HeroCard({ 
+  cert, 
+  isDarkMode,
+  onClick,
+  onMouseEnter,
+  onMouseMove,
+  onMouseLeave
+}: { 
+  cert: Certification; 
+  isDarkMode: boolean;
+  onClick: (e: React.MouseEvent, cert: Certification) => void;
+  onMouseEnter: (e: React.MouseEvent, cert: Certification) => void;
+  onMouseMove: (e: React.MouseEvent) => void;
+  onMouseLeave: () => void;
+}) {
   const [hovered, setHovered] = useState(false)
   const cardRef = useRef<HTMLAnchorElement>(null)
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
@@ -126,11 +138,18 @@ function HeroCard({ cert, isDarkMode }: { cert: Certification; isDarkMode: boole
     const cx = (e.clientX - rect.left) / rect.width - 0.5
     const cy = (e.clientY - rect.top) / rect.height - 0.5
     setTilt({ x: cy * -10, y: cx * 10 })
+    onMouseMove(e)
+  }
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setHovered(true)
+    onMouseEnter(e, cert)
   }
 
   const handleMouseLeave = () => {
     setHovered(false)
     setTilt({ x: 0, y: 0 })
+    onMouseLeave()
   }
 
   return (
@@ -139,7 +158,8 @@ function HeroCard({ cert, isDarkMode }: { cert: Certification; isDarkMode: boole
       href={cert.link}
       target="_blank"
       rel="noopener noreferrer"
-      onMouseEnter={() => setHovered(true)}
+      onClick={(e) => onClick(e, cert)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
       className="relative overflow-hidden rounded-3xl flex flex-col cursor-pointer block"
@@ -267,7 +287,23 @@ function HeroCard({ cert, isDarkMode }: { cert: Certification; isDarkMode: boole
 }
 
 /* ─── Compact Bento Card ─── */
-function BentoCard({ cert, isDarkMode, delay }: { cert: Certification; isDarkMode: boolean; delay: number }) {
+function BentoCard({ 
+  cert, 
+  isDarkMode, 
+  delay,
+  onClick,
+  onMouseEnter,
+  onMouseMove,
+  onMouseLeave
+}: { 
+  cert: Certification; 
+  isDarkMode: boolean; 
+  delay: number;
+  onClick: (e: React.MouseEvent, cert: Certification) => void;
+  onMouseEnter: (e: React.MouseEvent, cert: Certification) => void;
+  onMouseMove: (e: React.MouseEvent) => void;
+  onMouseLeave: () => void;
+}) {
   const [hovered, setHovered] = useState(false)
 
   return (
@@ -275,8 +311,16 @@ function BentoCard({ cert, isDarkMode, delay }: { cert: Certification; isDarkMod
       href={cert.link}
       target="_blank"
       rel="noopener noreferrer"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onClick={(e) => onClick(e, cert)}
+      onMouseEnter={(e) => {
+        setHovered(true)
+        onMouseEnter(e, cert)
+      }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={() => {
+        setHovered(false)
+        onMouseLeave()
+      }}
       className="relative overflow-hidden rounded-2xl flex flex-col cursor-pointer block"
       style={{
         background: isDarkMode
@@ -429,6 +473,41 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
   const stat2 = useCounter(new Set(certificationsData.map(c => c.issuerShort)).size)
   const stat3 = useCounter(2026, 2000)
 
+  const [hoveredCert, setHoveredCert] = useState<Certification | null>(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [offsetX, setOffsetX] = useState(-440)
+  const [activePhotoCert, setActivePhotoCert] = useState<Certification | null>(null)
+
+  const handleCardClick = (e: React.MouseEvent, cert: Certification) => {
+    if (cert.image) {
+      e.preventDefault()
+      setActivePhotoCert(cert)
+    }
+  }
+
+  const handleCardMouseEnter = (e: React.MouseEvent, cert: Certification) => {
+    setHoveredCert(cert)
+    setMousePos({ x: e.clientX, y: e.clientY })
+    setOffsetX(-440)
+  }
+
+  const handleCardMouseMove = (e: React.MouseEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY })
+  }
+
+  const handleCardMouseLeave = () => {
+    setHoveredCert(null)
+  }
+
+  useEffect(() => {
+    if (hoveredCert) {
+      const timer = setTimeout(() => {
+        setOffsetX(40)
+      }, 50)
+      return () => clearTimeout(timer)
+    }
+  }, [hoveredCert])
+
   return (
     <section
       id="certifications"
@@ -488,15 +567,38 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
 
         {/* Hero left — spans 2 cols */}
         <div className="lg:col-span-2">
-          <HeroCard cert={heroCards[0]} isDarkMode={isDarkMode} />
+          <HeroCard 
+            cert={heroCards[0]} 
+            isDarkMode={isDarkMode}
+            onClick={handleCardClick}
+            onMouseEnter={handleCardMouseEnter}
+            onMouseMove={handleCardMouseMove}
+            onMouseLeave={handleCardMouseLeave}
+          />
         </div>
 
         {/* Right column — hero card on top, 2 bentos stacked below */}
         <div className="lg:col-span-3 flex flex-col gap-5">
-          <HeroCard cert={heroCards[1]} isDarkMode={isDarkMode} />
+          <HeroCard 
+            cert={heroCards[1]} 
+            isDarkMode={isDarkMode}
+            onClick={handleCardClick}
+            onMouseEnter={handleCardMouseEnter}
+            onMouseMove={handleCardMouseMove}
+            onMouseLeave={handleCardMouseLeave}
+          />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {bentoCards.slice(0, 2).map((cert, i) => (
-              <BentoCard key={cert.id} cert={cert} isDarkMode={isDarkMode} delay={0.3 + i * 0.1} />
+              <BentoCard 
+                key={cert.id} 
+                cert={cert} 
+                isDarkMode={isDarkMode} 
+                delay={0.3 + i * 0.1}
+                onClick={handleCardClick}
+                onMouseEnter={handleCardMouseEnter}
+                onMouseMove={handleCardMouseMove}
+                onMouseLeave={handleCardMouseLeave}
+              />
             ))}
           </div>
         </div>
@@ -504,7 +606,16 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
         {/* Bottom full-width row — remaining bento cards */}
         <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
           {bentoCards.slice(2).map((cert, i) => (
-            <BentoCard key={cert.id} cert={cert} isDarkMode={isDarkMode} delay={0.5 + i * 0.1} />
+            <BentoCard 
+              key={cert.id} 
+              cert={cert} 
+              isDarkMode={isDarkMode} 
+              delay={0.5 + i * 0.1}
+              onClick={handleCardClick}
+              onMouseEnter={handleCardMouseEnter}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
+            />
           ))}
         </div>
       </div>
@@ -547,6 +658,84 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
       {/* Connecting line to next section */}
       <div className="absolute right-[10%] bottom-[-5rem] w-[2px] h-32 max-md:hidden z-0"
         style={{ backgroundImage: `linear-gradient(to bottom, ${accentColor()}80, transparent)` }} />
+
+      {/* Floating Mouse-Follow Preview (Big Image Preview) */}
+      {hoveredCert && (
+        <div
+          className="pointer-events-none fixed z-[99] rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-slate-900/90 backdrop-blur-md p-1 animate-fadeIn"
+          style={{
+            left: 0,
+            top: 0,
+            width: '420px',
+            height: '300px',
+            transform: `translate3d(${mousePos.x + offsetX}px, ${mousePos.y - 150}px, 0)`,
+            transition: 'transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease-out',
+            opacity: hoveredCert ? 1 : 0,
+          }}
+        >
+          {hoveredCert.image ? (
+            <img
+              src={hoveredCert.image}
+              alt={hoveredCert.title}
+              className="w-full h-full object-cover rounded-xl"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-white/50">
+              <span>No image preview</span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Certificate Immersive Lightbox Modal */}
+      {activePhotoCert && (
+        <div 
+          className="fixed inset-0 z-[150] bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-fadeIn"
+          onClick={() => setActivePhotoCert(null)}
+        >
+          {/* Close button */}
+          <button 
+            className="absolute top-6 right-6 text-white/70 hover:text-white text-3xl font-bold transition-colors z-50 p-2"
+            onClick={() => setActivePhotoCert(null)}
+          >
+            ✕
+          </button>
+
+          {/* Image */}
+          <div 
+            className="relative max-w-[95%] max-h-[85vh] rounded-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img 
+              src={activePhotoCert.image} 
+              alt={activePhotoCert.title} 
+              className="w-full h-full object-contain max-h-[85vh]"
+            />
+          </div>
+
+          {/* Details & Link */}
+          <div 
+            className="mt-6 text-center max-w-xl px-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="font-['Syne'] text-xl font-bold text-white mb-2">{activePhotoCert.title}</h3>
+            <p className="font-['DM_Sans'] text-sm text-gray-400 mb-4">{activePhotoCert.issuer} • {activePhotoCert.date}</p>
+            {activePhotoCert.link && (
+              <a 
+                href={activePhotoCert.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-['JetBrains_Mono'] font-bold border border-white/20 text-white bg-white/5 hover:bg-white/10 hover:border-white/40 transition-all hover:scale-105"
+              >
+                Verify Credential
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M7 17L17 7M17 7H7M17 7v10" />
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   )
 }

@@ -3,6 +3,7 @@ import { ProfileImage } from '../../ui/ProfileImage'
 
 export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'graphite' | 'cream' }> = ({ isDarkMode, theme }) => {
   const [isPhotoHovered, setIsPhotoHovered] = useState(false)
+  const [activePhoto, setActivePhoto] = useState<string | null>(null)
   const getAccent = () => {
     switch (theme) {
       case 'cream': return '#0F9B6E'
@@ -310,7 +311,8 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
 
             {/* Google I/O Extended Certificate Card */}
             <div
-              className={`relative p-6 rounded-2xl border overflow-hidden transition-all duration-300 group hover:-translate-y-0.5 ${
+              onClick={() => setActivePhoto("/Certif/Google_IO_2024.png")}
+              className={`relative p-6 rounded-2xl border overflow-hidden transition-all duration-300 group hover:-translate-y-0.5 cursor-pointer ${
                 isDarkMode
                   ? 'bg-white/[0.04] border-white/[0.08] hover:border-white/20 hover:shadow-lg hover:shadow-black/20'
                   : 'bg-white border-slate-200/80 shadow-sm hover:border-slate-300 hover:shadow-md'
@@ -435,7 +437,11 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
                   </div>
                   
                   {/* Google I/O Extended Certificate Detail */}
-                  <div className="col-span-2 border-t pt-4" style={{ borderColor: theme === 'cream' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }}>
+                  <div 
+                    onClick={() => setActivePhoto("/Certif/Google_IO_2024.png")}
+                    className="col-span-2 border-t pt-4 cursor-pointer hover:bg-white/[0.02] p-1.5 rounded-lg transition-colors" 
+                    style={{ borderColor: theme === 'cream' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }}
+                  >
                     <p className={`text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider mb-1.5 ${theme === 'cream' ? 'text-slate-500' : 'text-slate-400'}`}>Organization Certification</p>
                     <div className="flex items-center gap-3">
                       <div className="w-7 h-7 rounded-md flex items-center justify-center text-sm bg-white/5 border border-white/10" style={{ backgroundColor: theme === 'cream' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)', borderColor: theme === 'cream' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }}>
@@ -457,6 +463,38 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
           </div>
         </div>
       </div>
+      {activePhoto && (
+        <div 
+          className="fixed inset-0 z-[150] bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-fadeIn"
+          onClick={() => setActivePhoto(null)}
+        >
+          {/* Close button */}
+          <button 
+            className="absolute top-6 right-6 text-white/70 hover:text-white text-3xl font-bold transition-colors z-50 p-2"
+            onClick={() => setActivePhoto(null)}
+          >
+            ✕
+          </button>
+
+          {/* Image */}
+          <div 
+            className="relative max-w-[95%] max-h-[85vh] rounded-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img 
+              src={activePhoto} 
+              alt="Google I/O Extended Certificate" 
+              className="w-full h-full object-contain max-h-[85vh]"
+            />
+          </div>
+
+          {/* Details */}
+          <div className="mt-6 text-center max-w-xl px-4" onClick={(e) => e.stopPropagation()}>
+            <h3 className="font-['Syne'] text-xl font-bold text-white mb-2">Google I/O Extended Certificate</h3>
+            <p className="font-['DM_Sans'] text-sm text-gray-400">Google Developer Groups • 2024</p>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
