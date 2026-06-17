@@ -1,4 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
+﻿/* eslint-disable react-refresh/only-export-components */
 import React, { useRef, useEffect, useState } from 'react'
 
 export interface Project {
@@ -60,32 +60,59 @@ export const projectsData: Project[] = [
 ]
 
 export const Projects: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'graphite' | 'cream' }> = ({ isDarkMode, theme }) => {
-  const getCardBorderHoverClass = () => {
+
+  const getAccentColor = () => {
     switch (theme) {
-      case 'cream': return 'hover:border-[#0F9B6E]/40'
-      case 'dim': return 'hover:border-[#1DD0A7]/30'
-      case 'graphite': return 'hover:border-[#0ea5e9]/30'
-      default: return 'hover:border-highlight/30'
+      case 'cream': return '#0F9B6E'
+      case 'dim': return '#1DD0A7'
+      case 'graphite': return '#0ea5e9'
+      default: return '#39F1DA'
     }
   }
 
-  const getCardShadowHoverClass = () => {
+  const getAccentRgb = () => {
     switch (theme) {
-      case 'cream': return 'hover:shadow-[#0F9B6E]/10 hover:shadow-xl'
-      case 'dim': return 'hover:shadow-[#1DD0A7]/10 hover:shadow-2xl'
-      case 'graphite': return 'hover:shadow-[#0ea5e9]/10 hover:shadow-2xl'
-      default: return 'hover:shadow-highlight/10 hover:shadow-2xl'
+      case 'cream': return '15,155,110'
+      case 'dim': return '29,208,167'
+      case 'graphite': return '14,165,233'
+      default: return '57,241,218'
     }
   }
 
-  const getGlowGradClass = () => {
+  const getActivePillClass = () => {
     switch (theme) {
-      case 'cream': return 'bg-[radial-gradient(circle_at_center,rgba(15,155,110,0.1),transparent_70%)]'
-      case 'dim': return 'bg-[radial-gradient(circle_at_center,rgba(29,208,167,0.12),transparent_70%)]'
-      case 'graphite': return 'bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.12),transparent_70%)]'
-      default: return 'bg-[radial-gradient(circle_at_center,rgba(94,238,255,0.15),transparent_70%)]'
+      case 'cream': return 'bg-[#0F9B6E] text-white border-[#0F9B6E] shadow-[0_0_18px_rgba(15,155,110,0.35)]'
+      case 'dim': return 'bg-[#1DD0A7] text-[#15202B] border-[#1DD0A7] shadow-[0_0_18px_rgba(29,208,167,0.35)]'
+      case 'graphite': return 'bg-[#0ea5e9] text-[#121620] border-[#0ea5e9] shadow-[0_0_18px_rgba(14,165,233,0.35)]'
+      default: return 'bg-[#39F1DA] text-[#0D1117] border-[#39F1DA] shadow-[0_0_18px_rgba(57,241,218,0.35)]'
     }
   }
+
+  const getInactivePillClass = () => {
+    if (isDarkMode) {
+      switch (theme) {
+        case 'dim': return 'bg-transparent text-gray-400 border-white/20 hover:border-[#1DD0A7] hover:text-[#1DD0A7]'
+        case 'graphite': return 'bg-transparent text-gray-400 border-white/20 hover:border-[#0ea5e9] hover:text-[#0ea5e9]'
+        default: return 'bg-transparent text-gray-400 border-white/20 hover:border-[#39F1DA] hover:text-[#39F1DA]'
+      }
+    }
+    switch (theme) {
+      case 'cream': return 'bg-transparent text-slate-500 border-slate-300 hover:border-[#0F9B6E] hover:text-[#0F9B6E]'
+      default: return 'bg-transparent text-slate-500 border-slate-300 hover:border-slate-500 hover:text-slate-700'
+    }
+  }
+
+  const getBadgeClass = () => {
+    switch (theme) {
+      case 'cream': return 'bg-[#0F9B6E]/90 text-white border-transparent'
+      case 'dim': return 'bg-[#1DD0A7]/90 text-[#0a1a14] border-transparent'
+      case 'graphite': return 'bg-[#0ea5e9]/90 text-[#0a1520] border-transparent'
+      default: return 'bg-[#39F1DA]/90 text-[#0D1117] border-transparent'
+    }
+  }
+
+  const accentRgb = getAccentRgb()
+  const accentColor = getAccentColor()
 
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [activeFilter, setActiveFilter] = useState('All')
@@ -98,19 +125,15 @@ export const Projects: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | '
   useEffect(() => {
     const container = scrollContainerRef.current
     if (!container) return
-
     const handleWheel = (e: WheelEvent) => {
       if (e.deltaY !== 0) {
         e.preventDefault()
         container.scrollLeft += e.deltaY
       }
     }
-
     container.addEventListener('wheel', handleWheel)
     return () => container.removeEventListener('wheel', handleWheel)
   }, [])
-
-
 
   return (
     <section
@@ -120,43 +143,51 @@ export const Projects: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | '
       className="section-projects min-h-screen pt-32 px-[10%] pb-20 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-16 relative"
     >
       <div className="absolute inset-0 pointer-events-none">
-        <div className={`absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#0F9B6E]/5'} animate-float`} style={{ animationDelay: '1s' }} data-parallax="slow" data-parallax-speed="2"></div>
+        <div
+          className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full blur-3xl animate-float"
+          style={{ background: `rgba(${accentRgb},0.05)`, animationDelay: '1s' }}
+          data-parallax="slow"
+          data-parallax-speed="2"
+        />
       </div>
 
       {/* Header */}
-      <div className="mb-20 text-center relative z-10 scroll-animate" data-parallax="scale" data-parallax-delay="0.1">
+      <div className="mb-16 relative bottom-10 z-[20] scroll-animate" style={{ isolation: 'isolate' }} data-parallax="scale" data-parallax-delay="0.1">
         {/* Connecting Line Receiver */}
-        <div className={`absolute left-[10%] top-[-8rem] w-[2px] h-32 bg-gradient-to-t ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#0F9B6E]/50 to-transparent'
-          } max-md:hidden`}></div>
+        <div
+          className="absolute left-[10%] top-[-8rem] w-[2px] h-32 max-md:hidden"
+          style={{ backgroundImage: `linear-gradient(to top, rgba(${accentRgb},0.5), transparent)` }}
+        />
 
-        <div className="inline-block relative">
-          <div className={`absolute -inset-4 blur-2xl opacity-20 ${isDarkMode ? 'bg-highlight' : 'bg-[#0F9B6E]'}`}></div>
-          <h2
-            className={`relative font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-light-tagline-text'} text-[6rem] font-bold mb-4 max-md:text-[3.5rem] leading-none tracking-tight`}
+        {/* Editorial label */}
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-8 h-[2px]" style={{ background: accentColor }} />
+          <span
+            className="font-['JetBrains_Mono'] text-xs tracking-[0.25em] uppercase"
+            style={{ color: accentColor }}
           >
-            Featured
-            <span className="block text-gradient">Projects</span>
-          </h2>
+            Portfolio
+          </span>
         </div>
 
-        <p className={`mt-8 text-xl font-['DM_Sans'] ${isDarkMode ? 'text-body-text' : 'text-light-body-text'} max-w-2xl mx-auto leading-relaxed`}>
-          A collection of projects showcasing my curiosity in machine learning, web development, and IoT solutions.
+        <h2 className={`font-['Syne'] font-bold leading-none tracking-tight text-[5.5rem] max-md:text-[3.2rem] ${isDarkMode ? 'text-tagline-text' : 'text-light-tagline-text'}`}>
+          Featured
+          <span className="block text-gradient">Projects.</span>
+        </h2>
+
+        <p className={`mt-5 text-lg font-['DM_Sans'] max-w-xl leading-relaxed ${isDarkMode ? 'text-body-text' : 'text-light-body-text'}`}>
+          A curated selection of work spanning machine learning, IoT, web, and desktop � each built to solve real problems.
         </p>
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-3 mt-10" data-parallax="fade" data-parallax-delay="0.2">
+        {/* Category filter pills */}
+        <div className="flex flex-wrap gap-2.5 mt-8" data-parallax="fade" data-parallax-delay="0.2">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveFilter(category)}
-              className={`px-5 py-2.5 rounded-full font-['JetBrains_Mono'] text-sm tracking-wide transition-all duration-300 ${activeFilter === category
-                ? isDarkMode
-                  ? 'bg-highlight text-dark-bg border-2 border-highlight shadow-lg shadow-highlight/30'
-                  : 'bg-[#0F9B6E] text-white border-2 border-[#0F9B6E] shadow-lg shadow-[#0F9B6E]/20'
-                : isDarkMode
-                  ? 'bg-transparent text-nav-text border-2 border-nav-text/30 hover:border-highlight hover:text-highlight'
-                  : 'bg-transparent text-light-body-text border-2 border-slate-300 hover:border-[#0F9B6E] hover:text-[#0F9B6E]'
-                } hover:scale-105`}
+              className={`px-4 py-2 rounded-full font-['JetBrains_Mono'] text-xs tracking-wide border transition-all duration-300 hover:scale-105 ${
+                activeFilter === category ? getActivePillClass() : getInactivePillClass()
+              }`}
             >
               {category}
             </button>
@@ -164,93 +195,26 @@ export const Projects: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | '
         </div>
       </div>
 
-      {/* Projects Grid/Scroll Container */}
+      {/* Horizontal Scroll Container */}
       <div
         ref={scrollContainerRef}
-        className={`project-scroll overflow-x-auto pb-8 scrollbar-hide relative z-10 scroll-animate scroll-animate-delay-1`}
+        className="project-scroll overflow-x-auto pb-6 pt-4 relative z-10 scroll-animate scroll-animate-delay-1"
         data-parallax="slide-up"
         data-parallax-delay="0.3"
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none'
-        }}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', overflowY: 'visible' }}
         data-lenis-prevent
       >
-        <div className="flex gap-8 min-w-max px-4 mt-12">
+        <div className="flex gap-7 min-w-max px-2">
           {filteredProjects.map((project, index) => (
-            <div
+            <ProjectCard
               key={project.id}
-              className={`project-card perspective-card flex-shrink-0 w-[420px] p-6 rounded-3xl transition-all duration-500 group relative overflow-hidden ${isDarkMode
-                ? `bg-white/5 border border-white/10 ${getCardBorderHoverClass()} ${getCardShadowHoverClass()}`
-                : 'bg-white border border-slate-200/80 shadow-md hover:border-[#0F9B6E]/40 hover:shadow-xl hover:shadow-slate-300/30'
-                } backdrop-blur-md`}
-              style={{
-                animation: `fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards`,
-                animationDelay: `${index * 0.1}s`,
-                opacity: 0,
-                transformStyle: 'preserve-3d'
-              }}
-            >
-              {/* Hover Glow Gradient */}
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${getGlowGradClass()}`}></div>
-
-              {/* Category Badge */}
-              <div className="absolute top-6 right-6 z-20">
-                <span className={`px-3 py-1 rounded-full text-xs font-['JetBrains_Mono'] font-bold tracking-wide border backdrop-blur-md ${isDarkMode
-                  ? 'bg-black/30 text-highlight border-highlight/30'
-                  : 'bg-white/80 text-[#0F9B6E] border-[#0F9B6E]/30'
-                  }`}>
-                  {project.category}
-                </span>
-              </div>
-
-              {/* Project Image */}
-              <div className="relative w-full h-[240px] rounded-2xl overflow-hidden mb-6 group-hover:-translate-y-1 transition-transform duration-500">
-                <div className={`absolute inset-0 z-10 transition-colors duration-500 ${isDarkMode ? 'bg-black/20 group-hover:bg-transparent' : 'bg-transparent group-hover:bg-transparent'
-                  }`}></div>
-                <img
-                  src={project.image}
-                  className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-                  alt={project.title}
-                />
-              </div>
-
-              {/* Content */}
-              <div className="relative z-10 px-2">
-                <h3
-                  className={`text-2xl font-['Syne'] font-bold mb-3 transition-colors duration-300 ${isDarkMode ? 'text-white group-hover:text-highlight' : 'text-light-name-text group-hover:text-[#0F9B6E]'
-                    }`}
-                >
-                  {project.title}
-                </h3>
-
-                <p
-                  className={`text-sm font-['DM_Sans'] mb-6 leading-relaxed line-clamp-3 ${isDarkMode ? 'text-gray-400' : 'text-light-body-text/90'}`}
-                >
-                  {project.description}
-                </p>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.technologies.slice(0, 4).map((tech) => ( // Showing top 4 to prevent clutter
-                    <span
-                      key={tech}
-                      className={`text-[10px] uppercase tracking-wider px-2 py-1 rounded border transition-all duration-300 ${isDarkMode
-                        ? 'bg-white/5 text-gray-400 border-white/10 group-hover:border-highlight/30 group-hover:text-highlight'
-                        : 'bg-slate-100 text-light-body-text border-slate-200 group-hover:border-[#0F9B6E]/30 group-hover:text-[#0F9B6E]'
-                        }`}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 4 && (
-                    <span className={`text-[10px] px-2 py-1 rounded border ${isDarkMode ? 'bg-white/5 border-white/10 text-gray-500' : 'bg-slate-100 border-slate-200 text-light-body-text/60'}`}>
-                      +{project.technologies.length - 4}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
+              project={project}
+              index={index}
+              isDarkMode={isDarkMode}
+              accentColor={accentColor}
+              accentRgb={accentRgb}
+              badgeClass={getBadgeClass()}
+            />
           ))}
         </div>
       </div>
@@ -259,18 +223,157 @@ export const Projects: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | '
       <div className="text-center mt-10 relative z-10">
         <div className="inline-flex items-center gap-3">
           <div className="flex gap-1.5">
-            <div className={`w-2 h-2 rounded-full ${isDarkMode ? 'bg-highlight' : 'bg-[#0F9B6E]'} animate-pulse`}></div>
-            <div className={`w-2 h-2 rounded-full ${isDarkMode ? 'bg-highlight/60' : 'bg-[#0F9B6E]/60'} animate-pulse`} style={{ animationDelay: '0.2s' }}></div>
-            <div className={`w-2 h-2 rounded-full ${isDarkMode ? 'bg-highlight/30' : 'bg-[#0F9B6E]/30'} animate-pulse`} style={{ animationDelay: '0.4s' }}></div>
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: accentColor }} />
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: accentColor, opacity: 0.6, animationDelay: '0.2s' }} />
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: accentColor, opacity: 0.3, animationDelay: '0.4s' }} />
           </div>
           <p className={`text-sm font-['JetBrains_Mono'] ${isDarkMode ? 'text-nav-text' : 'text-light-body-text/70'}`}>
-            Scroll horizontally or use mouse wheel →
+            Scroll horizontally or use mouse wheel ?
           </p>
         </div>
       </div>
 
       {/* Connecting Line to Next Section */}
-      <div className={`absolute left-[10%] bottom-[-5rem] w-[2px] h-32 bg-gradient-to-b ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#0F9B6E]/50 to-transparent'} max-md:hidden z-0`}></div>
+      <div
+        className="absolute left-[10%] bottom-[-5rem] w-[2px] h-32 max-md:hidden z-0"
+        style={{ backgroundImage: `linear-gradient(to bottom, rgba(${accentRgb},0.5), transparent)` }}
+      />
     </section>
+  )
+}
+
+// --- Project Card sub-component to avoid hook rules issues ------------------
+
+interface ProjectCardProps {
+  project: Project
+  index: number
+  isDarkMode: boolean
+  accentColor: string
+  accentRgb: string
+  badgeClass: string
+}
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isDarkMode, accentColor, accentRgb, badgeClass }) => {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <div
+      className={`group flex-shrink-0 w-[460px] rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer relative ${
+        isDarkMode
+          ? 'bg-white/[0.04] border border-white/10'
+          : 'bg-white border border-slate-200/80 shadow-md'
+      }`}
+      style={{
+        animation: `fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+        animationDelay: `${index * 0.1}s`,
+        opacity: 0,
+        transform: hovered ? 'translateY(-8px)' : 'translateY(0)',
+        boxShadow: hovered ? `0 24px 60px rgba(${accentRgb},0.18), 0 0 0 1.5px rgba(${accentRgb},0.45)` : 'none',
+        borderColor: hovered
+          ? `rgba(${accentRgb},0.5)`
+          : isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(203,213,225,0.8)',
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Image area */}
+      <div className="relative w-full h-[260px] overflow-hidden">
+        <img
+          src={project.image}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          alt={project.title}
+        />
+
+        {/* Gradient overlay on hover */}
+        <div
+          className="absolute inset-0 transition-opacity duration-300"
+          style={{
+            background: `linear-gradient(to top, rgba(${accentRgb},0.75) 0%, rgba(0,0,0,0.4) 45%, transparent 70%)`,
+            opacity: hovered ? 1 : 0,
+          }}
+        />
+
+        {/* CTA buttons */}
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-end pb-5 gap-2.5 transition-opacity duration-300"
+          style={{ opacity: hovered ? 1 : 0 }}
+        >
+          {project.link && (
+            <>
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                className="flex items-center gap-2 px-5 py-2 rounded-full text-[11px] font-['JetBrains_Mono'] tracking-wider font-bold bg-white text-[#0D1117] hover:opacity-90 transition-opacity duration-200 shadow-lg"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                View Project
+              </a>
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                className="flex items-center gap-2 px-5 py-2 rounded-full text-[11px] font-['JetBrains_Mono'] tracking-wider font-bold bg-black/50 text-white border border-white/30 hover:bg-black/70 transition-colors duration-200 backdrop-blur-sm"
+              >
+                <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+                View on GitHub
+              </a>
+            </>
+          )}
+        </div>
+
+        {/* Category badge � top-left */}
+        <div className="absolute top-4 left-4 z-20">
+          <span className={`px-2.5 py-1 rounded-md text-[10px] font-['JetBrains_Mono'] font-bold tracking-widest uppercase border backdrop-blur-md ${badgeClass}`}>
+            {project.category}
+          </span>
+        </div>
+      </div>
+
+      {/* Card body */}
+      <div className="p-6">
+        <h3
+          className="text-[1.35rem] font-['Syne'] font-bold mb-2.5 leading-snug transition-colors duration-300"
+          style={{ color: hovered ? accentColor : isDarkMode ? '#ffffff' : '' }}
+        >
+          {project.title}
+        </h3>
+
+        <p className={`text-sm font-['DM_Sans'] leading-relaxed line-clamp-3 mb-5 ${isDarkMode ? 'text-gray-400' : 'text-light-body-text/80'}`}>
+          {project.description}
+        </p>
+
+        {/* Tech pills */}
+        <div className="flex flex-wrap gap-1.5">
+          {project.technologies.slice(0, 4).map((tech) => (
+            <span
+              key={tech}
+              className={`text-[9px] uppercase tracking-[0.15em] px-2.5 py-1 rounded-md border font-['JetBrains_Mono'] transition-all duration-300 ${
+                isDarkMode
+                  ? 'bg-white/5 text-gray-400 border-white/10 group-hover:border-white/20'
+                  : 'bg-slate-50 text-slate-500 border-slate-200 group-hover:border-slate-300'
+              }`}
+            >
+              {tech}
+            </span>
+          ))}
+          {project.technologies.length > 4 && (
+            <span className={`text-[9px] px-2.5 py-1 rounded-md border font-['JetBrains_Mono'] ${
+              isDarkMode ? 'bg-white/5 border-white/10 text-gray-500' : 'bg-slate-50 border-slate-200 text-slate-400'
+            }`}>
+              +{project.technologies.length - 4}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
