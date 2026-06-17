@@ -163,7 +163,7 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode, theme, setTheme, onChatO
               <span className={`font-['JetBrains_Mono'] text-[10px] tracking-widest uppercase transition-colors duration-300 mt-1 ${
                 isDarkMode ? 'text-body-text/60 group-hover:text-[#39F1DA]/80' : 'text-light-body-text/60 group-hover:text-[#0F9B6E]/80'
               }`}>
-                Software Engineer
+                Computer Science
               </span>
             </div>
           </button>
@@ -182,6 +182,13 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode, theme, setTheme, onChatO
               className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-light-nav-text hover:text-[#1DD0A7]'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group ${showHeader ? 'animate-slide-down-delay-1' : 'opacity-0'}`}
             >
               <span className="relative z-10">Projects</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a
+              href="#certifications"
+              className={`${isDarkMode ? 'text-nav-text hover:text-highlight' : 'text-light-nav-text hover:text-[#1DD0A7]'} no-underline text-sm font-['JetBrains_Mono'] tracking-wider transition-all duration-300 hover:translate-y-[-2px] max-md:text-xs relative group ${showHeader ? 'animate-slide-down-delay-2' : 'opacity-0'}`}
+            >
+              <span className="relative z-10">Certifications</span>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-highlight transition-all duration-300 group-hover:w-full"></span>
             </a>
             <a
@@ -221,9 +228,9 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode, theme, setTheme, onChatO
         </div>
       </header>
 
-      <section className="hero-section min-h-screen flex items-center justify-center px-[10%] relative max-w-[1600px] mx-auto max-xl:px-[5%] max-md:px-[5%] overflow-hidden">
+      <section className="hero-section min-h-screen flex items-center justify-center px-[10%] relative max-w-[1600px] mx-auto max-xl:px-[5%] max-md:px-[5%]">
         {/* Animated parallax background elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none">
           <div
             className={`absolute top-20 left-10 w-72 h-72 ${getBGGlowColor(1)} rounded-full blur-3xl animate-float`}
             data-parallax="slow"
@@ -249,11 +256,11 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode, theme, setTheme, onChatO
           <div className="space-y-6">
             <div className="inline-block">
               <p
-                className={`text-base font-['JetBrains_Mono'] font-normal tracking-widest uppercase ${
+                className={`text-base font-['JetBrains_Mono'] font-normal tracking-widest uppercase transition-all duration-700 ease-out ${
                   isDarkMode ? 'text-highlight' : 'text-[#0F9B6E]'
-                } ${showText1 ? 'typing-text' : 'opacity-0'}`}
+                } ${showText1 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'}`}
               >
-                Hi, my name is
+                Welcome, I'm
               </p>
             </div>
 
@@ -267,11 +274,10 @@ export const Hero: React.FC<HeroProps> = ({ isDarkMode, theme, setTheme, onChatO
             </h1>
 
             <h2
-              className={`text-[2rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-light-tagline-text'} mb-6 leading-tight max-xl:text-[3rem] max-md:text-[2.5rem] max-sm:text-[2rem] transition-all duration-700 ease-out ${showText3 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'}`}
+              className={`text-[2rem] font-['Syne'] font-semibold ${isDarkMode ? 'text-tagline-text' : 'text-light-tagline-text'} mb-6 leading-tight max-xl:text-[2.5rem] max-md:text-[2rem] max-sm:text-[1.5rem] transition-all duration-700 ease-out ${showText3 ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'}`}
               data-parallax="slow"
               data-parallax-speed="0.2"
-            >Sleep, Eat, Create. <span className="relative inline-block">
-              </span>
+            >Computer Science Student.
             </h2>
 
             {/* CTA Button */}
