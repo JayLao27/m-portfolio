@@ -117,9 +117,9 @@ export const Projects: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | '
       id="projects"
       data-scroll
       data-scroll-reveal
-      className="section-projects min-h-screen pt-32 px-[10%] pb-20 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-16 relative overflow-hidden"
+      className="section-projects min-h-screen pt-32 px-[10%] pb-20 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-16 relative"
     >
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
         <div className={`absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#0F9B6E]/5'} animate-float`} style={{ animationDelay: '1s' }} data-parallax="slow" data-parallax-speed="2"></div>
       </div>
 
@@ -268,6 +268,9 @@ export const Projects: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | '
           </p>
         </div>
       </div>
+
+      {/* Connecting Line to Next Section */}
+      <div className={`absolute left-[10%] bottom-[-5rem] w-[2px] h-32 bg-gradient-to-b ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#0F9B6E]/50 to-transparent'} max-md:hidden z-0`}></div>
     </section>
   )
 }
