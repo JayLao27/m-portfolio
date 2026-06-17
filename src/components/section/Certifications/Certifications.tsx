@@ -7,32 +7,63 @@ export interface Certification {
   date: string
   skills: string[]
   link?: string
+  image?: string
 }
 
 const certificationsData: Certification[] = [
   {
     id: 1,
-    title: 'Machine Learning Specialization',
-    issuer: 'DeepLearning.AI & Stanford',
-    date: 'August 2024',
-    skills: ['Machine Learning', 'Python', 'Neural Networks', 'Scikit-learn'],
-    link: '#'
+    title: 'Python for Data Science, AI & Development',
+    issuer: 'IBM',
+    date: '2025',
+    skills: ['Python', 'Data Science', 'AI', 'Development'],
+    link: 'https://coursera.org/share/4ca2be4346798683c15b578b01098d35',
+    image: '/Certif/Coursera_Python.png'
   },
   {
     id: 2,
-    title: 'Google Cybersecurity Professional Certificate',
-    issuer: 'Google',
-    date: 'June 2024',
-    skills: ['Cybersecurity', 'Network Security', 'Python', 'Linux'],
-    link: '#'
+    title: 'AI for Cybersecurity Specialization',
+    issuer: 'Johns Hopkins University',
+    date: '2025',
+    skills: ['AI', 'Cybersecurity', 'Machine Learning', 'Network Security'],
+    link: 'https://coursera.org/share/e820a6a12b0c2f8dcfc1a9543e63d69c',
+    image: '/Certif/Coursera_Cybersecurity.png'
   },
   {
     id: 3,
-    title: 'AWS Certified Cloud Practitioner',
-    issuer: 'Amazon Web Services',
-    date: 'January 2024',
-    skills: ['Cloud Computing', 'AWS Services', 'Security', 'Architecture'],
-    link: '#'
+    title: 'GitHub Foundations',
+    issuer: 'GitHub',
+    date: '2024',
+    skills: ['Git', 'GitHub', 'Version Control', 'Project Management'],
+    link: 'https://www.credly.com/badges/bb0b0dae-8941-4d38-b0e7-6d12720ebae0/linked_in_profile',
+    image: '/Certif/Github_Foundations.png'
+  },
+  {
+    id: 4,
+    title: 'IT Specialist - Databases',
+    issuer: 'Certiport (Pearson VUE)',
+    date: '2025',
+    skills: ['Database Design', 'SQL', 'MySQL', 'Relational Databases'],
+    link: 'https://www.credly.com/badges/8145dc78-e468-43fc-928e-45739b5aae10/linked_in_profile',
+    image: '/Certif/IT_Databases.png'
+  },
+  {
+    id: 5,
+    title: 'IT Specialist - Cybersecurity',
+    issuer: 'Certiport (Pearson VUE)',
+    date: '2026',
+    skills: ['Cybersecurity', 'Threat Analysis', 'Security Protocols'],
+    link: 'https://www.credly.com/badges/e2953d85-02f7-4122-9398-b0c141f555f9/public_url',
+    image: '/Certif/ITS-Badges-Cybersecurity.png'
+  },
+  {
+    id: 6,
+    title: 'IT Specialist - Network Security',
+    issuer: 'Certiport (Pearson VUE)',
+    date: '2026',
+    skills: ['Network Security', 'Device Security', 'OS Security'],
+    link: 'https://www.credly.com/badges/c0f4ab05-00e1-493d-af13-25af575e112a/public_url',
+    image: '/Certif/ITS-Badges_Network-Security.png'
   }
 ]
 
@@ -69,14 +100,17 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
       id="certifications"
       data-scroll
       data-scroll-reveal
-      className="section-certifications min-h-[70vh] pt-32 px-[10%] pb-20 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-16 relative overflow-hidden"
+      className="section-certifications min-h-[70vh] pt-24 px-[10%] pb-12 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-16 max-md:px-[5%] max-md:pb-12 relative"
     >
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
         <div className={`absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#0F9B6E]/5'} animate-float`} style={{ animationDelay: '1s' }} data-parallax="slow" data-parallax-speed="1.5"></div>
       </div>
 
+      {/* Connecting Line Receiver */}
+      <div className={`absolute left-[10%] top-[-8rem] w-[2px] h-32 bg-gradient-to-t ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#0F9B6E]/50 to-transparent'} max-md:hidden z-0`}></div>
+
       {/* Header */}
-      <div className="mb-16 text-center relative z-10 scroll-animate" data-parallax="scale" data-parallax-delay="0.1">
+      <div className="mb-16 text-center relative z-10">
         <div className="inline-block relative">
           <div className={`absolute -inset-4 blur-2xl opacity-20 ${isDarkMode ? 'bg-highlight' : 'bg-[#0F9B6E]'}`}></div>
           <h2
@@ -93,7 +127,7 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
       </div>
 
       {/* Certifications Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10 scroll-animate scroll-animate-delay-1" data-parallax="slide-up" data-parallax-delay="0.3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
         {certificationsData.map((cert, index) => (
           <a
             key={cert.id}
@@ -115,11 +149,15 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
 
             <div className="relative z-10 flex-1">
               <div className="flex justify-between items-start mb-6">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300 ${isDarkMode ? 'bg-highlight/10 text-highlight group-hover:bg-highlight/20' : 'bg-[#0F9B6E]/10 text-[#0F9B6E] group-hover:bg-[#0F9B6E]/20'}`}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 15l-2 5l9-5l-9-5l2 5z" />
-                    <circle cx="12" cy="8" r="4" />
-                  </svg>
+                <div className={`w-24 h-20 rounded-xl flex items-center justify-center overflow-hidden transition-colors duration-300 ${isDarkMode ? 'bg-highlight/10 text-highlight group-hover:bg-highlight/20' : 'bg-[#0F9B6E]/10 text-[#0F9B6E] group-hover:bg-[#0F9B6E]/20'}`}>
+                  {cert.image ? (
+                    <img src={cert.image} alt={cert.title} className="w-full h-full object-contain" />
+                  ) : (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 15l-2 5l9-5l-9-5l2 5z" />
+                      <circle cx="12" cy="8" r="4" />
+                    </svg>
+                  )}
                 </div>
                 <span className={`text-xs font-['JetBrains_Mono'] tracking-wide ${isDarkMode ? 'text-body-text/60' : 'text-light-body-text/60'}`}>
                   {cert.date}
@@ -151,6 +189,9 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
           </a>
         ))}
       </div>
+
+      {/* Connecting Line to Next Section */}
+      <div className={`absolute right-[10%] bottom-[-5rem] w-[2px] h-32 bg-gradient-to-b ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#0F9B6E]/50 to-transparent'} max-md:hidden z-0`}></div>
     </section>
   )
 }
