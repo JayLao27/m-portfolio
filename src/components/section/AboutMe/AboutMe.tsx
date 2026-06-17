@@ -7,9 +7,9 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
       id="about"
       data-scroll
       data-scroll-reveal
-      className="section-about min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12 relative overflow-hidden"
+      className="section-about min-h-screen pt-32 px-[10%] pb-16 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-12 relative"
     >
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
         <div className={`absolute top-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl ${isDarkMode ? 'bg-highlight/5' : 'bg-[#1DD0A7]/5'} animate-float`} data-parallax="slow" data-parallax-speed="1.5"></div>
       </div>
 
@@ -24,22 +24,19 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
             <div className="absolute -inset-4 rounded-2xl border border-highlight/20 -z-10"></div>
             <div className="absolute -inset-8 rounded-2xl border border-highlight/10 -z-20"></div>
             <h2 className={`font-['Syne'] ${isDarkMode ? 'text-tagline-text' : 'text-light-tagline-text'} text-[3rem] font-bold leading-tight max-md:text-[3rem] mb-4`}>
-              Beyond the Screen
+              About Me
             </h2>
             <ProfileImage isDarkMode={isDarkMode} theme={theme} />
             <div className="w-full text-left">
               <div className={`mt-10 mb-[40px] space-y-5 text-lg font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/90' : 'text-light-body-text/90'}`}>
               <p>
-                Hi, I'm <span className={`${isDarkMode ? 'text-highlight' : 'text-[#0F9B6E]'} font-bold`}>Jay Lao</span>. My interest in technology started early, around <span className={`inline-block px-3 py-1 rounded-full ${isDarkMode ? 'bg-highlight/10 border-highlight/20 text-highlight' : 'bg-[#0F9B6E]/10 border-[#0F9B6E]/20 text-[#0F9B6E]'} text-sm font-bold align-middle mx-1`}>five years old</span>, and has since grown into a strong foundation in software development and problem-solving.
+                Hi, I'm <span className={`${isDarkMode ? 'text-highlight' : 'text-[#0F9B6E]'} font-bold`}>Jay Lao</span>, a passionate Computer Science student. I focus on building practical, high-impact solutions with a strong interest in <span className={isDarkMode ? 'text-highlight font-semibold' : 'text-[#0F9B6E] font-semibold'}>Machine Learning</span> and <span className={isDarkMode ? 'text-highlight font-semibold' : 'text-[#0F9B6E] font-semibold'}>Computer Science</span>.
               </p>
               <p>
-                Today, I focus on building practical, high-impact solutions with a strong interest in <span className={isDarkMode ? 'text-highlight font-semibold' : 'text-[#0F9B6E] font-semibold'}>Machine Learning</span> and <span className={isDarkMode ? 'text-highlight font-semibold' : 'text-[#0F9B6E] font-semibold'}>Software Engineering</span>. I enjoy designing systems that are efficient, scalable, and user-focused, while continuously improving through hands-on projects and lifelong learning.
+                Currently, I am seeking <span className={`inline-block px-3 py-1 rounded-full ${isDarkMode ? 'bg-highlight/10 border-highlight/20 text-highlight' : 'bg-[#0F9B6E]/10 border-[#0F9B6E]/20 text-[#0F9B6E]'} text-sm font-bold align-middle mx-1`}>2025 Computer Science Internships</span> where I can apply my skills in real-world environments. I enjoy designing systems that are efficient, scalable, and user-focused, continuously learning through hands-on projects and professional opportunities.
               </p>
+              </div>
             </div>
-
-         
-            </div>
-
           </div>
 
           {/* Connecting Line Start */}
@@ -98,7 +95,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
               Here's what I'm working on lately:
             </h3>
             <div className="flex flex-wrap gap-3">
-              {['Machine Learning', 'Cybersecurity', 'Software Engineering'].map((skill) => (
+              {['Machine Learning', 'Cybersecurity', 'Computer Science'].map((skill) => (
                 <span
                   key={skill}
                   className={`px-4 py-2 rounded-full text-sm font-['JetBrains_Mono'] border transition-all duration-300 hover:scale-105 hover:shadow-lg ${isDarkMode
@@ -111,9 +108,12 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
               ))}
             </div>
 
-            <div className={` rounded-2xl border-l-4 border-highlight relative ${isDarkMode ? 'bg-white/5' : 'bg-white border border-slate-200/80 shadow-sm'}`} data-parallax="fade" data-parallax-delay="0.3">
-              <p className={`font-['DM_Sans'] italic text-base ${isDarkMode ? 'text-gray-300' : 'text-light-body-text/80'}`}>
-                "The only way to do great work is to love what you do and never stop learning."
+            <div className={`p-6 rounded-2xl border transition-all duration-300 ${isDarkMode ? 'bg-white/5 border-white/10 hover:border-highlight/30' : 'bg-white border-slate-200/80 shadow-sm hover:border-[#0F9B6E]/30'}`} data-parallax="fade" data-parallax-delay="0.3">
+              <h4 className={`font-['Syne'] text-lg font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-light-name-text'}`}>
+                Academic Background
+              </h4>
+              <p className={`font-['DM_Sans'] text-sm leading-relaxed ${isDarkMode ? 'text-gray-400' : 'text-light-body-text/80'}`}>
+                Dedicated to continuous learning, I balance coursework in advanced data structures and algorithms with hands-on development in personal and collaborative projects.
               </p>
             </div>
           </div>
