@@ -11,6 +11,7 @@ export interface Certification {
   image?: string
   accentColor: string
   accentRgb: string
+  isOrganization?: boolean
 }
 
 const certificationsData: Certification[] = [
@@ -86,6 +87,32 @@ const certificationsData: Certification[] = [
     accentColor: '#F59E0B',
     accentRgb: '245,158,11',
   },
+  {
+    id: 7,
+    title: 'Google I/O Extended 2024 Certificate',
+    issuer: 'Google Developer Groups',
+    issuerShort: 'GDG',
+    date: '2024',
+    skills: ['Google APIs', 'Android SDK', 'Gemini AI', 'Cloud Computing', 'Web Tech'],
+    link: 'https://io.google/2024/',
+    image: '/Certif/Google_IO_2024.png',
+    accentColor: '#4285F4',
+    accentRgb: '66,133,244',
+    isOrganization: true,
+  },
+  {
+    id: 8,
+    title: 'Google I/O Extended 2025 Certificate',
+    issuer: 'Google Developer Groups',
+    issuerShort: 'GDG',
+    date: '2026',
+    skills: ['Google APIs', 'Android SDK', 'Gemini AI', 'Cloud Computing', 'Web Tech'],
+    link: 'https://apohub.gdgdavao.org/feedback/mXV9USdyKntxVzI9bhnt?token=WYv8BTn9FwzAUS0mtbVNUOLp7T2Y0gvuzproGEux-nk',
+    image: '/Certif/Google_IO_2026.png',
+    accentColor: '#4285F4',
+    accentRgb: '66,133,244',
+    isOrganization: true,
+  },
 ]
 
 /* ─── Hero Card (large, left column) ─── */
@@ -155,14 +182,21 @@ function HeroCard({ cert, isDarkMode }: { cert: Certification; isDarkMode: boole
 
       <div className="relative z-10 p-8 flex flex-col h-full min-h-[360px]">
         {/* Top Row */}
-        <div className="flex items-start justify-between mb-8">
-          {/* Issuer badge */}
-          <span
-            className="font-['JetBrains_Mono'] text-[10px] tracking-[0.25em] uppercase px-3 py-1.5 rounded-full font-bold"
-            style={{ background: `rgba(${cert.accentRgb},0.15)`, color: cert.accentColor }}
-          >
-            {cert.issuer}
-          </span>
+        <div className="flex items-start justify-between mb-8 gap-4">
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Issuer badge */}
+            <span
+              className="font-['JetBrains_Mono'] text-[10px] tracking-[0.25em] uppercase px-3 py-1.5 rounded-full font-bold inline-block"
+              style={{ background: `rgba(${cert.accentRgb},0.15)`, color: cert.accentColor }}
+            >
+              {cert.issuer}
+            </span>
+            {cert.isOrganization && (
+              <span className="text-[9px] font-['JetBrains_Mono'] px-2.5 py-1 rounded bg-[#4285F4]/15 text-[#4285F4] font-bold uppercase tracking-wider border border-[#4285F4]/30">
+                Organization Certification
+              </span>
+            )}
+          </div>
 
           {/* External link icon */}
           <div
@@ -313,9 +347,16 @@ function BentoCard({ cert, isDarkMode, delay }: { cert: Certification; isDarkMod
               <path d="M7 17L17 7M17 7H7M17 7v10" />
             </svg>
           </div>
-          <p className="font-['DM_Sans'] text-xs font-semibold mb-3" style={{ color: cert.accentColor }}>
-            {cert.issuer}
-          </p>
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            <p className="font-['DM_Sans'] text-xs font-semibold" style={{ color: cert.accentColor }}>
+              {cert.issuer}
+            </p>
+            {cert.isOrganization && (
+              <span className="text-[9px] font-['JetBrains_Mono'] px-1.5 py-0.5 rounded bg-[#4285F4]/10 text-[#4285F4] font-bold uppercase tracking-wider border border-[#4285F4]/20">
+                Organization Certification
+              </span>
+            )}
+          </div>
           <div className="flex flex-wrap gap-1.5">
             {cert.skills.slice(0, 2).map(s => (
               <span
@@ -384,9 +425,9 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
   const heroCards = certificationsData.slice(0, 2)
   const bentoCards = certificationsData.slice(2)
 
-  const stat1 = useCounter(6)
-  const stat2 = useCounter(3)
-  const stat3 = useCounter(2024, 2000)
+  const stat1 = useCounter(certificationsData.length)
+  const stat2 = useCounter(new Set(certificationsData.map(c => c.issuerShort)).size)
+  const stat3 = useCounter(2026, 2000)
 
   return (
     <section

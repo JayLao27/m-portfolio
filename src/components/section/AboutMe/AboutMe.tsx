@@ -307,6 +307,61 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
                 </div>
               </div>
             </div>
+
+            {/* Google I/O Extended Certificate Card */}
+            <div
+              className={`relative p-6 rounded-2xl border overflow-hidden transition-all duration-300 group hover:-translate-y-0.5 ${
+                isDarkMode
+                  ? 'bg-white/[0.04] border-white/[0.08] hover:border-white/20 hover:shadow-lg hover:shadow-black/20'
+                  : 'bg-white border-slate-200/80 shadow-sm hover:border-slate-300 hover:shadow-md'
+              }`}
+            >
+              {/* Google Brand colored accent bar on top */}
+              <div
+                className="absolute top-0 left-0 right-0 h-[2px] opacity-80"
+                style={{ background: 'linear-gradient(90deg, #4285F4 0%, #EA4335 25%, #FBBC05 50%, #34A853 100%)' }}
+              />
+
+              <div className="flex items-start gap-4">
+                <div
+                  className="mt-0.5 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 bg-white/5 border border-white/10"
+                  style={{ 
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.02)',
+                    borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)'
+                  }}
+                >
+                  <img src="/Certif/Google_IO_2024.png" alt="Google I/O Extended" className="w-8 h-8 object-contain" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+                    <h4
+                      className={`font-['Syne'] text-[1.0625rem] font-bold ${
+                        isDarkMode ? 'text-white' : 'text-light-name-text'
+                      }`}
+                    >
+                      Google I/O Extended
+                    </h4>
+                    <span 
+                      className="text-[9px] font-['JetBrains_Mono'] px-2 py-0.5 rounded font-bold uppercase tracking-wider border"
+                      style={{
+                        color: isDarkMode ? '#39F1DA' : '#0F9B6E',
+                        borderColor: isDarkMode ? 'rgba(57, 241, 218, 0.3)' : 'rgba(15, 155, 110, 0.3)',
+                        background: isDarkMode ? 'rgba(57, 241, 218, 0.06)' : 'rgba(15, 155, 110, 0.06)'
+                      }}
+                    >
+                      Certificate
+                    </span>
+                  </div>
+                  <p
+                    className={`font-['DM_Sans'] text-sm leading-relaxed ${
+                      isDarkMode ? 'text-gray-400' : 'text-light-body-text/80'
+                    }`}
+                  >
+                    Awarded certificate from Google I/O Extended, recognizing engagement with Google developer ecosystem, Android SDK, and Google AI integration.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Transition wrapper for "More About Me" Solid Card (Replaces Tools on hover) */}
@@ -377,6 +432,20 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
                   <div>
                     <p className={`text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider mb-1 ${theme === 'cream' ? 'text-slate-500' : 'text-slate-400'}`}>Interests</p>
                     <p className="font-semibold text-base" style={{ color: theme === 'cream' ? '#1e293b' : '#f8fafc' }}>Algorithmic Dev</p>
+                  </div>
+                  
+                  {/* Google I/O Extended Certificate Detail */}
+                  <div className="col-span-2 border-t pt-4" style={{ borderColor: theme === 'cream' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }}>
+                    <p className={`text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider mb-1.5 ${theme === 'cream' ? 'text-slate-500' : 'text-slate-400'}`}>Organization Certification</p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-md flex items-center justify-center text-sm bg-white/5 border border-white/10" style={{ backgroundColor: theme === 'cream' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)', borderColor: theme === 'cream' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' }}>
+                        <img src="/Certif/Google_IO_2024.png" alt="Google I/O" className="w-5 h-5 object-contain" />
+                      </div>
+                      <div>
+                        <p className="font-bold text-[14px]" style={{ color: theme === 'cream' ? '#0F9B6E' : '#39F1DA' }}>Google I/O Extended Certificate</p>
+                        <p className={`text-xs ${theme === 'cream' ? 'text-slate-500' : 'text-slate-400'}`}>Issued by Google Developer Groups (2024)</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
