@@ -181,15 +181,18 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
       id="contact"
       data-scroll
       data-scroll-reveal
-      className="section-contact min-h-screen pt-32 px-[10%] pb-20 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-16 relative overflow-hidden"
+      className="section-contact min-h-screen pt-24 px-[10%] pb-12 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-16 max-md:px-[5%] max-md:pb-12 relative"
     >
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
         <div className={`absolute top-1/4 left-0 w-[600px] h-[600px] rounded-full blur-3xl ${getGlowClass()} animate-float`} style={{ animationDelay: '1.5s' }} data-parallax="slow" data-parallax-speed="1.5"></div>
         <div className={`absolute bottom-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl ${getGlowClass()} animate-float`} data-parallax="fast" data-parallax-speed="0.8"></div>
       </div>
 
+      {/* Connecting Line Receiver */}
+      <div className={`absolute right-[10%] top-[-8rem] w-[2px] h-32 bg-gradient-to-t ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#0F9B6E]/50 to-transparent'} max-md:hidden z-0`}></div>
+
       {/* Header */}
-      <div className="mb-16 text-center relative z-10 scroll-animate-subtle" data-parallax="scale" data-parallax-delay="0.1">
+      <div className="mb-16 text-center relative z-10">
         <div className="inline-block">
           <div className="relative">
             <h2
@@ -212,7 +215,7 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
       </div>
 
       {/* Contact Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10 scroll-animate-subtle scroll-animate-delay-1" data-parallax="fade" data-parallax-delay="0.2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
 
         {/* Left Side - Contact Information */}
         <div className="space-y-8">
@@ -260,8 +263,8 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
               Let's Work Together
             </h3>
             <p className={`font-['DM_Sans'] leading-relaxed ${isDarkMode ? 'text-body-text/80' : 'text-light-body-text/90'}`}>
-              I'm currently available for freelance projects, collaborations, and full-time opportunities.
-              Whether you have a question or just want to say hi, my inbox is always open!
+              I'm currently seeking Computer Science internships for 2025.
+              Whether you have an opportunity, a question, or just want to connect, my inbox is always open!
             </p>
 
           </div>
@@ -412,7 +415,7 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
       </div>
 
       {/* Bottom CTA */}
-      <div className="mt-20 text-center relative z-10 scroll-animate-subtle scroll-animate-delay-2" data-parallax="slide-up" data-parallax-delay="0.4">
+      <div className="mt-20 text-center relative z-10">
         <div className={`inline-block p-8 rounded-2xl glass-effect border ${isDarkMode ? 'border-white/10' : 'border-slate-200 bg-white/70 shadow-sm'}`}>
           <p className={`text-lg font-['DM_Sans'] mb-4 ${isDarkMode ? 'text-body-text' : 'text-light-body-text'}`}>
             Prefer a direct email?
