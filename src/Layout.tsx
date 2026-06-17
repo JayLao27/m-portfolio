@@ -7,6 +7,7 @@ import { Certifications } from './components/section/Certifications/Certificatio
 import { Contact } from './components/section/Contact/Contact'
 import { LayoutDesign } from './components/layout/LayoutDesign'
 import { Chatbot } from './components/chat/Chatbot'
+import { LocomotiveScrollProvider } from './components/effects/locomotive-scroll'
 
 function Layout() {
   const [theme, setTheme] = useState<'dark' | 'dim' | 'graphite' | 'cream'>('graphite')
@@ -15,27 +16,30 @@ function Layout() {
   const isDarkMode = theme !== 'cream'
 
   return (
-    <LayoutDesign isDarkMode={isDarkMode} theme={theme}>
-      <Hero 
-        isDarkMode={isDarkMode} 
-        theme={theme}
-        setTheme={setTheme} 
-        onChatOpen={() => setIsChatOpen(true)} 
-      />
-      <AboutMe isDarkMode={isDarkMode} theme={theme} />
-      <Projects isDarkMode={isDarkMode} theme={theme} />
-      <Certifications isDarkMode={isDarkMode} theme={theme} />
-      <Contact isDarkMode={isDarkMode} theme={theme} />
-      <Chatbot 
-        isDarkMode={isDarkMode} 
-        theme={theme}
-        isOpen={isChatOpen} 
-        onClose={() => setIsChatOpen(false)} 
-        onOpen={() => setIsChatOpen(true)} 
-      />
-    </LayoutDesign>
+    <LocomotiveScrollProvider>
+      <LayoutDesign isDarkMode={isDarkMode} theme={theme}>
+        <Hero 
+          isDarkMode={isDarkMode} 
+          theme={theme}
+          setTheme={setTheme} 
+          onChatOpen={() => setIsChatOpen(true)} 
+        />
+        <AboutMe isDarkMode={isDarkMode} theme={theme} />
+        <Projects isDarkMode={isDarkMode} theme={theme} />
+        <Certifications isDarkMode={isDarkMode} theme={theme} />
+        <Contact isDarkMode={isDarkMode} theme={theme} />
+        <Chatbot 
+          isDarkMode={isDarkMode} 
+          theme={theme}
+          isOpen={isChatOpen} 
+          onClose={() => setIsChatOpen(false)} 
+          onOpen={() => setIsChatOpen(true)} 
+        />
+      </LayoutDesign>
+    </LocomotiveScrollProvider>
   )
 }
 
 
 export default Layout
+

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { AdvancedCursorSpotlight } from '../effects/AdvancedCursorSpotlight'
-import { LocomotiveScrollProvider } from '../effects/locomotive-scroll'
+import { useLocomotiveScroll } from '../effects/locomotive-scroll'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { useParallax } from '../../hooks/useParallax'
 
@@ -10,9 +10,10 @@ type LayoutDesignProps = {
   children: ReactNode
 }
 
-export function LayoutDesign({ theme, children }: LayoutDesignProps) {
+export function LayoutDesign({ isDarkMode, theme, children }: LayoutDesignProps) {
   useScrollReveal()
   useParallax()
+  const scroll = useLocomotiveScroll()
 
   const getBgClass = () => {
     switch (theme) {
@@ -97,16 +98,111 @@ export function LayoutDesign({ theme, children }: LayoutDesignProps) {
     }
   }
 
+  const getAccentRgb = () => {
+    switch (theme) {
+      case 'cream': return '15,155,110'
+      case 'dim': return '29,208,167'
+      case 'graphite': return '14,165,233'
+      default: return '57,241,218'
+    }
+  }
+
   return (
-    <LocomotiveScrollProvider>
-      <div
-        className={`${getBgClass()} transition-all duration-700 font-['DM_Sans'] leading-relaxed relative overflow-x-hidden min-h-screen`}
-      >
+    <div
+      className={`${getBgClass()} transition-all duration-700 font-['DM_Sans'] leading-relaxed relative overflow-x-hidden min-h-screen`}
+    >
         <AdvancedCursorSpotlight
           theme={theme}
           intensity={0.2}
           size={500}
         />
+
+        {/* ── Global Dot-Grid Background ── */}
+        <div
+          className="absolute inset-0 pointer-events-none z-[1]"
+          style={{
+            backgroundImage: `radial-gradient(circle, ${isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'} 1px, transparent 1px)`,
+            backgroundSize: '32px 32px',
+          }}
+        />
+
+        {/* ── Global Vertical Guide Lines ── */}
+        <div className="absolute inset-y-0 left-0 right-0 max-w-[1600px] mx-auto pointer-events-none z-[2] px-[10%] max-xl:px-[5%] max-md:px-[5%]">
+          <div className="relative h-full w-full">
+            {/* Left dashed grid guide */}
+            <div className="absolute inset-y-0 left-0 w-[1px]"
+              style={{
+                borderLeft: `1px dashed ${isDarkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)'}`
+              }}
+            />
+            {/* Right dashed grid guide */}
+            <div className="absolute inset-y-0 right-0 w-[1px]"
+              style={{
+                borderRight: `1px dashed ${isDarkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)'}`
+              }}
+            />
+          </div>
+        </div>
+
+        {/* ── Global Diagonal Light Beams ── */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
+          <div
+            className="absolute top-[5%] left-[25%] w-[1px] h-[35%] origin-top"
+            style={{
+              background: `linear-gradient(to bottom, transparent, rgba(${getAccentRgb()},0.12) 30%, transparent 70%)`,
+              transform: 'rotate(-25deg) scaleX(50)',
+              opacity: 0.4,
+            }}
+          />
+          {/* Middle Beam (slices about-projects transition) */}
+          <div
+            className="absolute top-[35%] right-[20%] w-[1px] h-[35%] origin-top"
+            style={{
+              background: `linear-gradient(to bottom, transparent, rgba(${getAccentRgb()},0.08) 30%, transparent 70%)`,
+              transform: 'rotate(-25deg) scaleX(50)',
+              opacity: 0.3,
+            }}
+          />
+          {/* Bottom Beam (slices certs-contact transition) */}
+          <div
+            className="absolute top-[68%] left-[18%] w-[1px] h-[28%] origin-top"
+            style={{
+              background: `linear-gradient(to bottom, transparent, rgba(${getAccentRgb()},0.1) 30%, transparent 70%)`,
+              transform: 'rotate(-25deg) scaleX(50)',
+              opacity: 0.35,
+            }}
+          />
+        </div>
+
+        {/* ── Global Floating Accent Rings ── */}
+        <div className="absolute inset-0 pointer-events-none z-[2]">
+          {/* Ring 1 - upper section */}
+          <div
+            className="absolute top-[12%] right-[10%] w-32 h-32 rounded-full animate-float"
+            style={{
+              border: `1px dashed rgba(${getAccentRgb()},0.15)`,
+              animationDuration: '12s',
+            }}
+          />
+          {/* Ring 2 - mid section */}
+          <div
+            className="absolute top-[42%] left-[6%] w-48 h-48 rounded-full animate-float"
+            style={{
+              border: `1px solid rgba(${getAccentRgb()},0.06)`,
+              animationDuration: '18s',
+              animationDelay: '1s',
+            }}
+          />
+          {/* Ring 3 - lower section */}
+          <div
+            className="absolute top-[75%] right-[8%] w-40 h-40 rounded-full animate-float"
+            style={{
+              border: `1px dashed rgba(${getAccentRgb()},0.08)`,
+              animationDuration: '15s',
+              animationDelay: '2s',
+            }}
+          />
+        </div>
 
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-[3]">
           <div
@@ -167,7 +263,13 @@ export function LayoutDesign({ theme, children }: LayoutDesignProps) {
         </div>
 
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => {
+            if (scroll) {
+              scroll.scrollTo(0)
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }
+          }}
           className={`scroll-top-button fixed bottom-8 right-8 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-50 ${getScrollBtnClass()}`}
           aria-label="Scroll to top"
         >
@@ -176,6 +278,5 @@ export function LayoutDesign({ theme, children }: LayoutDesignProps) {
           </svg>
         </button>
       </div>
-    </LocomotiveScrollProvider>
   )
 }
