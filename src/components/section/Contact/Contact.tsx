@@ -1,73 +1,8 @@
 import React, { useState } from 'react'
-import { EmailIcon, InstagramIcon, LinkedInIcon } from '../../ui/Icons'
+import { EmailIcon, InstagramIcon, LinkedInIcon, GitHubIcon } from '../../ui/Icons'
 
-export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'graphite' | 'cream' }> = ({ isDarkMode, theme }) => {
-  // --- Theme helpers --------------------------------------------------------
-  const getGlowClass = () => {
-    switch (theme) {
-      case 'cream': return 'bg-[#0F9B6E]/5'
-      case 'dim': return 'bg-[#1DD0A7]/5'
-      case 'graphite': return 'bg-[#0ea5e9]/5'
-      default: return 'bg-highlight/5'
-    }
-  }
-
-
-
-  const getHighlightTextClass = () => {
-    switch (theme) {
-      case 'cream': return 'text-[#0F9B6E]'
-      case 'dim': return 'text-[#1DD0A7]'
-      case 'graphite': return 'text-[#0ea5e9]'
-      default: return 'text-highlight'
-    }
-  }
-
-  const getFocusClass = () => {
-    switch (theme) {
-      case 'cream': return 'focus:ring-[#0F9B6E]/40 focus:border-[#0F9B6E]/40'
-      case 'dim': return 'focus:ring-[#1DD0A7]/50 focus:border-[#1DD0A7]/50'
-      case 'graphite': return 'focus:ring-[#0ea5e9]/50 focus:border-[#0ea5e9]/50'
-      default: return 'focus:ring-highlight/50 focus:border-highlight/50'
-    }
-  }
-
-  const getButtonClass = () => {
-    switch (theme) {
-      case 'cream': return 'bg-[#0F9B6E] text-white hover:bg-[#0d855e] disabled:bg-[#0F9B6E]/50 hover:shadow-[#0F9B6E]/20'
-      case 'dim': return 'bg-[#1DD0A7] text-[#15202B] hover:bg-[#1DD0A7]/90 disabled:bg-[#1DD0A7]/50 hover:shadow-[#1DD0A7]/30'
-      case 'graphite': return 'bg-[#0ea5e9] text-[#121620] hover:bg-[#0ea5e9]/90 disabled:bg-[#0ea5e9]/50 hover:shadow-[#0ea5e9]/30'
-      default: return 'bg-highlight text-dark-bg hover:bg-highlight/90 disabled:bg-highlight/50 hover:shadow-highlight/30'
-    }
-  }
-
-  const getEmailLinkClass = () => {
-    switch (theme) {
-      case 'cream': return 'bg-[#0F9B6E]/10 text-[#0F9B6E] border-2 border-[#0F9B6E]/50 hover:bg-[#0F9B6E] hover:text-white hover:shadow-[#0F9B6E]/20'
-      case 'dim': return 'bg-[#1DD0A7]/10 text-[#1DD0A7] border-2 border-[#1DD0A7]/50 hover:bg-[#1DD0A7] hover:text-[#15202B] hover:shadow-[#1DD0A7]/30'
-      case 'graphite': return 'bg-[#0ea5e9]/10 text-[#0ea5e9] border-2 border-[#0ea5e9]/50 hover:bg-[#0ea5e9] hover:text-[#121620] hover:shadow-[#0ea5e9]/30'
-      default: return 'bg-highlight/10 text-highlight border-2 border-highlight/50 hover:bg-highlight hover:text-dark-bg hover:shadow-highlight/30'
-    }
-  }
-
-  const getCardThemeClass = () => {
-    switch (theme) {
-      case 'cream': return 'bg-slate-50 hover:bg-[#0F9B6E]/10 border border-slate-100 hover:border-[#0F9B6E]/30 shadow-sm'
-      case 'dim': return 'bg-white/5 hover:bg-[#1DD0A7]/10 border border-white/5 hover:border-[#1DD0A7]/30'
-      case 'graphite': return 'bg-white/5 hover:bg-[#0ea5e9]/10 border border-white/5 hover:border-[#0ea5e9]/30'
-      default: return 'bg-white/5 hover:bg-highlight/10 border border-white/5 hover:border-highlight/30'
-    }
-  }
-
-  const getSocialIconContainerClass = () => {
-    switch (theme) {
-      case 'cream': return 'bg-[#0F9B6E]/10 text-[#0F9B6E] group-hover:bg-[#0F9B6E] group-hover:text-white'
-      case 'dim': return 'bg-[#1DD0A7]/10 text-[#1DD0A7] group-hover:bg-[#1DD0A7] group-hover:text-[#15202B]'
-      case 'graphite': return 'bg-[#0ea5e9]/10 text-[#0ea5e9] group-hover:bg-[#0ea5e9] group-hover:text-[#121620]'
-      default: return 'bg-highlight/10 text-highlight group-hover:bg-highlight group-hover:text-dark-bg'
-    }
-  }
-
+export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'graphite' | 'cream' }> = ({ theme }) => {
+  // --- Theme helper values ----------------------------------------------------
   const getAccentColor = () => {
     switch (theme) {
       case 'cream': return '#0F9B6E'
@@ -86,25 +21,35 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
     }
   }
 
-  const getFormTopAccent = () => {
+  const getCardBg = () => {
     switch (theme) {
-      case 'cream': return 'border-t-[#0F9B6E]'
-      case 'dim': return 'border-t-[#1DD0A7]'
-      case 'graphite': return 'border-t-[#0ea5e9]'
-      default: return 'border-t-[#39F1DA]'
+      case 'cream': return 'bg-[#FFFFFF] border-slate-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.02)]'
+      case 'dim': return 'bg-[#15202B]/85 border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.5)]'
+      case 'graphite': return 'bg-[#121620]/85 border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.5)]'
+      default: return 'bg-[#0a192f]/85 border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.6)]'
     }
   }
 
   const accentColor = getAccentColor()
   const accentRgb = getAccentRgb()
 
-  // --- Form state -----------------------------------------------------------
+  // --- Clipboard utilities --------------------------------------------------
+  const [copiedText, setCopiedText] = useState<string | null>(null)
+  
+  const copyToClipboard = (text: string, name: string) => {
+    navigator.clipboard.writeText(text)
+    setCopiedText(name)
+    setTimeout(() => setCopiedText(null), 2000)
+  }
+
+  // --- Form fields & state handlers ------------------------------------------
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: ''
   })
+  const [focusedField, setFocusedField] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
@@ -112,16 +57,24 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
+  const selectSubject = (subjText: string) => {
+    setFormData({ ...formData, subject: subjText })
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus('idle')
+
     const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
     if (!accessKey) {
-      console.warn('Web3Forms access key is missing. Simulation mode or error shown.')
-      setTimeout(() => { setIsSubmitting(false); setSubmitStatus('error') }, 1000)
+      setTimeout(() => {
+        setIsSubmitting(false)
+        setSubmitStatus('error')
+      }, 1000)
       return
     }
+
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -140,330 +93,540 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
         setSubmitStatus('success')
         setFormData({ name: '', email: '', subject: '', message: '' })
       } else {
-        console.error('Submission failed:', data)
         setSubmitStatus('error')
       }
     } catch (err) {
-      console.error('Submission network error:', err)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  // --- Contact info ---------------------------------------------------------
-  const contactInfo = [
+  // --- Social Networks metadata ----------------------------------------------
+  const socialItems = [
     {
-      icon: <EmailIcon className="w-5 h-5" />,
-      title: 'Email',
+      name: 'Email',
       value: 'jaylao03271@gmail.com',
-      link: 'mailto:jaylao03271@gmail.com'
+      link: 'mailto:jaylao03271@gmail.com',
+      icon: <EmailIcon className="w-5 h-5" />,
+      color: accentColor,
+      rgb: accentRgb,
+      label: 'DIRECT MAIL'
     },
     {
-      icon: <LinkedInIcon className="w-5 h-5" />,
-      title: 'LinkedIn',
+      name: 'LinkedIn',
       value: 'linkedin.com/in/jaylao',
-      link: 'https://www.linkedin.com/in/jaylao'
+      link: 'https://www.linkedin.com/in/jaylao',
+      icon: <LinkedInIcon className="w-5 h-5" />,
+      color: '#0A66C2',
+      rgb: '10,102,194',
+      label: 'PROFESSIONAL NET'
     },
     {
-      icon: <InstagramIcon className="w-5 h-5" />,
-      title: 'Instagram',
-      value: '@xjay_lao',
-      link: 'https://www.instagram.com/xjay_lao'
-    },
-    {
-      icon: (
-        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-        </svg>
-      ),
-      title: 'GitHub',
+      name: 'GitHub',
       value: 'github.com/JayLao27',
-      link: 'https://github.com/JayLao27'
+      link: 'https://github.com/JayLao27',
+      icon: <GitHubIcon className="w-5 h-5" />,
+      color: theme === 'cream' ? '#1F2937' : '#F3F4F6',
+      rgb: theme === 'cream' ? '31,41,55' : '243,244,246',
+      label: 'SOURCE REPOSITORY'
+    },
+    {
+      name: 'Instagram',
+      value: '@xjay_lao',
+      link: 'https://www.instagram.com/xjay_lao',
+      icon: <InstagramIcon className="w-5 h-5" />,
+      color: '#E1306C',
+      rgb: '225,48,108',
+      label: 'SOCIAL HUB'
     }
   ]
 
-  // --- Render ---------------------------------------------------------------
+  // --- Message input metadata ------------------------------------------------
+  const charLimit = 1000
+  const charCount = formData.message.length
+  const charPct = Math.min(100, (charCount / charLimit) * 100)
+
   return (
     <section
       id="contact"
       data-scroll
       data-scroll-reveal
-      className="section-contact min-h-screen pt-24 px-[10%] pb-12 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-16 max-md:px-[5%] max-md:pb-12 relative"
+      className="section-contact min-h-screen pt-32 px-[10%] pb-24 max-w-[1600px] mx-auto max-xl:px-[5%] max-md:pt-24 max-md:px-[5%] max-md:pb-16 relative overflow-hidden"
     >
-      {/* Ambient glows */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className={`absolute top-1/4 left-0 w-[600px] h-[600px] rounded-full blur-3xl ${getGlowClass()} animate-float`} style={{ animationDelay: '1.5s' }} data-parallax="slow" data-parallax-speed="1.5" />
-        <div className={`absolute bottom-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl ${getGlowClass()} animate-float`} data-parallax="fast" data-parallax-speed="0.8" />
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out forwards;
+        }
+      `}</style>
+
+      {/* ── Ambient Radial Glows ── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div
+          className="absolute -top-1/4 -left-1/4 w-[800px] h-[800px] rounded-full blur-[160px] opacity-35"
+          style={{ background: `radial-gradient(circle, ${accentColor} 0%, transparent 70%)` }}
+        />
+        <div
+          className="absolute -bottom-1/4 -right-1/4 w-[700px] h-[700px] rounded-full blur-[140px] opacity-25"
+          style={{ background: `radial-gradient(circle, ${accentColor} 0%, transparent 70%)` }}
+        />
       </div>
 
-      {/* Connecting Line Receiver */}
-      <div className={`absolute right-[10%] top-[-8rem] w-[2px] h-32 bg-gradient-to-t ${isDarkMode ? 'from-highlight/50 to-transparent' : 'from-[#0F9B6E]/50 to-transparent'} max-md:hidden z-0`} />
-
-      {/* -- Header (left-aligned editorial) ------------------------------- */}
-      <div className="mb-16 relative z-10">
-        {/* Editorial label */}
+      {/* ── Section Header ── */}
+      <div className="relative z-10 mb-16">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-[2px]" style={{ background: accentColor }} />
-          <span className="font-['JetBrains_Mono'] text-xs tracking-[0.25em] uppercase" style={{ color: accentColor }}>
-            Contact
+          <div className="w-8 h-[2px] rounded-full" style={{ background: accentColor }} />
+          <span
+            className="font-['JetBrains_Mono'] text-[11px] tracking-[0.3em] uppercase font-bold"
+            style={{ color: accentColor }}
+          >
+            Get In Touch
           </span>
         </div>
-
-        <h2 className={`font-['Syne'] font-bold leading-none tracking-tight text-[5rem] max-md:text-[3rem] ${isDarkMode ? 'text-tagline-text' : 'text-light-tagline-text'}`}>
-          Get In
-          <span className="block text-gradient">Touch.</span>
+        <h2
+          className={`font-['Syne'] font-extrabold leading-[0.9] tracking-tight text-[5.5rem] max-md:text-[3.5rem] ${
+            theme === 'cream' ? 'text-[#0F9B6E]' : 'text-white'
+          }`}
+        >
+          Let's Start<br />
+          <span
+            style={{
+              backgroundImage: `linear-gradient(135deg, ${accentColor} 0%, ${theme === 'cream' ? '#0F9B6E' : '#CCD6F6'} 100%)`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}
+          >
+            A Conversation.
+          </span>
         </h2>
-
-        <p className={`mt-5 text-lg font-['DM_Sans'] max-w-lg leading-relaxed ${isDarkMode ? 'text-body-text' : 'text-light-body-text'}`}>
-          Open to internship opportunities, collaborations, and conversations. Let's build something meaningful together.
+        <p className={`mt-6 font-['DM_Sans'] text-base max-w-xl leading-relaxed ${theme === 'cream' ? 'text-slate-600' : 'text-gray-400'}`}>
+          Currently open to internship opportunities, research collaborations, and creative discussions. Send a direct message or connect through my social nodes.
         </p>
-
-        {/* Decorative lines */}
-        <div className="flex gap-2 mt-6">
-          <div className="w-20 h-[3px] rounded-full" style={{ background: accentColor }} />
-          <div className="w-12 h-[3px] rounded-full" style={{ background: accentColor, opacity: 0.5 }} />
-          <div className="w-6 h-[3px] rounded-full" style={{ background: accentColor, opacity: 0.25 }} />
-        </div>
       </div>
 
-      {/* -- Two-column grid ------------------------------------------------ */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 relative z-10">
-
-        {/* Left � Contact Info + Cards */}
-        <div className="space-y-6">
-
-          {/* Contact Information card */}
-          <div className={`rounded-2xl overflow-hidden glass-effect border ${isDarkMode ? 'border-white/10' : 'border-slate-200 bg-white/70 shadow-sm'}`}>
-            {/* Top accent stripe */}
-            <div className="h-[3px]" style={{ background: `linear-gradient(90deg, ${accentColor}, transparent)` }} />
-            <div className="p-7">
-              <h3 className={`text-xl font-['Syne'] font-bold mb-6 ${getHighlightTextClass()}`}>
-                Contact Information
-              </h3>
-              <div className="space-y-3">
-                {contactInfo.map((item, index) => (
-                  <a
-                    key={index}
-                    href={item.link}
-                    target={item.link.startsWith('http') ? '_blank' : '_self'}
-                    rel={item.link.startsWith('http') ? 'noopener noreferrer' : ''}
-                    className={`flex items-center gap-4 p-3.5 rounded-xl transition-all duration-300 group ${getCardThemeClass()}`}
-                  >
-                    {/* Colored icon box */}
-                    <div
-                      className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 ${getSocialIconContainerClass()}`}
-                    >
-                      {item.icon}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className={`text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest mb-0.5 ${isDarkMode ? 'text-body-text/50' : 'text-light-body-text/50'}`}>
-                        {item.title}
-                      </p>
-                      <p className={`text-sm font-['DM_Sans'] font-medium truncate ${isDarkMode ? 'text-body-text' : 'text-light-name-text'}`}>
-                        {item.value}
-                      </p>
-                    </div>
-                    <svg
-                      className={`w-4 h-4 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1 ${getHighlightTextClass()}`}
-                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                ))}
+      {/* ── Main Layout Grid ── */}
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        {/* ── LEFT COLUMN: Quick Details & Social Node Cards (5 cols) ── */}
+        <div className="lg:col-span-5 space-y-6">
+          
+          {/* Availability Status Card */}
+          <div className={`p-6 rounded-3xl border ${getCardBg()} relative overflow-hidden group`}>
+            <div className="flex items-center justify-between mb-4">
+              <span className={`font-['JetBrains_Mono'] text-[9px] uppercase tracking-widest ${theme === 'cream' ? 'text-slate-500' : 'text-white/40'}`}>
+                CURRENT AVAILABILITY
+              </span>
+              <div 
+                className="px-2.5 py-0.5 rounded text-[9px] font-['JetBrains_Mono'] font-bold border flex items-center gap-1.5"
+                style={{ 
+                  color: accentColor, 
+                  borderColor: `${accentColor}30`, 
+                  background: `${accentColor}10` 
+                }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full inline-block animate-pulse" style={{ background: accentColor }} />
+                OPEN
               </div>
             </div>
+            
+            <p className={`font-['Syne'] text-base font-extrabold ${theme === 'cream' ? 'text-slate-800' : 'text-white'}`}>
+              Davao City, Philippines
+            </p>
+            <p className={`mt-2 font-['DM_Sans'] text-xs ${theme === 'cream' ? 'text-slate-500' : 'text-slate-400'}`}>
+              Available for 2026 CS Internships, research assistant roles, and collaborative software engineering projects globally (Remote or Hybrid).
+            </p>
           </div>
 
-          {/* Let's Work Together card */}
-          <div className={`rounded-2xl overflow-hidden glass-effect border ${isDarkMode ? 'border-white/10' : 'border-slate-200 bg-white/70 shadow-sm'}`}>
-            <div className="h-[3px]" style={{ background: `linear-gradient(90deg, ${accentColor}, transparent)` }} />
-            <div className="p-7">
-              <h3 className={`text-xl font-['Syne'] font-bold mb-3 ${getHighlightTextClass()}`}>
-                Let's Work Together
-              </h3>
-              <p className={`font-['DM_Sans'] leading-relaxed text-sm mb-5 ${isDarkMode ? 'text-body-text/80' : 'text-light-body-text/90'}`}>
-                I'm currently seeking Computer Science internships for 2026.
-                Whether you have an opportunity, a question, or just want to connect, my inbox is always open!
-              </p>
-              {/* Availability note */}
+          {/* Social Network Cards Grid (2x2) */}
+          <div className="grid grid-cols-2 gap-4">
+            {socialItems.map((item) => (
               <div
-                className="flex items-center gap-2.5 px-4 py-2.5 rounded-full w-fit"
-                style={{ background: `rgba(${accentRgb},0.1)`, border: `1px solid rgba(${accentRgb},0.2)` }}
+                key={item.name}
+                className={`p-5 rounded-2xl border ${getCardBg()} transition-all duration-300 relative group flex flex-col justify-between h-[135px]`}
+                style={{
+                  boxShadow: `0 4px 24px rgba(0,0,0,${theme === 'cream' ? '0.01' : '0.2'})`
+                }}
+                onMouseEnter={(e) => {
+                  if (theme !== 'cream') {
+                    e.currentTarget.style.borderColor = `${item.color}50`
+                    e.currentTarget.style.boxShadow = `0 12px 35px rgba(${item.rgb}, 0.18)`
+                  } else {
+                    e.currentTarget.style.borderColor = `${item.color}60`
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = ''
+                  e.currentTarget.style.boxShadow = ''
+                }}
               >
-                <div
-                  className="w-2 h-2 rounded-full animate-pulse"
-                  style={{ background: accentColor }}
-                />
-                <span
-                  className="text-xs font-['JetBrains_Mono'] tracking-wide"
-                  style={{ color: accentColor }}
-                >
-                  Available for remote / hybrid internships
+                {/* Visual grid overlay for social nodes */}
+                <div className="absolute inset-0 opacity-5 pointer-events-none transition-opacity duration-300 group-hover:opacity-10" style={{ color: item.color }}>
+                  <svg width="100%" height="100%">
+                    <pattern id={`grid-${item.name}`} width="12" height="12" patternUnits="userSpaceOnUse">
+                      <circle cx="2" cy="2" r="0.75" fill="currentColor" />
+                    </pattern>
+                    <rect width="100%" height="100%" fill={`url(#grid-${item.name})`} />
+                  </svg>
+                </div>
+
+                {/* Card Top Actions */}
+                <div className="flex items-start justify-between relative z-10">
+                  <div
+                    className="w-9 h-9 rounded-xl flex items-center justify-center border transition-all duration-300"
+                    style={{
+                      background: `rgba(${item.rgb}, 0.08)`,
+                      borderColor: `rgba(${item.rgb}, 0.15)`,
+                      color: item.color
+                    }}
+                  >
+                    {item.icon}
+                  </div>
+                  
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={() => copyToClipboard(item.value, item.name)}
+                      className={`p-1.5 rounded-lg border transition-all duration-200 hover:scale-105 ${
+                        theme === 'cream' 
+                          ? 'border-slate-200/60 bg-slate-50 hover:bg-slate-100 text-slate-500' 
+                          : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.06] text-slate-400 hover:text-white'
+                      }`}
+                      title={`Copy ${item.name} handle`}
+                    >
+                      {copiedText === item.name ? (
+                        <span className="font-mono text-[8px] font-bold uppercase text-emerald-400 px-0.5">
+                          COPIED
+                        </span>
+                      ) : (
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                        </svg>
+                      )}
+                    </button>
+
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`p-1.5 rounded-lg border transition-all duration-200 hover:scale-105 ${
+                        theme === 'cream' 
+                          ? 'border-slate-200/60 bg-slate-50 hover:bg-slate-100 text-slate-500' 
+                          : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.06] text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                
+                {/* Node details */}
+                <div className="relative z-10">
+                  <span className={`block font-['JetBrains_Mono'] text-[8px] uppercase tracking-widest opacity-55 ${theme === 'cream' ? 'text-slate-600' : 'text-slate-300'}`}>
+                    {item.label}
+                  </span>
+                  <span className={`block font-['Syne'] text-sm font-bold mt-1 ${theme === 'cream' ? 'text-slate-800' : 'text-white'}`}>
+                    {item.name}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Core Focus statement */}
+          <div className={`p-6 rounded-3xl border ${getCardBg()} text-center relative overflow-hidden`}>
+            <p className={`font-['DM_Sans'] text-xs leading-relaxed ${theme === 'cream' ? 'text-slate-600' : 'text-gray-400'}`}>
+              "Building optimized systems and integrations. I'm always looking for ways to bridge the gap between complex software logic and high-fidelity user experiences."
+            </p>
+          </div>
+        </div>
+
+        {/* ── RIGHT COLUMN: Secure Message Form (7 cols) ── */}
+        <div className="lg:col-span-7">
+          <div className={`rounded-3xl border relative overflow-hidden ${getCardBg()}`}>
+            
+            {/* Top border strip */}
+            <div 
+              className="absolute top-0 left-0 right-0 h-[3px]" 
+              style={{ background: `linear-gradient(90deg, ${accentColor}, transparent, ${accentColor})` }} 
+            />
+
+            {/* Form Header */}
+            <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-white/5" style={{ borderColor: theme === 'cream' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)' }}>
+              <div className="flex items-center gap-1.5">
+                <div className={`w-2.5 h-2.5 rounded-full bg-rose-500/80 ${submitStatus === 'error' ? 'animate-pulse scale-110' : ''}`} />
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                <div className={`w-2.5 h-2.5 rounded-full bg-green-500/80 ${submitStatus === 'success' ? 'animate-pulse scale-110' : ''}`} />
+                <span className={`ml-2 font-mono text-[10px] tracking-wider uppercase opacity-45 ${theme === 'cream' ? 'text-slate-800' : 'text-white'}`}>
+                  contact_terminal.log
                 </span>
               </div>
+              <span className="font-['JetBrains_Mono'] text-[9px] tracking-widest uppercase opacity-45">
+                SECURE_GATEWAY
+              </span>
             </div>
-          </div>
-        </div>
+            
+            <div className="p-6 sm:p-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                
+                {/* Presets Row */}
+                <div>
+                  <span className={`block font-['JetBrains_Mono'] text-[9px] uppercase tracking-widest mb-2.5 ${theme === 'cream' ? 'text-slate-500' : 'text-white/45'}`}>
+                    SELECT SUBJECT PRESET
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { text: 'Internship 💼', prefix: 'Internship Opportunity' },
+                      { text: 'Collaboration 🤝', prefix: 'Collaboration Request' },
+                      { text: 'General Chat 💬', prefix: 'General Discussion' }
+                    ].map((item) => (
+                      <button
+                        key={item.text}
+                        type="button"
+                        onClick={() => selectSubject(item.prefix)}
+                        className={`px-3 py-1.5 rounded-lg text-[10px] font-['JetBrains_Mono'] border transition-all ${
+                          formData.subject.startsWith(item.prefix)
+                            ? `border-white/10`
+                            : `bg-transparent border-white/5 opacity-60 hover:opacity-100 hover:scale-105`
+                        }`}
+                        style={{
+                          borderColor: formData.subject.startsWith(item.prefix) ? accentColor : '',
+                          backgroundColor: formData.subject.startsWith(item.prefix) ? `${accentColor}15` : '',
+                          color: formData.subject.startsWith(item.prefix) ? accentColor : (theme === 'cream' ? '#1F2937' : '#FFFFFF')
+                        }}
+                      >
+                        {item.text}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-        {/* Right � Form */}
-        <div className={`rounded-2xl overflow-hidden glass-effect border ${isDarkMode ? 'border-white/10' : 'border-slate-200 bg-white/70 shadow-sm'}`}>
-          {/* Top accent border line */}
-          <div className={`h-[3px] border-t-[3px] ${getFormTopAccent()}`} style={{ background: `linear-gradient(90deg, ${accentColor}, rgba(${accentRgb},0.2))` }} />
-          <div className="p-8">
-            <h3 className={`text-2xl font-['Syne'] font-bold mb-7 ${isDarkMode ? 'text-white' : 'text-light-name-text'}`}>
-              Send Me a Message
-            </h3>
+                {/* Name */}
+                <div className="relative group">
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    onFocus={() => setFocusedField('name')}
+                    onBlur={() => setFocusedField(null)}
+                    required
+                    placeholder=" "
+                    className={`peer w-full px-4 py-3.5 rounded-xl font-['DM_Sans'] text-xs transition-all focus:outline-none border ${
+                      theme === 'cream'
+                        ? 'bg-slate-50 border-slate-200 text-slate-800 placeholder-transparent focus:bg-white'
+                        : 'bg-white/[0.01] border-white/5 text-white placeholder-transparent focus:bg-white/[0.03]'
+                    }`}
+                    style={{
+                      borderColor: focusedField === 'name' ? accentColor : ''
+                    }}
+                  />
+                  <label 
+                    htmlFor="name" 
+                    className={`absolute left-4 top-3.5 font-['JetBrains_Mono'] text-[9px] uppercase tracking-widest transition-all pointer-events-none duration-300 ${
+                      theme === 'cream' ? 'text-slate-400' : 'text-white/40'
+                    } peer-placeholder-shown:text-xs peer-placeholder-shown:top-3.5 peer-placeholder-shown:font-['DM_Sans'] peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-[-10px] peer-focus:text-[9px] peer-focus:font-['JetBrains_Mono'] peer-focus:uppercase peer-focus:tracking-widest peer-focus:px-2 peer-focus:-translate-y-1 peer-focus:rounded`}
+                    style={{
+                      color: formData.name ? accentColor : '',
+                      backgroundColor: (formData.name || theme === 'cream') ? (theme === 'cream' ? '#FFFFFF' : '#121620') : 'transparent'
+                    }}
+                  >
+                    Your Name
+                  </label>
+                </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Name */}
-              <div>
-                <label htmlFor="name" className={`block text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest mb-2 ${isDarkMode ? 'text-body-text/60' : 'text-light-body-text/60'}`}>
-                  Your Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  placeholder="Name"
-                  className={`w-full px-4 py-3 rounded-lg font-['DM_Sans'] text-sm transition-all duration-300 focus:outline-none focus:ring-2 ${
-                    isDarkMode
-                      ? `bg-white/5 border border-white/10 text-body-text placeholder-body-text/30 ${getFocusClass()}`
-                      : `bg-slate-50 border border-slate-200 text-light-name-text placeholder-slate-400 ${getFocusClass()} focus:bg-white`
-                  }`}
-                />
-              </div>
+                {/* Email */}
+                <div className="relative group">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    onFocus={() => setFocusedField('email')}
+                    onBlur={() => setFocusedField(null)}
+                    required
+                    placeholder=" "
+                    className={`peer w-full px-4 py-3.5 rounded-xl font-['DM_Sans'] text-xs transition-all focus:outline-none border ${
+                      theme === 'cream'
+                        ? 'bg-slate-50 border-slate-200 text-slate-800 placeholder-transparent focus:bg-white'
+                        : 'bg-white/[0.01] border-white/5 text-white placeholder-transparent focus:bg-white/[0.03]'
+                    }`}
+                    style={{
+                      borderColor: focusedField === 'email' ? accentColor : ''
+                    }}
+                  />
+                  <label 
+                    htmlFor="email" 
+                    className={`absolute left-4 top-3.5 font-['JetBrains_Mono'] text-[9px] uppercase tracking-widest transition-all pointer-events-none duration-300 ${
+                      theme === 'cream' ? 'text-slate-400' : 'text-white/40'
+                    } peer-placeholder-shown:text-xs peer-placeholder-shown:top-3.5 peer-placeholder-shown:font-['DM_Sans'] peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-[-10px] peer-focus:text-[9px] peer-focus:font-['JetBrains_Mono'] peer-focus:uppercase peer-focus:tracking-widest peer-focus:px-2 peer-focus:-translate-y-1 peer-focus:rounded`}
+                    style={{
+                      color: formData.email ? accentColor : '',
+                      backgroundColor: (formData.email || theme === 'cream') ? (theme === 'cream' ? '#FFFFFF' : '#121620') : 'transparent'
+                    }}
+                  >
+                    Your Email
+                  </label>
+                </div>
 
-              {/* Email */}
-              <div>
-                <label htmlFor="email" className={`block text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest mb-2 ${isDarkMode ? 'text-body-text/60' : 'text-light-body-text/60'}`}>
-                  Your Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  placeholder="name@example.com"
-                  className={`w-full px-4 py-3 rounded-lg font-['DM_Sans'] text-sm transition-all duration-300 focus:outline-none focus:ring-2 ${
-                    isDarkMode
-                      ? `bg-white/5 border border-white/10 text-body-text placeholder-body-text/30 ${getFocusClass()}`
-                      : `bg-slate-50 border border-slate-200 text-light-name-text placeholder-slate-400 ${getFocusClass()} focus:bg-white`
-                  }`}
-                />
-              </div>
+                {/* Subject */}
+                <div className="relative group">
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    onFocus={() => setFocusedField('subject')}
+                    onBlur={() => setFocusedField(null)}
+                    required
+                    placeholder=" "
+                    className={`peer w-full px-4 py-3.5 rounded-xl font-['DM_Sans'] text-xs transition-all focus:outline-none border ${
+                      theme === 'cream'
+                        ? 'bg-slate-50 border-slate-200 text-slate-800 placeholder-transparent focus:bg-white'
+                        : 'bg-white/[0.01] border-white/5 text-white placeholder-transparent focus:bg-white/[0.03]'
+                    }`}
+                    style={{
+                      borderColor: focusedField === 'subject' ? accentColor : ''
+                    }}
+                  />
+                  <label 
+                    htmlFor="subject" 
+                    className={`absolute left-4 top-3.5 font-['JetBrains_Mono'] text-[9px] uppercase tracking-widest transition-all pointer-events-none duration-300 ${
+                      theme === 'cream' ? 'text-slate-400' : 'text-white/40'
+                    } peer-placeholder-shown:text-xs peer-placeholder-shown:top-3.5 peer-placeholder-shown:font-['DM_Sans'] peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-[-10px] peer-focus:text-[9px] peer-focus:font-['JetBrains_Mono'] peer-focus:uppercase peer-focus:tracking-widest peer-focus:px-2 peer-focus:-translate-y-1 peer-focus:rounded`}
+                    style={{
+                      color: formData.subject ? accentColor : '',
+                      backgroundColor: (formData.subject || theme === 'cream') ? (theme === 'cream' ? '#FFFFFF' : '#121620') : 'transparent'
+                    }}
+                  >
+                    Subject
+                  </label>
+                </div>
 
-              {/* Subject */}
-              <div>
-                <label htmlFor="subject" className={`block text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest mb-2 ${isDarkMode ? 'text-body-text/60' : 'text-light-body-text/60'}`}>
-                  Subject *
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  placeholder="Project Inquiry"
-                  className={`w-full px-4 py-3 rounded-lg font-['DM_Sans'] text-sm transition-all duration-300 focus:outline-none focus:ring-2 ${
-                    isDarkMode
-                      ? `bg-white/5 border border-white/10 text-body-text placeholder-body-text/30 ${getFocusClass()}`
-                      : `bg-slate-50 border border-slate-200 text-light-name-text placeholder-slate-400 ${getFocusClass()} focus:bg-white`
-                  }`}
-                />
-              </div>
+                {/* Message */}
+                <div className="relative group">
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    onFocus={() => setFocusedField('message')}
+                    onBlur={() => setFocusedField(null)}
+                    required
+                    rows={5}
+                    placeholder=" "
+                    className={`peer w-full px-4 py-3.5 rounded-xl font-['DM_Sans'] text-xs transition-all focus:outline-none resize-none border ${
+                      theme === 'cream'
+                        ? 'bg-slate-50 border-slate-200 text-slate-800 placeholder-transparent focus:bg-white'
+                        : 'bg-white/[0.01] border-white/5 text-white placeholder-transparent focus:bg-white/[0.03]'
+                    }`}
+                    style={{
+                      borderColor: focusedField === 'message' ? accentColor : ''
+                    }}
+                  />
+                  <label 
+                    htmlFor="message" 
+                    className={`absolute left-4 top-3.5 font-['JetBrains_Mono'] text-[9px] uppercase tracking-widest transition-all pointer-events-none duration-300 ${
+                      theme === 'cream' ? 'text-slate-400' : 'text-white/40'
+                    } peer-placeholder-shown:text-xs peer-placeholder-shown:top-3.5 peer-placeholder-shown:font-['DM_Sans'] peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-[-10px] peer-focus:text-[9px] peer-focus:font-['JetBrains_Mono'] peer-focus:uppercase peer-focus:tracking-widest peer-focus:px-2 peer-focus:-translate-y-1 peer-focus:rounded`}
+                    style={{
+                      color: formData.message ? accentColor : '',
+                      backgroundColor: (formData.message || theme === 'cream') ? (theme === 'cream' ? '#FFFFFF' : '#121620') : 'transparent'
+                    }}
+                  >
+                    Message
+                  </label>
 
-              {/* Message */}
-              <div>
-                <label htmlFor="message" className={`block text-[10px] font-['JetBrains_Mono'] uppercase tracking-widest mb-2 ${isDarkMode ? 'text-body-text/60' : 'text-light-body-text/60'}`}>
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  placeholder="Tell me about your project or opportunity..."
-                  className={`w-full px-4 py-3 rounded-lg font-['DM_Sans'] text-sm transition-all duration-300 focus:outline-none focus:ring-2 resize-none ${
-                    isDarkMode
-                      ? `bg-white/5 border border-white/10 text-body-text placeholder-body-text/30 ${getFocusClass()}`
-                      : `bg-slate-50 border border-slate-200 text-light-name-text placeholder-slate-400 ${getFocusClass()} focus:bg-white`
-                  }`}
-                />
-              </div>
+                  {/* Character limit bar */}
+                  <div className="flex justify-between items-center mt-1.5 font-mono text-[9px] opacity-50 px-1">
+                    <span>CHARACTERS: {charCount}/{charLimit}</span>
+                    <span style={{ color: charCount > charLimit ? '#EF4444' : '' }}>
+                      {charCount > charLimit ? 'LIMIT EXCEEDED' : 'READY'}
+                    </span>
+                  </div>
+                  <div className="w-full h-[2px] bg-white/5 rounded-full overflow-hidden mt-1" style={{ backgroundColor: theme === 'cream' ? 'rgba(0,0,0,0.05)' : '' }}>
+                    <div 
+                      className="h-full rounded-full transition-all duration-300" 
+                      style={{ 
+                        width: `${charPct}%`, 
+                        backgroundColor: charCount > charLimit ? '#EF4444' : accentColor 
+                      }} 
+                    />
+                  </div>
+                </div>
 
-              {/* Submit button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full px-8 py-4 rounded-xl font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl hover:scale-[1.02] disabled:cursor-not-allowed disabled:hover:scale-100 ${getButtonClass()}`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    Send Message
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </>
+                {/* Submit button */}
+                <button
+                  type="submit"
+                  disabled={isSubmitting || charCount > charLimit}
+                  className="w-full py-4 rounded-xl font-['JetBrains_Mono'] text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 flex items-center justify-center gap-3 relative overflow-hidden group shadow-lg"
+                  style={{
+                    backgroundColor: charCount > charLimit ? '#6B7280' : accentColor,
+                    color: theme === 'cream' ? '#FFFFFF' : '#111827',
+                    boxShadow: charCount > charLimit ? '' : `0 8px 30px rgba(${accentRgb}, 0.2)`
+                  }}
+                  onMouseEnter={(e) => {
+                    if (charCount <= charLimit) {
+                      e.currentTarget.style.boxShadow = `0 12px 35px rgba(${accentRgb}, 0.35)`
+                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.01)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (charCount <= charLimit) {
+                      e.currentTarget.style.boxShadow = `0 8px 30px rgba(${accentRgb}, 0.2)`
+                      e.currentTarget.style.transform = ''
+                    }
+                  }}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      SENDING...
+                    </>
+                  ) : (
+                    <>
+                      SEND MESSAGE
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="transition-transform duration-300 group-hover:translate-x-1.5">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </>
+                  )}
+                </button>
+
+                {/* Success Feedback Output */}
+                {submitStatus === 'success' && (
+                  <div className="p-4 rounded-xl border border-emerald-500/25 bg-emerald-500/5 text-emerald-400 font-mono text-[11px] space-y-1 animate-fadeIn">
+                    <p className="font-bold">MESSAGE SENT SUCCESSFULLY.</p>
+                    <p className="opacity-75">Thank you! I will review your message and follow up shortly.</p>
+                  </div>
                 )}
-              </button>
 
-              {/* Success */}
-              {submitStatus === 'success' && (
-                <div className={`p-4 rounded-xl ${
-                  theme === 'cream' ? 'bg-[#0F9B6E]/10 border border-[#0F9B6E]/30'
-                  : theme === 'dim' ? 'bg-[#1DD0A7]/10 border border-[#1DD0A7]/30'
-                  : theme === 'graphite' ? 'bg-[#0ea5e9]/10 border border-[#0ea5e9]/30'
-                  : 'bg-highlight/10 border border-highlight/30'
-                }`}>
-                  <p className={`text-sm font-['DM_Sans'] text-center ${getHighlightTextClass()}`}>
-                    ? Message sent successfully! I'll get back to you soon.
-                  </p>
-                </div>
-              )}
+                {/* Error Feedback Output */}
+                {submitStatus === 'error' && (
+                  <div className="p-4 rounded-xl border border-rose-500/25 bg-rose-500/5 text-rose-400 font-mono text-[11px] space-y-1 animate-fadeIn">
+                    <p className="font-bold">TRANSMISSION ERROR.</p>
+                    <p className="opacity-75">Failed to send message. Please verify your connection or try again.</p>
+                  </div>
+                )}
 
-              {/* Error */}
-              {submitStatus === 'error' && (
-                <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30">
-                  <p className="text-sm font-['DM_Sans'] text-center text-rose-500">
-                    ? Failed to send message. Please ensure `VITE_WEB3FORMS_ACCESS_KEY` is configured in your `.env` file.
-                  </p>
-                </div>
-              )}
-            </form>
+              </form>
+            </div>
+
           </div>
         </div>
-      </div>
 
-      {/* -- Bottom CTA ----------------------------------------------------- */}
-      <div className="mt-20 text-center relative z-10">
-        <p className={`text-sm font-['JetBrains_Mono'] uppercase tracking-widest mb-4 ${isDarkMode ? 'text-body-text/40' : 'text-light-body-text/40'}`}>
-          or reach out directly
-        </p>
-        <a
-          href="mailto:jaylao03271@gmail.com"
-          className={`contact-email-link inline-flex items-center gap-3 px-8 py-4 rounded-full font-['JetBrains_Mono'] text-sm tracking-wider transition-all duration-500 ${getEmailLinkClass()} hover:scale-105 hover:shadow-lg`}
-        >
-          <EmailIcon className="w-5 h-5" />
-          jaylao03271@gmail.com
-        </a>
       </div>
     </section>
   )
