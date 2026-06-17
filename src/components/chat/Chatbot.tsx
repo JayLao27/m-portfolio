@@ -932,7 +932,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
               <h3 className={`font-['Syne'] font-bold text-sm leading-none ${getHeaderTitleClass()}`}>
                 JayChat
               </h3>
-              <span className="text-[10px] opacity-60">AI Assistant</span>
+              <span className="text-[10px] opacity-60">Chat with Jay (AI Assistant)</span>
             </div>
           </div>
           <div className="flex items-center gap-1.5">
