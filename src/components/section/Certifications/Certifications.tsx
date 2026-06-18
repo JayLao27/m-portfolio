@@ -117,6 +117,7 @@ const certificationsData: Certification[] = [
 function HeroCard({ 
   cert, 
   isDarkMode,
+  delay = 0.1,
   onClick,
   onMouseEnter,
   onMouseMove,
@@ -124,6 +125,7 @@ function HeroCard({
 }: { 
   cert: Certification; 
   isDarkMode: boolean;
+  delay?: number;
   onClick: (e: React.MouseEvent, cert: Certification) => void;
   onMouseEnter: (e: React.MouseEvent, cert: Certification) => void;
   onMouseMove: (e: React.MouseEvent) => void;
@@ -162,7 +164,9 @@ function HeroCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
-      className="relative overflow-hidden rounded-3xl flex flex-col cursor-pointer block"
+      className="certification-card relative overflow-hidden rounded-3xl flex flex-col cursor-pointer block"
+      data-parallax="skew-in"
+      data-parallax-delay={delay}
       style={{
         background: isDarkMode
           ? `linear-gradient(145deg, rgba(${cert.accentRgb},0.08) 0%, rgba(255,255,255,0.03) 100%)`
@@ -174,9 +178,10 @@ function HeroCard({
             ? '0 4px 24px rgba(0,0,0,0.3)'
             : '0 4px 24px rgba(0,0,0,0.08)',
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${hovered ? 1.015 : 1})`,
-        transition: 'transform 0.15s ease, box-shadow 0.4s ease, border-color 0.4s ease',
+        transition: hovered
+          ? 'transform 0.15s ease, box-shadow 0.4s ease, border-color 0.4s ease'
+          : 'box-shadow 0.4s ease, border-color 0.4s ease',
         backdropFilter: 'blur(16px)',
-        animation: 'fadeInUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards',
         opacity: 0,
       }}
     >
@@ -321,7 +326,9 @@ function BentoCard({
         setHovered(false)
         onMouseLeave()
       }}
-      className="relative overflow-hidden rounded-2xl flex flex-col cursor-pointer block"
+      className="bento-card relative overflow-hidden rounded-2xl flex flex-col cursor-pointer block"
+      data-parallax="skew-in"
+      data-parallax-delay={delay}
       style={{
         background: isDarkMode
           ? 'rgba(255,255,255,0.03)'
@@ -331,9 +338,10 @@ function BentoCard({
           ? `0 16px 48px rgba(${cert.accentRgb},0.18)`
           : isDarkMode ? '0 2px 12px rgba(0,0,0,0.2)' : '0 2px 12px rgba(0,0,0,0.06)',
         transform: hovered ? 'translateY(-4px) scale(1.01)' : 'translateY(0) scale(1)',
-        transition: 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)',
+        transition: hovered
+          ? 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)'
+          : 'background 0.35s, border-color 0.35s, box-shadow 0.35s, opacity 0.35s',
         backdropFilter: 'blur(12px)',
-        animation: `fadeInUp 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s forwards`,
         opacity: 0,
       }}
     >
@@ -443,35 +451,9 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
     }
   }
 
-  /* Animated counter hook */
-  const useCounter = (target: number, duration = 1600) => {
-    const [count, setCount] = useState(0)
-    const ref = useRef<HTMLDivElement>(null)
-    useEffect(() => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (!entry.isIntersecting) return
-        observer.disconnect()
-        const start = performance.now()
-        const tick = (now: number) => {
-          const progress = Math.min((now - start) / duration, 1)
-          const ease = 1 - Math.pow(1 - progress, 3)
-          setCount(Math.round(ease * target))
-          if (progress < 1) requestAnimationFrame(tick)
-        }
-        requestAnimationFrame(tick)
-      }, { threshold: 0.5 })
-      if (ref.current) observer.observe(ref.current)
-      return () => observer.disconnect()
-    }, [target, duration])
-    return { count, ref }
-  }
-
-  const heroCards = certificationsData.slice(0, 2)
-  const bentoCards = certificationsData.slice(2)
-
-  const stat1 = useCounter(certificationsData.length)
-  const stat2 = useCounter(new Set(certificationsData.map(c => c.issuerShort)).size)
-  const stat3 = useCounter(2026, 2000)
+  const activeCertifications = certificationsData.filter(c => !c.isOrganization)
+  const heroCards = activeCertifications.slice(0, 2)
+  const bentoCards = activeCertifications.slice(2)
 
   const [hoveredCert, setHoveredCert] = useState<Certification | null>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
@@ -570,6 +552,7 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
           <HeroCard 
             cert={heroCards[0]} 
             isDarkMode={isDarkMode}
+            delay={0.1}
             onClick={handleCardClick}
             onMouseEnter={handleCardMouseEnter}
             onMouseMove={handleCardMouseMove}
@@ -582,6 +565,7 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
           <HeroCard 
             cert={heroCards[1]} 
             isDarkMode={isDarkMode}
+            delay={0.2}
             onClick={handleCardClick}
             onMouseEnter={handleCardMouseEnter}
             onMouseMove={handleCardMouseMove}
@@ -616,41 +600,6 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
               onMouseMove={handleCardMouseMove}
               onMouseLeave={handleCardMouseLeave}
             />
-          ))}
-        </div>
-      </div>
-
-      {/* ── Metrics ribbon ── */}
-      <div
-        className="relative z-10 mt-12 rounded-3xl overflow-hidden"
-        style={{
-          background: isDarkMode ? 'rgba(255,255,255,0.025)' : 'rgba(255,255,255,0.7)',
-          border: `1px solid ${isDarkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
-          backdropFilter: 'blur(16px)',
-        }}
-      >
-        {/* Accent top strip */}
-        <div className="h-[2px] w-full"
-          style={{ backgroundImage: `linear-gradient(90deg, transparent, ${accentColor()}, transparent)` }}
-        />
-        <div ref={stat1.ref} className="grid grid-cols-3 divide-x"
-          style={{ borderColor: isDarkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)' }}>
-          {[
-            { count: stat1.count, suffix: '', label: 'Certifications Earned' },
-            { count: stat2.count, suffix: '+', label: 'Issuing Organizations' },
-            { count: stat3.count, suffix: '', label: 'Latest Issued' },
-          ].map(({ count, suffix, label }) => (
-            <div key={label} className="flex flex-col items-center justify-center py-8 px-4 gap-1">
-              <span
-                className="font-['Syne'] text-5xl font-extrabold max-md:text-4xl tabular-nums"
-                style={{ color: accentColor() }}
-              >
-                {count}{suffix}
-              </span>
-              <span className={`font-['JetBrains_Mono'] text-[10px] uppercase tracking-[0.2em] ${isDarkMode ? 'text-white/35' : 'text-slate-400'}`}>
-                {label}
-              </span>
-            </div>
           ))}
         </div>
       </div>
