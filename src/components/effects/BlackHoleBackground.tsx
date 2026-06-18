@@ -1354,7 +1354,7 @@ export const BlackHoleBackground: React.FC<BlackHoleBackgroundProps> = ({ theme 
           })
 
           // ── PASS 5: Silver Lining Rim Glow (peach-pink highlights facing the central light source)
-          hs.forEach((h, hIdx) => {
+          hs.forEach((h) => {
             const toCenterAngle = Math.atan2(cy - h.y, cx - h.x)
             const hlCount = 12
             
@@ -1412,7 +1412,6 @@ export const BlackHoleBackground: React.FC<BlackHoleBackgroundProps> = ({ theme 
           const dx = sx - bhx, dy = sy - bhy
           const dSq = dx*dx+dy*dy
           if (dSq < bhRsSq * 25 && dSq > bhRsSq * 0.8) {
-            const dist = Math.sqrt(dSq)
             const warp = 1 + (bhRsSq) / dSq
             const lsX = bhx + dx * warp
             const lsY = bhy + dy * warp
