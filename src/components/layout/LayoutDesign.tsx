@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useState, useEffect, type ReactNode } from 'react'
 import { AdvancedCursorSpotlight } from '../effects/AdvancedCursorSpotlight'
 import { useLocomotiveScroll } from '../effects/locomotive-scroll'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
@@ -14,6 +14,26 @@ export function LayoutDesign({ isDarkMode, theme, children }: LayoutDesignProps)
   useScrollReveal()
   useParallax()
   const scroll = useLocomotiveScroll()
+  const [scrollProgress, setScrollProgress] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight
+      if (totalHeight > 0) {
+        const progress = window.scrollY / totalHeight
+        setScrollProgress(progress)
+      }
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    // Run once initially to capture page state
+    handleScroll()
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [scroll])
 
   const getBgClass = () => {
     switch (theme) {
@@ -111,6 +131,16 @@ export function LayoutDesign({ isDarkMode, theme, children }: LayoutDesignProps)
     <div
       className={`${getBgClass()} transition-all duration-700 font-['DM_Sans'] leading-relaxed relative overflow-x-hidden min-h-screen`}
     >
+        {/* Sleek Scroll Progress Bar */}
+        <div 
+          className="fixed top-0 left-0 right-0 h-[3px] z-[200] origin-left transition-transform duration-75 ease-out"
+          style={{
+            background: `linear-gradient(to right, rgba(${getAccentRgb()}, 0.4), rgba(${getAccentRgb()}, 1))`,
+            transform: `scaleX(${scrollProgress})`,
+            boxShadow: `0 0 10px rgba(${getAccentRgb()}, 0.5)`
+          }}
+        />
+
         <AdvancedCursorSpotlight
           theme={theme}
           intensity={0.2}
