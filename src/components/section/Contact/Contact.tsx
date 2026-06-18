@@ -213,10 +213,10 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* ── LEFT COLUMN: Quick Details & Social Node Cards (5 cols) ── */}
-        <div className="lg:col-span-5 space-y-6">
+        <div className="lg:col-span-5 space-y-6 scroll-animate-subtle" data-parallax="skew-in-left" data-parallax-speed="0.8" data-parallax-delay="0.1">
           
           {/* Availability Status Card */}
-          <div className={`p-6 rounded-3xl border ${getCardBg()} relative overflow-hidden group`}>
+          <div className={`social-card p-6 rounded-3xl border ${getCardBg()} relative overflow-hidden group`}>
             <div className="flex items-center justify-between mb-4">
               <span className={`font-['JetBrains_Mono'] text-[9px] uppercase tracking-widest ${theme === 'cream' ? 'text-slate-500' : 'text-white/40'}`}>
                 CURRENT AVAILABILITY
@@ -247,7 +247,7 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
             {socialItems.map((item) => (
               <div
                 key={item.name}
-                className={`p-5 rounded-2xl border ${getCardBg()} transition-all duration-300 relative group flex flex-col justify-between h-[135px]`}
+                className={`social-card p-5 rounded-2xl border ${getCardBg()} transition-all duration-300 relative group flex flex-col justify-between h-[135px]`}
                 style={{
                   boxShadow: `0 4px 24px rgba(0,0,0,${theme === 'cream' ? '0.01' : '0.2'})`
                 }}
@@ -340,7 +340,7 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
           </div>
 
           {/* Core Focus statement */}
-          <div className={`p-6 rounded-3xl border ${getCardBg()} text-center relative overflow-hidden`}>
+          <div className={`social-card p-6 rounded-3xl border ${getCardBg()} text-center relative overflow-hidden`}>
             <p className={`font-['DM_Sans'] text-xs leading-relaxed ${theme === 'cream' ? 'text-slate-600' : 'text-gray-400'}`}>
               "Building optimized systems and integrations. I'm always looking for ways to bridge the gap between complex software logic and high-fidelity user experiences."
             </p>
@@ -348,8 +348,8 @@ export const Contact: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
         </div>
 
         {/* ── RIGHT COLUMN: Secure Message Form (7 cols) ── */}
-        <div className="lg:col-span-7">
-          <div className={`rounded-3xl border relative overflow-hidden ${getCardBg()}`}>
+        <div className="lg:col-span-7 scroll-animate" data-parallax="skew-in-right" data-parallax-speed="0.8" data-parallax-delay="0.15">
+          <div className={`bento-card rounded-3xl border relative overflow-hidden ${getCardBg()}`}>
             
             {/* Top border strip */}
             <div 
