@@ -1,5 +1,6 @@
 import { useState, useEffect, type ReactNode } from 'react'
 import { AdvancedCursorSpotlight } from '../effects/AdvancedCursorSpotlight'
+import { BlackHoleBackground } from '../effects/BlackHoleBackground'
 import { useLocomotiveScroll } from '../effects/locomotive-scroll'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { useParallax } from '../../hooks/useParallax'
@@ -146,6 +147,9 @@ export function LayoutDesign({ isDarkMode, theme, children }: LayoutDesignProps)
           intensity={0.2}
           size={500}
         />
+
+        {/* Black Hole Background scene */}
+        <BlackHoleBackground theme={theme} isDarkMode={isDarkMode} />
 
         {/* ── Global Dot-Grid Background ── */}
         <div
