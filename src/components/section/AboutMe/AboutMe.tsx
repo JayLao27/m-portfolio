@@ -74,7 +74,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
       <div className="grid grid-cols-2 gap-20 items-start max-md:grid-cols-1 max-md:gap-12 relative z-10 max-xl:gap-12">
 
         {/* ── LEFT COLUMN ── */}
-        <div className="space-y-6 scroll-animate-subtle" data-parallax="slide-left" data-parallax-speed="0.8" data-parallax-delay="0.1">
+        <div className="space-y-6 scroll-animate-subtle" data-parallax="skew-in-left" data-parallax-speed="0.8" data-parallax-delay="0.1">
 
           {/* Section label */}
           <div className="flex items-center gap-3 mb-1">
@@ -157,7 +157,7 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
         </div>
 
         {/* ── RIGHT COLUMN ── */}
-        <div className="space-y-6 scroll-animate relative min-h-[420px]" data-parallax="slide-right" data-parallax-speed="0.8" data-parallax-delay="0.15">
+        <div className="space-y-6 scroll-animate relative min-h-[420px]" data-parallax="skew-in-right" data-parallax-speed="0.8" data-parallax-delay="0.15">
           
           {/* Transition wrapper for default "Tools I Build With" & Focus cards */}
           <div 
@@ -181,11 +181,11 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
             </h3>
 
             {/* Tech category cards */}
-            <div className="space-y-3">
+            <div className="space-y-3" data-parallax="stagger-skew" data-parallax-delay="0.1" data-parallax-selector=".tech-category-card">
               {techCategories.map(({ category, icon, borderColor, items }) => (
                 <div
                   key={category}
-                  className={`relative pl-5 pr-5 py-4 rounded-xl border-l-[3px] border transition-all duration-300 group ${
+                  className={`tech-category-card relative pl-5 pr-5 py-4 rounded-xl border-l-[3px] border transition-all duration-300 group ${
                     isDarkMode
                       ? 'bg-white/[0.03] border-t-white/[0.06] border-r-white/[0.06] border-b-white/[0.06] hover:bg-white/[0.055] hover:shadow-lg'
                       : 'bg-white border-t-slate-200/80 border-r-slate-200/80 border-b-slate-200/80 shadow-sm hover:shadow-md hover:bg-slate-50/50'
@@ -271,6 +271,8 @@ export const AboutMe: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | 'g
 
             {/* Academic Background Card */}
             <div
+              data-parallax="skew-in"
+              data-parallax-delay="0.25"
               className={`relative p-6 rounded-2xl border overflow-hidden transition-all duration-300 group hover:-translate-y-0.5 ${
                 isDarkMode
                   ? 'bg-white/[0.04] border-white/[0.08] hover:border-highlight/25 hover:shadow-lg hover:shadow-black/20'
