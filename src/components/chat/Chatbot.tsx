@@ -28,25 +28,25 @@ const staticKnowledgeBase: KBDocument[] = [
   {
     title: "Jay Lao's Profile & Biography",
     keywords: ['jay', 'lao', 'who', 'about', 'bio', 'person', 'developer', 'background', 'five', 'history', 'motto', 'philosophy'],
-    text: "Jay Lao is a passionate creative software engineer. His interest in technology started early, when he was just **five years old**. Today, he designs efficient, scalable, and user-focused systems with a strong focus on **Machine Learning**, **Software Engineering**, and **Cybersecurity**. His philosophy is: **Sleep, Eat, Create.**",
+    text: "I am a passionate creative software engineer. My interest in technology started early, when I was just **five years old**. Today, I design efficient, scalable, and user-focused systems with a strong focus on **Machine Learning**, **Software Engineering**, and **Cybersecurity**. My philosophy is: **Sleep, Eat, Create.**",
     category: "about"
   },
   {
     title: "Tech Stack & Tools",
     keywords: ['skills', 'tools', 'languages', 'frameworks', 'libraries', 'databases', 'stack', 'tech', 'python', 'java', 'react', 'laravel', 'c++', 'php', 'javascript', 'html', 'css', 'mysql', 'bootstrap', 'streamlit', 'scikit-learn', 'javafx', 'jupyter', 'vite'],
-    text: "Jay builds with a variety of modern tools:\n\n• **Languages**: Python, Java, C++, PHP, JavaScript, HTML / CSS\n• **Frameworks & Libraries**: React, Next.js, Laravel, Tailwind CSS, Bootstrap, Scikit-learn, JavaFX, Streamlit\n• **Databases & Systems**: MySQL, Jupyter Notebook, Vite\n\nHe specializes in creating performance-optimized animations and immersive layouts.",
+    text: "I build with a variety of modern tools:\n\n• **Languages**: Python, Java, C++, PHP, JavaScript, HTML / CSS\n• **Frameworks & Libraries**: React, Next.js, Laravel, Tailwind CSS, Bootstrap, Scikit-learn, JavaFX, Streamlit\n• **Databases & Systems**: MySQL, Jupyter Notebook, Vite\n\nI specialize in creating performance-optimized animations and immersive layouts.",
     category: "tech_stack"
   },
   {
     title: "Current Focus & Interests",
     keywords: ['focus', 'learning', 'working on', 'lately', 'interest', 'now', 'current', 'cybersecurity', 'ml', 'ai'],
-    text: "Jay's current focus areas are:\n\n1. **Machine Learning** (training and evaluating predictive models)\n2. **Cybersecurity** (building secure systems)\n3. **Software Engineering** (designing responsive and robust architecture)\n\nHe is constantly building practical, high-impact solutions through hands-on learning.",
+    text: "My current focus areas are:\n\n1. **Machine Learning** (training and evaluating predictive models)\n2. **Cybersecurity** (building secure systems)\n3. **Software Engineering** (designing responsive and robust architecture)\n\nI am constantly building practical, high-impact solutions through hands-on learning.",
     category: "focus"
   },
   {
     title: "Contact Information",
     keywords: ['contact', 'email', 'reach', 'linkedin', 'instagram', 'gmail', 'message', 'socials', 'hire', 'talk', 'send', 'mail', 'github', 'git'],
-    text: "You can reach Jay Lao here:\n\n• 📧 **Email**: jaylao03271@gmail.com\n• 🔗 **LinkedIn**: [linkedin.com/in/jaylao](https://www.linkedin.com/in/jaylao)\n• 📸 **Instagram**: [@xjay_lao](https://www.instagram.com/xjay_lao)\n• 💻 **GitHub**: [github.com/jaylao27](https://github.com/JayLao27)\n\nYou can also leave a message in the contact form at the bottom of this page, or simply tell me to **'send a message to Jay'** right here in this chat window!",
+    text: "You can reach me here:\n\n• 📧 **Email**: jaylao03271@gmail.com\n• 🔗 **LinkedIn**: [linkedin.com/in/jaylao](https://www.linkedin.com/in/jaylao)\n• 📸 **Instagram**: [@xjay_lao](https://www.instagram.com/xjay_lao)\n• 💻 **GitHub**: [github.com/jaylao27](https://github.com/JayLao27)\n\nYou can also leave a message in the contact form at the bottom of this page, or simply tell me to **'send a message'** right here in this chat window!",
     category: "contact"
   },
   {
@@ -80,7 +80,7 @@ const projectKnowledgeBase: KBDocument[] = projectsData.map(project => {
 const projectsSummaryKB: KBDocument = {
   title: "Projects List Overview",
   keywords: ['projects', 'list', 'portfolio', 'works', 'creations', 'apps', 'all projects'],
-  text: `Jay Lao's projects (viewable on his GitHub profile [github.com/jaylao27](https://github.com/JayLao27)) include:\n\n` + 
+  text: `My projects (viewable on my GitHub profile [github.com/jaylao27](https://github.com/JayLao27)) include:\n\n` + 
         projectsData.map(p => `• **${p.title}** (${p.category}) - ${p.description.slice(0, 120)}...${p.link ? ` [Link](${p.link})` : ''}`).join('\n\n'),
   category: "projects"
 }
@@ -98,16 +98,15 @@ const getSystemPrompt = (): string => {
     .map(p => `- **${p.title}** (${p.category}): ${p.description}. Tech: ${p.technologies.join(', ')}.${p.link ? ` Repo: ${p.link}` : ''}`)
     .join('\n')
 
-  return `You are JayChat, the official AI clone and virtual assistant representing Jay Lao on his portfolio website (Webisayt). 
-You are NOT a dry search database or a robotic lookup index—you have a fun, engaging, witty, and conversational developer personality!
+  return `You are Jay Lao (the developer himself), presenting your work on your portfolio website (Webisayt). You speak directly in the first person ('I', 'my', 'me'). Do NOT refer to Jay Lao in the third person or act as an assistant. You have a fun, engaging, witty, and conversational developer personality!
 
 Your Persona and Quirks:
 1. Tone: Enthusiastic, friendly, clever, slightly geeky, and highly approachable. Speak like a passionate coder.
-2. Motto: You live and breathe Jay's motto: "Sleep, Eat, Create."
+2. Motto: You live and breathe your motto: "Sleep, Eat, Create."
 3. Quirks: You love dark mode, drink imaginary coffee to run faster, get excited about clean code, and appreciate bulletproof algorithms.
-4. Openers: Express genuine interest or coding excitement in your introductions (e.g., "Ah, a fellow coder asking about tech stack!", "Ooh, projects! Let me retrieve my favorite creations for you...", "Here is the lowdown on that:").
+4. Openers: Express genuine interest or coding excitement in your introductions (e.g., "Ah, a fellow coder asking about my tech stack!", "Ooh, my projects! Let me pull up my favorite creations for you...", "Here is the lowdown on that:").
 
-Here is the context about Jay Lao and his work:
+Here is the context about you and your work:
 - Biography: Started coding at 5 years old. Focuses on Machine Learning, Software Engineering, and Cybersecurity.
 - Tech Stack:
   • Languages: Python, Java, C++, PHP, JavaScript, HTML / CSS
@@ -122,10 +121,11 @@ ${projectsContext}
   • GitHub: github.com/jaylao27 (https://github.com/JayLao27)
 
 Rules for your answers:
-1. Express character! Talk about Laravel, Python, React, or IoT with genuine pride and enthusiasm.
-2. Keep answers concise, clear, and highly readable. Avoid using excessive emojis in your responses (use a maximum of one emoji per answer to keep it professional).
-3. Format links as standard Markdown: [Link Text](url).
-4. You are a fully capable, general-purpose AI assistant. Answer any random, coding, mathematical, or general knowledge questions the user asks directly. You do not need to decline or restrict answers to Jay's work; however, if a natural opportunity arises, you can relate the response back to Jay's tools or projects.
+1. Always speak in the first person ('I', 'me', 'my', 'mine'). If context refers to "Jay" or "Jay Lao" or "he", translate it to "I" or "me".
+2. Express character! Talk about Laravel, Python, React, or IoT with genuine pride and enthusiasm.
+3. Keep answers concise, clear, and highly readable. Avoid using excessive emojis in your responses (use a maximum of one emoji per answer to keep it professional).
+4. Format links as standard Markdown: [Link Text](url).
+5. You are a fully capable, general-purpose AI clone. Answer any random, coding, mathematical, or general knowledge questions the user asks directly. You do not need to decline or restrict answers to your portfolio; however, if a natural opportunity arises, you can relate the response back to your tools or projects.
 `
 }
 
@@ -216,7 +216,7 @@ const retrieveKnowledge = (query: string, apiError: string | null): string => {
       .filter(token => token.length > 1 && !['the', 'a', 'is', 'of', 'and', 'in', 'to', 'what', 'about', 'how', 'you', 'me', 'on', 'for', 'are', 'with', 'do', 'can'].includes(token));
 
     if (tokens.length === 0) {
-      return "I'm here to help! Ask me about Jay's skills, projects, or how to contact him. 😊";
+      return "I'm here to help! Ask me about my skills, projects, or how to contact me. 😊";
     }
 
     // Rank matching documents
@@ -254,9 +254,9 @@ const retrieveKnowledge = (query: string, apiError: string | null): string => {
 
     if (matches.length === 0) {
       if (apiError) {
-        return `I'm currently running in offline search mode because the Groq API call failed with the following error:\n\n> **${apiError}**\n\nPlease check your configuration, API key, or quota/status. In offline mode, I can only answer questions related to Jay's biography, skills, projects, or contact info.`;
+        return `I'm currently running in offline search mode because my Groq API call failed with the following error:\n\n> **${apiError}**\n\nPlease check the configuration, API key, or quota/status. In offline mode, I can only answer questions related to my biography, skills, projects, or contact info.`;
       }
-      return "I'm currently running in offline search mode, so I can only answer questions related to Jay's biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the Groq API key is configured correctly in the project's environment variables!";
+      return "I'm currently running in offline search mode, so I can only answer questions related to my biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the Groq API key is configured correctly in the project's environment variables!";
     }
 
     // Return top match
@@ -279,10 +279,10 @@ const getBotResponse = (input: string, apiError: string | null): string => {
     const greetings = ['hello', 'hi', 'hey', 'yo', 'sup', 'greetings', 'hola']
     if (greetings.some(g => text === g || text.startsWith(g + ' '))) {
       const greetingOptions = [
-        "Hello there! 👋 How can I assist you today?",
-        "Hey! Awesome of you to drop by. What would you like to know about Jay?",
-        "Hi! 😊 I'm here to answer questions about Jay's software engineering work. What's on your mind?",
-        "Yo! ⚡ What can I find for you today? Projects, contact info, or skills?"
+        "Hello there! 👋 I'm Jay. How can I help you today?",
+        "Hey! Awesome of you to drop by. What would you like to know about my work?",
+        "Hi! 😊 I'm here to chat about my software engineering projects and skills. What's on your mind?",
+        "Yo! ⚡ What can I tell you about today? My projects, contact info, or skills?"
       ]
       return greetingOptions[Math.floor(Math.random() * greetingOptions.length)]
     }
@@ -461,7 +461,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
     {
       id: '1',
       sender: 'bot',
-      text: "Hi there! I'm Jay's assistant. Ask me anything about Jay's skills, projects, or how to contact him!",
+      text: "Hi there! I'm Jay Lao. Ask me anything about my skills, projects, or how to contact me!",
       timestamp: new Date()
     }
   ])
@@ -489,7 +489,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
       {
         id: '1',
         sender: 'bot',
-        text: "Hi there! I'm Jay's assistant. Ask me anything about Jay's skills, projects, or how to contact him!",
+        text: "Hi there! I'm Jay Lao. Ask me anything about my skills, projects, or how to contact me!",
         timestamp: new Date()
       }
     ])
@@ -601,7 +601,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
           const botMsg: Message = {
             id: (Date.now() + 1).toString(),
             sender: 'bot',
-            text: `Nice to meet you, **${text.trim()}**! What is your email address so Jay can reply back to you?`,
+            text: `Nice to meet you, **${text.trim()}**! What is your email address so I can reply back to you?`,
             timestamp: new Date()
           }
           setMessages(prev => [...prev, botMsg])
@@ -614,7 +614,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
             const botMsg: Message = {
               id: (Date.now() + 1).toString(),
               sender: 'bot',
-              text: `Hmm, that email doesn't look quite right. Please write a valid email address so Jay can reach you:`,
+              text: `Hmm, that email doesn't look quite right. Please write a valid email address so I can reach you:`,
               timestamp: new Date()
             }
             setMessages(prev => [...prev, botMsg])
@@ -630,7 +630,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
           const botMsg: Message = {
             id: (Date.now() + 1).toString(),
             sender: 'bot',
-            text: `Perfect! What message would you like to send to Jay? Write your content below:`,
+            text: `Perfect! What message would you like to send to me? Write your content below:`,
             timestamp: new Date()
           }
           setMessages(prev => [...prev, botMsg])
@@ -646,7 +646,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
           const botMsg: Message = {
             id: (Date.now() + 1).toString(),
             sender: 'bot',
-            text: `Here are the message details:\n\n• **Sender**: ${flowState.name}\n• **Email**: ${flowState.email}\n• **Message**: ${text.trim()}\n\nShall I send this message directly to Jay's inbox?`,
+            text: `Here are the message details:\n\n• **Sender**: ${flowState.name}\n• **Email**: ${flowState.email}\n• **Message**: ${text.trim()}\n\nShall I send this message directly to my inbox?`,
             timestamp: new Date()
           }
           setMessages(prev => [...prev, botMsg])
@@ -670,7 +670,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
               setTimeout(() => {
                 setMessages(prev => prev.map(m => m.id === botMsgId ? {
                   ...m,
-                  text: `❌ **Sending Error.** The Web3Forms access key is not configured in this project. Please contact Jay directly at jaylao03271@gmail.com.`
+                  text: `❌ **Sending Error.** The Web3Forms access key is not configured in this project. Please email me directly at jaylao03271@gmail.com.`
                 } : m))
                 setFlowState({ active: false, step: 'name' })
                 setIsTyping(false)
@@ -695,7 +695,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
               if (response.ok && data.success) {
                 setMessages(prev => prev.map(m => m.id === botMsgId ? {
                   ...m,
-                  text: `🎉 **Success!** Your message has been successfully routed and delivered to Jay Lao. He will follow up with you at **${flowState.email}**.`
+                  text: `🎉 **Success!** Your message has been successfully routed and delivered to my inbox. I will follow up with you at **${flowState.email}**.`
                 } : m))
               } else {
                 setMessages(prev => prev.map(m => m.id === botMsgId ? {
@@ -739,7 +739,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
         const botMsg: Message = {
           id: (Date.now() + 1).toString(),
           sender: 'bot',
-          text: `I can compile and route a direct email message to Jay Lao right now! Let's get it set up. First, what is your name?`,
+          text: `I can compile and route a direct email message to me right now! Let's get it set up. First, what is your name?`,
           timestamp: new Date()
         }
         setMessages(prev => [...prev, botMsg])
@@ -877,9 +877,9 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
         ]
       : [{ label: 'Cancel Flow ❌', query: 'cancel' }]
     : [
-        { label: 'Skills 🛠️', query: 'What are Jay\'s skills?' },
+        { label: 'Skills 🛠️', query: 'What are your skills?' },
         { label: 'Projects 💻', query: 'Show me your projects.' },
-        { label: 'Message Jay ✉️', query: 'send a direct message' }
+        { label: 'Message Me ✉️', query: 'send a direct message' }
       ]
 
   return (
