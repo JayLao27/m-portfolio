@@ -1,4 +1,4 @@
-﻿/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react-refresh/only-export-components */
 import React, { useRef, useEffect, useState } from 'react'
 
 export interface Project {
@@ -198,18 +198,20 @@ export const Projects: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | '
       {/* Horizontal Scroll Container */}
       <div
         ref={scrollContainerRef}
-        className="project-scroll overflow-x-auto pb-6 pt-4 relative z-10 scroll-animate scroll-animate-delay-1"
-        data-parallax="slide-up"
-        data-parallax-delay="0.3"
+        className="project-scroll overflow-x-auto pb-6 pt-4 relative z-10 scroll-animate"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', overflowY: 'visible' }}
         data-lenis-prevent
       >
-        <div className="flex gap-7 min-w-max px-2">
-          {filteredProjects.map((project, index) => (
+        <div 
+          className="flex gap-7 min-w-max px-2"
+          data-parallax="stagger-skew"
+          data-parallax-delay="0.15"
+          data-parallax-selector=".project-card"
+        >
+          {filteredProjects.map((project) => (
             <ProjectCard
               key={project.id}
               project={project}
-              index={index}
               isDarkMode={isDarkMode}
               accentColor={accentColor}
               accentRgb={accentRgb}
@@ -246,26 +248,23 @@ export const Projects: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'dim' | '
 
 interface ProjectCardProps {
   project: Project
-  index: number
   isDarkMode: boolean
   accentColor: string
   accentRgb: string
   badgeClass: string
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, isDarkMode, accentColor, accentRgb, badgeClass }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, isDarkMode, accentColor, accentRgb, badgeClass }) => {
   const [hovered, setHovered] = useState(false)
 
   return (
     <div
-      className={`group flex-shrink-0 w-[460px] rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer relative ${
+      className={`project-card group flex-shrink-0 w-[460px] rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer relative ${
         isDarkMode
           ? 'bg-white/[0.04] border border-white/10'
           : 'bg-white border border-slate-200/80 shadow-md'
       }`}
       style={{
-        animation: `fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards`,
-        animationDelay: `${index * 0.1}s`,
         opacity: 0,
         transform: hovered ? 'translateY(-8px)' : 'translateY(0)',
         boxShadow: hovered ? `0 24px 60px rgba(${accentRgb},0.18), 0 0 0 1.5px rgba(${accentRgb},0.45)` : 'none',
