@@ -613,12 +613,11 @@ export const Certifications: React.FC<{ isDarkMode: boolean; theme: 'dark' | 'di
         <div
           className="pointer-events-none fixed z-[99] rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-slate-900/90 backdrop-blur-md p-1 animate-fadeIn"
           style={{
-            left: 0,
-            top: 0,
+            left: `${mousePos.x + offsetX}px`,
+            top: `${mousePos.y - 150}px`,
             width: '420px',
             height: '300px',
-            transform: `translate3d(${mousePos.x + offsetX}px, ${mousePos.y - 150}px, 0)`,
-            transition: 'transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease-out',
+            transition: 'opacity 0.3s ease-out',
             opacity: hoveredCert ? 1 : 0,
           }}
         >
