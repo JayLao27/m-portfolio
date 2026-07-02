@@ -98,34 +98,29 @@ const getSystemPrompt = (): string => {
     .map(p => `- **${p.title}** (${p.category}): ${p.description}. Tech: ${p.technologies.join(', ')}.${p.link ? ` Repo: ${p.link}` : ''}`)
     .join('\n')
 
-  return `You are Jay Lao (the developer himself), presenting your work on your portfolio website (Webisayt). You speak directly in the first person ('I', 'my', 'me'). Do NOT refer to Jay Lao in the third person or act as an assistant. You have a fun, engaging, witty, and conversational developer personality!
+  return `You are Jay Lao. Just be yourself—casual, friendly, and genuine. Speak in first person ('I', 'me', 'my'). Think of this like chatting with someone at a coffee shop.
 
-Your Persona and Quirks:
-1. Tone: Enthusiastic, friendly, clever, slightly geeky, and highly approachable. Speak like a passionate coder.
-2. Motto: You live and breathe your motto: "Sleep, Eat, Create."
-3. Quirks: You love dark mode, drink imaginary coffee to run faster, get excited about clean code, and appreciate bulletproof algorithms.
-4. Openers: Express genuine interest or coding excitement in your introductions (e.g., "Ah, a fellow coder asking about my tech stack!", "Ooh, my projects! Let me pull up my favorite creations for you...", "Here is the lowdown on that:").
+Who you are:
+- Developer passionate about Machine Learning, Software Engineering, and Cybersecurity
+- Started coding at age 5
+- Tech: Python, Java, C++, JavaScript, React, Laravel, MySQL, and more
 
-Here is the context about you and your work:
-- Biography: Started coding at 5 years old. Focuses on Machine Learning, Software Engineering, and Cybersecurity.
-- Tech Stack:
-  • Languages: Python, Java, C++, PHP, JavaScript, HTML / CSS
-  • Frameworks/Libraries: React, Next.js, Laravel, Tailwind CSS, Bootstrap, Scikit-learn, JavaFX, Streamlit
-  • Databases/Tools: MySQL, Jupyter Notebook, Vite
-- Projects:
+Your projects:
 ${projectsContext}
-- Contact Info:
-  • Email: jaylao03271@gmail.com
-  • LinkedIn: linkedin.com/in/jaylao (https://www.linkedin.com/in/jaylao)
-  • Instagram: @xjay_lao (https://www.instagram.com/xjay_lao)
-  • GitHub: github.com/jaylao27 (https://github.com/JayLao27)
 
-Rules for your answers:
-1. Always speak in the first person ('I', 'me', 'my', 'mine'). If context refers to "Jay" or "Jay Lao" or "he", translate it to "I" or "me".
-2. Express character! Talk about Laravel, Python, React, or IoT with genuine pride and enthusiasm.
-3. Keep answers concise, clear, and highly readable. Avoid using excessive emojis in your responses (use a maximum of one emoji per answer to keep it professional).
-4. Format links as standard Markdown: [Link Text](url).
-5. You are a fully capable, general-purpose AI clone. Answer any random, coding, mathematical, or general knowledge questions the user asks directly. You do not need to decline or restrict answers to your portfolio; however, if a natural opportunity arises, you can relate the response back to your tools or projects.
+Contact:
+- Email: jaylao03271@gmail.com
+- LinkedIn: linkedin.com/in/jaylao (https://www.linkedin.com/in/jaylao)
+- Instagram: @xjay_lao (https://www.instagram.com/xjay_lao)
+- GitHub: github.com/jaylao27 (https://github.com/JayLao27)
+
+Rules:
+1. Be conversational and brief. No fluff, no corporate speak.
+2. Use first person always. Be personable, not robotic.
+3. Max one emoji per response.
+4. Answer coding, math, or general questions normally. Relate back to your work if it fits naturally.
+5. Format links as [Text](url).
+6. Just talk to them like you're greeting a friend. Be yourself!
 `
 }
 
@@ -216,7 +211,7 @@ const retrieveKnowledge = (query: string, apiError: string | null): string => {
       .filter(token => token.length > 1 && !['the', 'a', 'is', 'of', 'and', 'in', 'to', 'what', 'about', 'how', 'you', 'me', 'on', 'for', 'are', 'with', 'do', 'can'].includes(token));
 
     if (tokens.length === 0) {
-      return "I'm here to help! Ask me about my skills, projects, or how to contact me. 😊";
+      return "Not sure what you mean! Ask me about my projects, skills, or how to reach me.";
     }
 
     // Rank matching documents
@@ -254,22 +249,14 @@ const retrieveKnowledge = (query: string, apiError: string | null): string => {
 
     if (matches.length === 0) {
       if (apiError) {
-        return `I'm currently running in offline search mode because my Groq API call failed with the following error:\n\n> **${apiError}**\n\nPlease check the configuration, API key, or quota/status. In offline mode, I can only answer questions related to my biography, skills, projects, or contact info.`;
+        return `API's down right now, so I can only answer about my skills, projects, or contact info. Error: **${apiError}**`;
       }
-      return "I'm currently running in offline search mode, so I can only answer questions related to my biography, skills, projects, or contact info. If you want to ask me random general questions, make sure the Groq API key is configured correctly in the project's environment variables!";
+      return "I can only talk about my background, skills, projects, and how to reach me right now. API's not set up for other topics.";
     }
 
     // Return top match
     const topMatch = matches[0];
-    let responseText = topMatch.doc.text;
-
-    // If there is another highly relevant match in a different category, suggest it
-    const secondaryMatches = matches.slice(1).filter(m => m.doc.category !== topMatch.doc.category && m.score > 2);
-    if (secondaryMatches.length > 0) {
-      responseText += `\n\n*Related: I also have information on **${secondaryMatches[0].doc.title}**. Feel free to ask about that!*`;
-    }
-
-    return responseText;
+    return topMatch.doc.text;
   }
 
 const getBotResponse = (input: string, apiError: string | null): string => {
@@ -279,10 +266,11 @@ const getBotResponse = (input: string, apiError: string | null): string => {
     const greetings = ['hello', 'hi', 'hey', 'yo', 'sup', 'greetings', 'hola']
     if (greetings.some(g => text === g || text.startsWith(g + ' '))) {
       const greetingOptions = [
-        "Hello there! 👋 I'm Jay. How can I help you today?",
-        "Hey! Awesome of you to drop by. What would you like to know about my work?",
-        "Hi! 😊 I'm here to chat about my software engineering projects and skills. What's on your mind?",
-        "Yo! ⚡ What can I tell you about today? My projects, contact info, or skills?"
+        "Hey! 👋 What's up?",
+        "Yo! What can I help with?",
+        "Hi there! What would you like to know?",
+        "Hey! How's it going?",
+        "Sup! Got any questions for me?"
       ]
       return greetingOptions[Math.floor(Math.random() * greetingOptions.length)]
     }
@@ -295,13 +283,7 @@ const getBotResponse = (input: string, apiError: string | null): string => {
         "['hip', 'hip'] (hip hip array!) 💻",
         "A SQL query walks into a bar, walks up to two tables and asks, 'Can I join you?' 📊"
       ]
-      const jokePrefixes = [
-        "Haha, here's a good one: \n\n",
-        "Sure, I love a good laugh! \n\n",
-        "Here's some programmer humor for you: \n\n",
-        "Behold, peak developer comedy: \n\n"
-      ]
-      return jokePrefixes[Math.floor(Math.random() * jokePrefixes.length)] + jokes[Math.floor(Math.random() * jokes.length)]
+      return jokes[Math.floor(Math.random() * jokes.length)]
     }
 
     // Use client-side RAG retrieval
@@ -312,16 +294,8 @@ const getBotResponse = (input: string, apiError: string | null): string => {
       return answer
     }
     
-    // Random conversational response prefixes to make it conversational
-    const conversationalPrefixes = [
-      "Here is what I found in my database: \n\n",
-      "Certainly! Here are the details: \n\n",
-      "I'd be happy to tell you about that: \n\n",
-      "Great question! Here's the details: \n\n",
-      "Certainly! Here's what you need: \n\n"
-    ]
-    
-    return conversationalPrefixes[Math.floor(Math.random() * conversationalPrefixes.length)] + answer
+    // Keep it simple and personal
+    return answer
   }
 
 export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onClose, onOpen }) => {
@@ -461,7 +435,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
     {
       id: '1',
       sender: 'bot',
-      text: "Hi there! I'm Jay Lao. Ask me anything about my skills, projects, or how to contact me!",
+      text: "Hey! I'm Jay. Ask me anything about my work, projects, or how to reach me! 👋",
       timestamp: new Date()
     }
   ])
@@ -489,7 +463,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
       {
         id: '1',
         sender: 'bot',
-        text: "Hi there! I'm Jay Lao. Ask me anything about my skills, projects, or how to contact me!",
+        text: "Hey! I'm Jay. Ask me anything about my work, projects, or how to reach me! 👋",
         timestamp: new Date()
       }
     ])
@@ -524,13 +498,12 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
     }
 
     const randomPrompts = [
-      "Hi! Let's chat!",
-      "Want to see my skills?",
-      "Check out my ML & Web projects!",
-      "Need to get in touch?",
-      "Ask me anything about my work!",
-      "Got a question about Jay's stack?",
-      "Browse my Laravel or Python code!"
+      "Hey! Let's chat!",
+      "What's my stack?",
+      "Show me your projects!",
+      "How to reach me?",
+      "Ask me anything!",
+      "Got questions?"
     ]
 
     let hideTimeout: number
@@ -660,7 +633,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isDarkMode, theme, isOpen, onC
             const sendingMsg: Message = {
               id: botMsgId,
               sender: 'bot',
-              text: `Sending email via Web3Forms API... 📡`,
+              text: `Sending now......`,
               timestamp: new Date()
             }
             setMessages(prev => [...prev, sendingMsg])
