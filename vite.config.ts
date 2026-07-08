@@ -13,9 +13,19 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          three: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing', 'postprocessing'],
-          animation: ['gsap', 'locomotive-scroll'],
+        manualChunks(id) {
+          if (
+            id.includes('three') ||
+            id.includes('@react-three/fiber') ||
+            id.includes('@react-three/drei') ||
+            id.includes('@react-three/postprocessing') ||
+            id.includes('postprocessing')
+          ) {
+            return 'three'
+          }
+          if (id.includes('gsap') || id.includes('locomotive-scroll')) {
+            return 'animation'
+          }
         },
       },
     },
